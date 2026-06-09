@@ -70,7 +70,7 @@ const LocaleLayout = async ({
     <html lang={locale ?? 'en'} className={cn('h-full', instrumentSerif.variable)} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1C64F2" />
+        <meta name="theme-color" content="#8b5cf6" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -78,7 +78,7 @@ const LocaleLayout = async ({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icon-192x192.png" />
-        <meta name="msapplication-TileColor" content="#1C64F2" />
+        <meta name="msapplication-TileColor" content="#8b5cf6" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
       <body
