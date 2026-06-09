@@ -43,7 +43,7 @@ const Explore: FC<IExploreProps> = ({
   }, [isCurrentWorkspaceDatasetOperator])
 
   return (
-    <div className='flex h-full overflow-hidden border-t border-divider-regular bg-background-body'>
+    <div className='flex h-full overflow-hidden bg-background-body'>
       <ExploreContext.Provider
         value={
           {
