@@ -244,7 +244,7 @@ const translation = {
     title: 'Plugins',
   },
   difyVersionNotCompatible:
-    'La version actuelle de Dify n\'est pas compatible avec ce plugin, veuillez mettre à niveau vers la version minimale requise : {{minimalDifyVersion}}',
+    'La version actuelle de AgentFlow n\'est pas compatible avec ce plugin, veuillez mettre à niveau vers la version minimale requise : {{minimalDifyVersion}}',
   requestAPlugin: 'Demander un plugin',
   publishPlugins: 'Publier des plugins',
   auth: {

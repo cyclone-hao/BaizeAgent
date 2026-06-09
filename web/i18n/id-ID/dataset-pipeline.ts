@@ -147,7 +147,7 @@ const translation = {
   knowledgeDescription: 'Deskripsi pengetahuan',
   knowledgeNameAndIconPlaceholder: 'Silakan masukkan nama Basis Pengetahuan',
   knowledgeNameAndIcon: 'Nama & ikon pengetahuan',
-  knowledgeDescriptionPlaceholder: 'Jelaskan apa yang ada di Basis Pengetahuan ini. Deskripsi terperinci memungkinkan AI mengakses konten kumpulan data dengan lebih akurat. Jika kosong, Dify akan menggunakan strategi hit default. (Opsional)',
+  knowledgeDescriptionPlaceholder: 'Jelaskan apa yang ada di Basis Pengetahuan ini. Deskripsi terperinci memungkinkan AI mengakses konten kumpulan data dengan lebih akurat. Jika kosong, AgentFlow akan menggunakan strategi hit default. (Opsional)',
   editPipelineInfo: 'Mengedit info alur',
 }
 

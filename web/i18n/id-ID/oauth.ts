@@ -1,7 +1,7 @@
 const translation = {
   tips: {
-    loggedIn: 'Aplikasi ini ingin mengakses informasi berikut dari akun Dify Cloud Anda.',
-    notLoggedIn: 'Aplikasi ini ingin mengakses akun Dify Cloud Anda',
+    loggedIn: 'Aplikasi ini ingin mengakses informasi berikut dari akun AgentFlow Cloud Anda.',
+    notLoggedIn: 'Aplikasi ini ingin mengakses akun AgentFlow Cloud Anda',
     needLogin: 'Silakan masuk untuk mengotorisasi',
     common: 'Kami menghormati privasi Anda dan hanya akan menggunakan informasi ini untuk meningkatkan pengalaman Anda dengan alat pengembang kami.',
   },

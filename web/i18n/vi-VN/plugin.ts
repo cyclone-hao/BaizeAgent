@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugin',
   },
-  difyVersionNotCompatible: 'Phiên bản Dify hiện tại không tương thích với plugin này, vui lòng nâng cấp lên phiên bản tối thiểu cần thiết: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Phiên bản AgentFlow hiện tại không tương thích với plugin này, vui lòng nâng cấp lên phiên bản tối thiểu cần thiết: {{minimalDifyVersion}}',
   requestAPlugin: 'Yêu cầu một plugin',
   publishPlugins: 'Xuất bản plugin',
   auth: {

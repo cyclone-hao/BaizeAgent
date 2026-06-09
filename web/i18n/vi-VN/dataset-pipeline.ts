@@ -148,7 +148,7 @@ const translation = {
   knowledgeNameAndIcon: 'Tên kiến thức & biểu tượng',
   editPipelineInfo: 'Chỉnh sửa thông tin quy trình',
   knowledgeNameAndIconPlaceholder: 'Vui lòng nhập tên của Cơ sở kiến thức',
-  knowledgeDescriptionPlaceholder: 'Mô tả những gì có trong Cơ sở kiến thức này. Mô tả chi tiết cho phép AI truy cập nội dung của tập dữ liệu chính xác hơn. Nếu trống, Dify sẽ sử dụng chiến lược hit mặc định. (Tùy chọn)',
+  knowledgeDescriptionPlaceholder: 'Mô tả những gì có trong Cơ sở kiến thức này. Mô tả chi tiết cho phép AI truy cập nội dung của tập dữ liệu chính xác hơn. Nếu trống, AgentFlow sẽ sử dụng chiến lược hit mặc định. (Tùy chọn)',
 }
 
 export default translation

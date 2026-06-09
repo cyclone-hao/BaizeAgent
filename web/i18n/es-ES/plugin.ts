@@ -246,7 +246,7 @@ const translation = {
     title: 'Complementos',
   },
   difyVersionNotCompatible:
-    'La versión actual de Dify no es compatible con este plugin, por favor actualiza a la versión mínima requerida: {{minimalDifyVersion}}',
+    'La versión actual de AgentFlow no es compatible con este plugin, por favor actualiza a la versión mínima requerida: {{minimalDifyVersion}}',
   requestAPlugin: 'Solicitar un plugin',
   publishPlugins: 'Publicar plugins',
   auth: {

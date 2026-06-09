@@ -192,7 +192,7 @@ const translation = {
     sortBy: 'Чорне місто',
     pluginsResult: 'Результати {{num}}',
     empower: 'Розширюйте можливості розробки штучного інтелекту',
-    difyMarketplace: 'Dify Marketplace',
+    difyMarketplace: 'AgentFlow Marketplace',
     viewMore: 'Дивитись більше',
     noPluginFound: 'Плагін не знайдено',
     verifiedTip: 'Перевірено Dify',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагіни',
   },
-  difyVersionNotCompatible: 'Поточна версія Dify не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Поточна версія AgentFlow не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimalDifyVersion}}',
   requestAPlugin: 'Запросити плагін',
   publishPlugins: 'Публікація плагінів',
   auth: {

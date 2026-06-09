@@ -174,7 +174,7 @@ const translation = {
     },
     aliyun: {
       title: 'Oblačni nadzor',
-      description: 'Popolnoma upravljana in brez vzdrževanja platforma za opazovanje, ki jo zagotavlja Alibaba Cloud, omogoča takojšnje spremljanje, sledenje in ocenjevanje aplikacij Dify.',
+      description: 'Popolnoma upravljana in brez vzdrževanja platforma za opazovanje, ki jo zagotavlja Alibaba Cloud, omogoča takojšnje spremljanje, sledenje in ocenjevanje aplikacij AgentFlow.',
     },
   },
   mermaid: {

@@ -70,7 +70,7 @@ const translation = {
       title: 'Limite de cotă de anotare',
       tooltip: 'Editarea și anotarea manuală a răspunsurilor oferă capacități de întrebări și răspunsuri personalizabile și de înaltă calitate pentru aplicații. (Aplicabil numai în aplicațiile de chat)',
     },
-    ragAPIRequestTooltip: 'Se referă la numărul de apeluri API care invocă doar capacitățile de procesare a bazei de cunoștințe a Dify.',
+    ragAPIRequestTooltip: 'Se referă la numărul de apeluri API care invocă doar capacitățile de procesare a bazei de cunoștințe a AgentFlow.',
     receiptInfo: 'Doar proprietarul echipei și administratorul echipei pot să se aboneze și să vizualizeze informațiile de facturare',
     annotationQuota: 'Cota de adnotare',
     priceTip: 'pe spațiu de lucru/',
@@ -92,7 +92,7 @@ const translation = {
     annualBilling: 'Facturare anuala',
     freeTrialTip: 'perioadă de probă gratuită de 200 de apeluri OpenAI.',
     documentsRequestQuotaTooltip: 'Specificați numărul total de acțiuni pe care un spațiu de lucru le poate efectua pe minut în cadrul bazei de cunoștințe, inclusiv crearea, ștergerea, actualizările setului de date, încărcările de documente, modificările, arhivarea și interogările bazei de cunoștințe. Acest metric este utilizat pentru a evalua performanța cererilor din baza de cunoștințe. De exemplu, dacă un utilizator Sandbox efectuează 10 teste consecutive de hituri într-un minut, spațiul său de lucru va fi restricționat temporar de la efectuarea următoarelor acțiuni pentru minutul următor: crearea setului de date, ștergerea, actualizările și încărcările sau modificările documentelor.',
-    apiRateLimitTooltip: 'Limita de rată API se aplică tuturor cererilor efectuate prin API-ul Dify, inclusiv generarea de texte, conversațiile de chat, execuțiile fluxului de lucru și procesarea documentelor.',
+    apiRateLimitTooltip: 'Limita de rată API se aplică tuturor cererilor efectuate prin API-ul AgentFlow, inclusiv generarea de texte, conversațiile de chat, execuțiile fluxului de lucru și procesarea documentelor.',
     startBuilding: 'Începeți să construiți',
   },
   plans: {
@@ -119,7 +119,7 @@ const translation = {
         1: 'Autorizare licență comercială',
         3: 'Mai multe spații de lucru și managementul întreprinderii',
         2: 'Funcții exclusive pentru întreprinderi',
-        7: 'Actualizări și întreținere de către Dify oficial',
+        7: 'Actualizări și întreținere de către AgentFlow oficial',
         0: 'Soluții de implementare scalabile la nivel de întreprindere',
         4: 'SSO',
         8: 'Asistență tehnică profesională',
@@ -133,7 +133,7 @@ const translation = {
     },
     community: {
       features: {
-        2: 'Respectă licența Dify Open Source',
+        2: 'Respectă licența AgentFlow Open Source',
         0: 'Toate caracteristicile de bază lansate în depozitul public',
         1: 'Spațiu de lucru unic',
       },

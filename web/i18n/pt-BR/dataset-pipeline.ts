@@ -148,7 +148,7 @@ const translation = {
   inputField: 'Campo de entrada',
   knowledgeNameAndIcon: 'Nome e ícone do conhecimento',
   editPipelineInfo: 'Editar informações do pipeline',
-  knowledgeDescriptionPlaceholder: 'Descreva o que está nesta Base de Conhecimento. Uma descrição detalhada permite que a IA acesse o conteúdo do conjunto de dados com mais precisão. Se estiver vazio, o Dify usará a estratégia de acerto padrão. (Opcional)',
+  knowledgeDescriptionPlaceholder: 'Descreva o que está nesta Base de Conhecimento. Uma descrição detalhada permite que a IA acesse o conteúdo do conjunto de dados com mais precisão. Se estiver vazio, o AgentFlow usará a estratégia de acerto padrão. (Opcional)',
 }
 
 export default translation

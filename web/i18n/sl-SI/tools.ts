@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'Zanima me ',
-    line2: 'prispevanje orodij k Dify.',
+    line2: 'prispevanje orodij k AgentFlow.',
     viewGuide: 'Oglejte si vodič',
   },
   author: 'Avtor',

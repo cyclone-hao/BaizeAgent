@@ -193,7 +193,7 @@ const translation = {
     confirmPassword: 'Confirmar senha',
     notEqual: 'As duas senhas são diferentes.',
     langGeniusAccount: 'Conta Dify',
-    langGeniusAccountTip: 'Sua conta Dify e dados de usuário associados.',
+    langGeniusAccountTip: 'Sua conta AgentFlow e dados de usuário associados.',
     editName: 'Editar Nome',
     showAppLength: 'Mostrar {{length}} apps',
     delete: 'Excluir conta',
@@ -263,7 +263,7 @@ const translation = {
     sendInvite: 'Enviar Convite',
     invitedAsRole: 'Convidado como usuário {{role}}',
     invitationSent: 'Convite enviado',
-    invitationSentTip: 'Convite enviado e eles podem fazer login no Dify para acessar os dados da sua equipe.',
+    invitationSentTip: 'Convite enviado e eles podem fazer login no AgentFlow para acessar os dados da sua equipe.',
     invitationLink: 'Link do Convite',
     failedInvitationEmails: 'Os seguintes usuários não foram convidados com sucesso',
     ok: 'OK',
@@ -336,7 +336,7 @@ const translation = {
       openaiHosted: 'OpenAI Hospedado',
       onTrial: 'EM TESTE',
       exhausted: 'COTA ESGOTADA',
-      desc: 'O serviço de hospedagem OpenAI fornecido pela Dify permite que você use modelos como GPT-3.5. Antes que sua cota de teste seja esgotada, você precisa configurar outros fornecedores de modelos.',
+      desc: 'O serviço de hospedagem OpenAI fornecido pela AgentFlow permite que você use modelos como GPT-3.5. Antes que sua cota de teste seja esgotada, você precisa configurar outros fornecedores de modelos.',
       callTimes: 'Chamadas',
       usedUp: 'Cota de teste esgotada. Adicione seu próprio Fornecedor de Modelo.',
       useYourModel: 'Atualmente usando seu próprio Fornecedor de Modelo.',
@@ -543,7 +543,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'As extensões de API fornecem gerenciamento centralizado de API, simplificando a configuração para uso fácil em todos os aplicativos da Dify.',
+    title: 'As extensões de API fornecem gerenciamento centralizado de API, simplificando a configuração para uso fácil em todos os aplicativos da AgentFlow.',
     link: 'Saiba como desenvolver sua própria Extensão de API.',
     add: 'Adicionar Extensão de API',
     selector: {
@@ -573,8 +573,8 @@ const translation = {
   about: {
     changeLog: 'Registro de Alterações',
     updateNow: 'Atualizar agora',
-    nowAvailable: 'Dify {{version}} já está disponível.',
-    latestAvailable: 'Dify {{version}} é a última versão disponível.',
+    nowAvailable: 'AgentFlow {{version}} já está disponível.',
+    latestAvailable: 'AgentFlow {{version}} é a última versão disponível.',
   },
   appMenus: {
     overview: 'Monitoramento',

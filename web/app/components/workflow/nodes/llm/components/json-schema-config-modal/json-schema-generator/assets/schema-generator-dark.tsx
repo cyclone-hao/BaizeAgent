@@ -5,7 +5,7 @@ const SchemaGeneratorDark = () => {
       <defs>
         <linearGradient id="paint0_linear_13059_32065" x1="14.9996" y1="15" x2="-2.55847" y2="16.6207" gradientUnits="userSpaceOnUse">
           <stop stopColor="#36BFFA" />
-          <stop offset="1" stopColor="#296DFF" />
+          <stop offset="1" stopColor="#a855f7" />
         </linearGradient>
       </defs>
     </svg>

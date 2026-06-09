@@ -1,6 +1,6 @@
 const translation = {
   toVerifiedTip: {
-    end: 'untuk Paket Profesional Dify.',
+    end: 'untuk Paket Profesional AgentFlow.',
     coupon: 'kupon eksklusif 100%',
     front: 'Anda sekarang memenuhi syarat untuk status Terverifikasi Pendidikan. Silakan masukkan informasi pendidikan Anda di bawah ini untuk menyelesaikan proses dan menerima',
   },
@@ -27,7 +27,7 @@ const translation = {
       },
       option: {
         age: 'Saya mengonfirmasi bahwa saya berusia setidaknya 18 tahun',
-        inSchool: 'Saya mengonfirmasi bahwa saya terdaftar atau dipekerjakan di lembaga yang disediakan. Dify dapat meminta bukti pendaftaran/pekerjaan. Jika saya salah menggambarkan kelayakan saya, saya setuju untuk membayar biaya apa pun yang awalnya dibebaskan berdasarkan status pendidikan saya.',
+        inSchool: 'Saya mengonfirmasi bahwa saya terdaftar atau dipekerjakan di lembaga yang disediakan. AgentFlow dapat meminta bukti pendaftaran/pekerjaan. Jika saya salah menggambarkan kelayakan saya, saya setuju untuk membayar biaya apa pun yang awalnya dibebaskan berdasarkan status pendidikan saya.',
       },
       title: 'Syarat & Perjanjian',
     },
@@ -36,7 +36,7 @@ const translation = {
     expired: {
       summary: {
         line2: 'Namun, Anda tidak lagi memenuhi syarat untuk kupon diskon pendidikan baru.',
-        line1: 'Anda masih dapat mengakses dan menggunakan Dify.',
+        line1: 'Anda masih dapat mengakses dan menggunakan AgentFlow.',
       },
       title: 'Status pendidikan Anda telah kedaluwarsa',
     },
@@ -63,11 +63,11 @@ const translation = {
   submit: 'Kirim',
   toVerified: 'Dapatkan Pendidikan Terverifikasi',
   currentSigned: 'SAAT INI MASUK SEBAGAI',
-  successTitle: 'Anda telah mendapatkan Dify Education Verified',
-  rejectTitle: 'Verifikasi Pendidikan Dify Anda telah ditolak',
-  successContent: 'Kami telah mengeluarkan kupon diskon 100% untuk paket Dify Professional ke akun Anda. Kupon berlaku selama satu tahun, harap gunakan dalam masa berlaku.',
+  successTitle: 'Anda telah mendapatkan AgentFlow Education Verified',
+  rejectTitle: 'Verifikasi Pendidikan AgentFlow Anda telah ditolak',
+  successContent: 'Kami telah mengeluarkan kupon diskon 100% untuk paket AgentFlow Professional ke akun Anda. Kupon berlaku selama satu tahun, harap gunakan dalam masa berlaku.',
   emailLabel: 'Email Anda saat ini',
-  rejectContent: 'Sayangnya, Anda tidak memenuhi syarat untuk status Education Verified dan oleh karena itu tidak dapat menerima kupon 100% eksklusif untuk Paket Dify Professional jika Anda menggunakan alamat email ini.',
+  rejectContent: 'Sayangnya, Anda tidak memenuhi syarat untuk status Education Verified dan oleh karena itu tidak dapat menerima kupon 100% eksklusif untuk Paket AgentFlow Professional jika Anda menggunakan alamat email ini.',
   learn: 'Pelajari cara mendapatkan verifikasi pendidikan',
   submitError: 'Pengiriman formulir gagal. Silakan coba lagi nanti.',
 }

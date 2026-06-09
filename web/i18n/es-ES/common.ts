@@ -197,7 +197,7 @@ const translation = {
     confirmPassword: 'Confirmar contraseña',
     notEqual: 'Las dos contraseñas son diferentes.',
     langGeniusAccount: 'Cuenta Dify',
-    langGeniusAccountTip: 'Tu cuenta Dify y los datos de usuario asociados.',
+    langGeniusAccountTip: 'Tu cuenta AgentFlow y los datos de usuario asociados.',
     editName: 'Editar Nombre',
     showAppLength: 'Mostrar {{length}} apps',
     delete: 'Eliminar cuenta',
@@ -271,7 +271,7 @@ const translation = {
     sendInvite: 'Enviar invitación',
     invitedAsRole: 'Invitado como usuario {{role}}',
     invitationSent: 'Invitación enviada',
-    invitationSentTip: 'Invitación enviada, y pueden iniciar sesión en Dify para acceder a tus datos del equipo.',
+    invitationSentTip: 'Invitación enviada, y pueden iniciar sesión en AgentFlow para acceder a tus datos del equipo.',
     invitationLink: 'Enlace de invitación',
     failedInvitationEmails: 'Los siguientes usuarios no fueron invitados exitosamente',
     ok: 'OK',
@@ -340,7 +340,7 @@ const translation = {
       openaiHosted: 'OpenAI Hospedado',
       onTrial: 'EN PRUEBA',
       exhausted: 'CUOTA AGOTADA',
-      desc: 'El servicio de hospedaje OpenAI proporcionado por Dify te permite usar modelos como GPT-3.5. Antes de que se agote tu cuota de prueba, necesitas configurar otros proveedores de modelos.',
+      desc: 'El servicio de hospedaje OpenAI proporcionado por AgentFlow te permite usar modelos como GPT-3.5. Antes de que se agote tu cuota de prueba, necesitas configurar otros proveedores de modelos.',
       callTimes: 'Tiempos de llamada',
       usedUp: 'Cuota de prueba agotada. Agrega tu propio proveedor de modelos.',
       useYourModel: 'Actualmente usando tu propio proveedor de modelos.',
@@ -547,7 +547,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'Las extensiones basadas en API proporcionan una gestión centralizada de API, simplificando la configuración para su fácil uso en las aplicaciones de Dify.',
+    title: 'Las extensiones basadas en API proporcionan una gestión centralizada de API, simplificando la configuración para su fácil uso en las aplicaciones de AgentFlow.',
     link: 'Aprende cómo desarrollar tu propia Extensión API.',
     add: 'Agregar Extensión API',
     selector: {
@@ -577,8 +577,8 @@ const translation = {
   about: {
     changeLog: 'Registro de cambios',
     updateNow: 'Actualizar ahora',
-    nowAvailable: 'Dify {{version}} ya está disponible.',
-    latestAvailable: 'Dify {{version}} es la última versión disponible.',
+    nowAvailable: 'AgentFlow {{version}} ya está disponible.',
+    latestAvailable: 'AgentFlow {{version}} es la última versión disponible.',
   },
   appMenus: {
     overview: 'Monitoreo',

@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'Sono interessato a ',
-    line2: 'contribuire con strumenti a Dify.',
+    line2: 'contribuire con strumenti a AgentFlow.',
     viewGuide: 'Visualizza la guida',
   },
   author: 'Di',

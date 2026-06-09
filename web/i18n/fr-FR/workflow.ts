@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Pour en savoir plus',
         title: 'Veuillez choisir une structure de morceaux',
-        message: 'La base de connaissances Dify prend en charge trois structures de segmentation : Général, Parent-enfant et Q&R. Chaque base de connaissances ne peut avoir qu’une seule structure. La sortie du nœud précédent doit s’aligner sur la structure de blocs sélectionnée. Notez que le choix de la structure de segmentation affecte les méthodes d’index disponibles.',
+        message: 'La base de connaissances AgentFlow prend en charge trois structures de segmentation : Général, Parent-enfant et Q&R. Chaque base de connaissances ne peut avoir qu’une seule structure. La sortie du nœud précédent doit s’aligner sur la structure de blocs sélectionnée. Notez que le choix de la structure de segmentation affecte les méthodes d’index disponibles.',
       },
       chunkStructure: 'Structure de morceaux',
       chunkIsRequired: 'Une structure de morceaux est requise',

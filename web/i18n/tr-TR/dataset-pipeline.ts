@@ -148,7 +148,7 @@ const translation = {
   knowledgeNameAndIcon: 'Bilgi adı ve simgesi',
   pipelineNameAndIcon: 'İşlem hattı adı & simgesi',
   editPipelineInfo: 'İşlem hattı bilgilerini düzenleme',
-  knowledgeDescriptionPlaceholder: 'Bu Bilgi Bankasında neler olduğunu açıklayın. Ayrıntılı bir açıklama, yapay zekanın veri kümesinin içeriğine daha doğru bir şekilde erişmesini sağlar. Boşsa, Dify varsayılan isabet stratejisini kullanacaktır. (İsteğe bağlı)',
+  knowledgeDescriptionPlaceholder: 'Bu Bilgi Bankasında neler olduğunu açıklayın. Ayrıntılı bir açıklama, yapay zekanın veri kümesinin içeriğine daha doğru bir şekilde erişmesini sağlar. Boşsa, AgentFlow varsayılan isabet stratejisini kullanacaktır. (İsteğe bağlı)',
 }
 
 export default translation

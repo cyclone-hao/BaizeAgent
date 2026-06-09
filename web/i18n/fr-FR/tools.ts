@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Je suis intéressé par',
-    line2: 'contribuer des outils à Dify.',
+    line2: 'contribuer des outils à AgentFlow.',
     viewGuide: 'Voir le guide',
   },
   author: 'Par',

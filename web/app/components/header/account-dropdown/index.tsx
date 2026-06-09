@@ -6,20 +6,16 @@ import {
   RiAccountCircleLine,
   RiArrowRightUpLine,
   RiBookOpenLine,
-  RiGithubLine,
   RiGraduationCapFill,
   RiInformation2Line,
   RiLogoutBoxRLine,
-  RiMap2Line,
   RiSettings3Line,
-  RiStarLine,
   RiTShirt2Line,
 } from '@remixicon/react'
 import Link from 'next/link'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import Indicator from '../indicator'
 import AccountAbout from '../account-about'
-import GithubStar from '../github-star'
 import Support from './support'
 import Compliance from './compliance'
 import PremiumBadge from '@/app/components/base/premium-badge'
@@ -149,33 +145,6 @@ export default function AppSelector() {
                       {IS_CLOUD_EDITION && isCurrentWorkspaceOwner && <Compliance />}
                     </div>
                     <div className='p-1'>
-                      <MenuItem>
-                        <Link
-                          className={cn(itemClassName, 'group justify-between',
-                            'data-[active]:bg-state-base-hover',
-                          )}
-                          href='https://roadmap.dify.ai'
-                          target='_blank' rel='noopener noreferrer'>
-                          <RiMap2Line className='size-4 shrink-0 text-text-tertiary' />
-                          <div className='system-md-regular grow px-1 text-text-secondary'>{t('common.userProfile.roadmap')}</div>
-                          <RiArrowRightUpLine className='size-[14px] shrink-0 text-text-tertiary' />
-                        </Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <Link
-                          className={cn(itemClassName, 'group justify-between',
-                            'data-[active]:bg-state-base-hover',
-                          )}
-                          href='https://github.com/langgenius/dify'
-                          target='_blank' rel='noopener noreferrer'>
-                          <RiGithubLine className='size-4 shrink-0 text-text-tertiary' />
-                          <div className='system-md-regular grow px-1 text-text-secondary'>{t('common.userProfile.github')}</div>
-                          <div className='flex items-center gap-0.5 rounded-[5px] border border-divider-deep bg-components-badge-bg-dimm px-[5px] py-[3px]'>
-                            <RiStarLine className='size-3 shrink-0 text-text-tertiary' />
-                            <GithubStar className='system-2xs-medium-uppercase text-text-tertiary' />
-                          </div>
-                        </Link>
-                      </MenuItem>
                       {
                         document?.body?.getAttribute('data-public-site-about') !== 'hide' && (
                           <MenuItem>

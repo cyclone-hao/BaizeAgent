@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: '瞭解詳情',
         title: '請選擇區塊結構',
-        message: 'Dify 知識庫支援三種區塊結構：一般、親子和 Q&A。每個知識庫只能有一個結構。前一個節點的輸出必須與選取的區塊結構一致。請注意，區塊結構的選擇會影響可用的索引方法。',
+        message: 'AgentFlow 知識庫支援三種區塊結構：一般、親子和 Q&A。每個知識庫只能有一個結構。前一個節點的輸出必須與選取的區塊結構一致。請注意，區塊結構的選擇會影響可用的索引方法。',
       },
       chunkIsRequired: '需要區塊結構',
       aboutRetrieval: '關於檢索方法。',

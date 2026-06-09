@@ -20,11 +20,11 @@
 
   .premium-badge-blue {
     @apply bg-util-colors-blue-blue-200;
-    background-image: linear-gradient(90deg, #5289ffe6 0%, #155aefe6 100%), linear-gradient(135deg, var(--color-premium-badge-border-highlight-color) 0%, #155aef 100%);
+    background-image: linear-gradient(90deg, #c084fce6 0%, #8b5cf6e6 100%), linear-gradient(135deg, var(--color-premium-badge-border-highlight-color) 0%, #8b5cf6 100%);
   }
   .premium-badge-blue.allowHover:hover {
     @apply bg-util-colors-blue-blue-300;
-    background-image: linear-gradient(90deg, #296dffe6 0%, #004aebe6 100%), linear-gradient(135deg, var(--color-premium-badge-border-highlight-color) 0%, #00329e 100%);
+    background-image: linear-gradient(90deg, #a855f7e6 0%, #7c3aede6 100%), linear-gradient(135deg, var(--color-premium-badge-border-highlight-color) 0%, #5b21b6 100%);
   }
 
   .premium-badge-indigo {

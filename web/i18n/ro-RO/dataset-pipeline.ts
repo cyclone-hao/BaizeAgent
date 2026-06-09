@@ -147,7 +147,7 @@ const translation = {
   knowledgeNameAndIcon: 'Nume și pictogramă de cunoștințe',
   editPipelineInfo: 'Editați informațiile despre conductă',
   knowledgeNameAndIconPlaceholder: 'Vă rugăm să introduceți numele bazei de cunoștințe',
-  knowledgeDescriptionPlaceholder: 'Descrieți ce este în această bază de cunoștințe. O descriere detaliată permite AI să acceseze mai precis conținutul setului de date. Dacă este gol, Dify va folosi strategia implicită de accesare. (Opțional)',
+  knowledgeDescriptionPlaceholder: 'Descrieți ce este în această bază de cunoștințe. O descriere detaliată permite AI să acceseze mai precis conținutul setului de date. Dacă este gol, AgentFlow va folosi strategia implicită de accesare. (Opțional)',
   inputField: 'Câmp de intrare',
 }
 

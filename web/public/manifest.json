@@ -1,6 +1,6 @@
 {
-  "name": "Dify",
-  "short_name": "Dify",
+  "name": "AgentFlow",
+  "short_name": "AgentFlow",
   "description": "Build Production Ready Agentic AI Solutions",
   "icons": [
     {
@@ -31,7 +31,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#1C64F2",
+  "theme_color": "#8b5cf6",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",

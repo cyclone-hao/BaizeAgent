@@ -1,6 +1,6 @@
 const translation = {
   toVerifiedTip: {
-    end: 'za profesionalni načrt Dify.',
+    end: 'za profesionalni načrt AgentFlow.',
     front: 'Zdaj ste upravičeni do statusa Preverjeno izobraževanje. Prosimo, vnesite svoje izobraževalne podatke spodaj, da zaključite postopek in prejmete',
     coupon: 'izključno 100% kupon',
   },
@@ -26,26 +26,26 @@ const translation = {
         front: 'Vaše informacije in uporaba statusa preverjene izobrazbe so predmet naših',
       },
       option: {
-        inSchool: 'Potrjujem, da sem vpisan ali zaposlen na navedenem zavodu. Dify lahko zahteva dokazilo o vpisu/zaposlitvi. Če napačno predstavim svojo upravičenost, se strinjam, da plačam morebitne pristojbine, ki so bile sprva oproščene na podlagi mojega izobraževalnega statusa.',
+        inSchool: 'Potrjujem, da sem vpisan ali zaposlen na navedenem zavodu. AgentFlow lahko zahteva dokazilo o vpisu/zaposlitvi. Če napačno predstavim svojo upravičenost, se strinjam, da plačam morebitne pristojbine, ki so bile sprva oproščene na podlagi mojega izobraževalnega statusa.',
         age: 'Potrjujem, da sem star najmanj 18 let',
       },
       title: 'Pogoji in dogovori',
     },
   },
   toVerified: 'Preverite izobrazbo',
-  successContent: 'Za vaše račune smo izdali kupon za 100% popust na profesionalni načrt Dify. Kupon je veljaven eno leto, prosimo, uporabite ga v veljavnem obdobju.',
+  successContent: 'Za vaše račune smo izdali kupon za 100% popust na profesionalni načrt AgentFlow. Kupon je veljaven eno leto, prosimo, uporabite ga v veljavnem obdobju.',
   successTitle: 'Imate verifikacijo izobraževanja Dify',
   submitError: 'Pošiljanje obrazca ni uspelo. Prosimo, poskusite znova kasneje.',
   submit: 'Predloži',
-  rejectTitle: 'Vaša Dify izobraževalna verifikacija je bila zavrnjena.',
+  rejectTitle: 'Vaša AgentFlow izobraževalna verifikacija je bila zavrnjena.',
   learn: 'Naučite se, kako preveriti izobrazbo',
   emailLabel: 'Vaš trenutni elektronski naslov',
   currentSigned: 'Trenutno prijavljen kot',
-  rejectContent: 'Na žalost niste upravičeni do statusa Verificirane izobrazbe in zato ne morete prejeti ekskluzivnega 100-odstotnega kupona za Dify profesionalni načrt, če uporabljate ta e-poštni naslov.',
+  rejectContent: 'Na žalost niste upravičeni do statusa Verificirane izobrazbe in zato ne morete prejeti ekskluzivnega 100-odstotnega kupona za AgentFlow profesionalni načrt, če uporabljate ta e-poštni naslov.',
   notice: {
     expired: {
       summary: {
-        line1: 'Še vedno lahko dostopate in uporabljate Dify.',
+        line1: 'Še vedno lahko dostopate in uporabljate AgentFlow.',
         line2: 'Vendar pa niste več upravičeni do novih kuponov za popust na izobraževanje.',
       },
       title: 'Vaš status izobrazbe je potekel.',

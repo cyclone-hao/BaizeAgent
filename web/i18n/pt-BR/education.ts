@@ -2,7 +2,7 @@ const translation = {
   toVerifiedTip: {
     front: 'Você agora está elegível para o status de Educação Verificada. Por favor, insira suas informações educacionais abaixo para concluir o processo e receber um',
     coupon: 'cupom exclusivo de 100%',
-    end: 'para o Plano Profissional Dify.',
+    end: 'para o Plano Profissional AgentFlow.',
   },
   form: {
     schoolName: {
@@ -26,7 +26,7 @@ const translation = {
         end: 'Ao enviar:',
       },
       option: {
-        inSchool: 'Eu confirmo que estou matriculado ou empregado na instituição mencionada. A Dify pode solicitar comprovação de matrícula/emprego. Se eu representar indevidamente minha elegibilidade, concordo em pagar quaisquer taxas inicialmente isentas com base no meu status educacional.',
+        inSchool: 'Eu confirmo que estou matriculado ou empregado na instituição mencionada. A AgentFlow pode solicitar comprovação de matrícula/emprego. Se eu representar indevidamente minha elegibilidade, concordo em pagar quaisquer taxas inicialmente isentas com base no meu status educacional.',
         age: 'Eu confirmo que tenho pelo menos 18 anos',
       },
       title: 'Termos e Acordos',
@@ -37,16 +37,16 @@ const translation = {
   currentSigned: 'ATUALMENTE CONECTADO COMO',
   submit: 'Enviar',
   emailLabel: 'Seu e-mail atual',
-  successContent: 'Emitimos um cupom de desconto de 100% para o plano Dify Professional na sua conta. O cupom é válido por um ano, por favor, utilize-o dentro do período de validade.',
-  rejectTitle: 'A sua verificação educacional Dify foi rejeitada.',
-  rejectContent: 'Infelizmente, você não é elegível para o status de Educação Verificada e, portanto, não pode receber o cupom exclusivo de 100% para o Plano Profissional Dify se usar este endereço de e-mail.',
-  successTitle: 'Você Tem a Educação Dify Verificada',
+  successContent: 'Emitimos um cupom de desconto de 100% para o plano AgentFlow Professional na sua conta. O cupom é válido por um ano, por favor, utilize-o dentro do período de validade.',
+  rejectTitle: 'A sua verificação educacional AgentFlow foi rejeitada.',
+  rejectContent: 'Infelizmente, você não é elegível para o status de Educação Verificada e, portanto, não pode receber o cupom exclusivo de 100% para o Plano Profissional AgentFlow se usar este endereço de e-mail.',
+  successTitle: 'Você Tem a Educação AgentFlow Verificada',
   submitError: 'A submissão do formulário falhou. Por favor, tente novamente mais tarde.',
   notice: {
     expired: {
       summary: {
         line2: 'No entanto, você não é mais elegível para novos cupons de desconto na educação.',
-        line1: 'Você ainda pode acessar e usar o Dify.',
+        line1: 'Você ainda pode acessar e usar o AgentFlow.',
       },
       title: 'Seu status de educação expirou',
     },

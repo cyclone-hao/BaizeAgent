@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Documentos',
-    desc: 'Todos os arquivos do Knowledge são mostrados aqui, e todo o Knowledge pode ser vinculado a citações do Dify ou indexado por meio do plugin Chat.',
+    desc: 'Todos os arquivos do Knowledge são mostrados aqui, e todo o Knowledge pode ser vinculado a citações do AgentFlow ou indexado por meio do plugin Chat.',
     addFile: 'adicionar arquivo',
     addPages: 'Adicionar Páginas',
     table: {
@@ -54,7 +54,7 @@ const translation = {
         tip: 'Você pode enviar arquivos, sincronizar do site ou de aplicativos da web como Notion, GitHub, etc.',
       },
       sync: {
-        tip: 'O Dify baixará periodicamente arquivos do seu Notion e concluirá o processamento.',
+        tip: 'O AgentFlow baixará periodicamente arquivos do seu Notion e concluirá o processamento.',
       },
     },
     delete: {

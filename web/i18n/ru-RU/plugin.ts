@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагины',
   },
-  difyVersionNotCompatible: 'Текущая версия Dify не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Текущая версия AgentFlow не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimalDifyVersion}}',
   requestAPlugin: 'Запросите плагин',
   publishPlugins: 'Публикация плагинов',
   auth: {

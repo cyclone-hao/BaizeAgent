@@ -650,11 +650,11 @@ button:focus-within {
 /* border radius end */
 
 .link {
-  @apply text-blue-600 cursor-pointer hover:opacity-80 transition-opacity duration-200 ease-in-out;
+  @apply text-primary-600 cursor-pointer hover:opacity-80 transition-opacity duration-200 ease-in-out;
 }
 
 .text-gradient {
-  background: linear-gradient(91.58deg, #2250f2 -29.55%, #0ebcf3 75.22%);
+  background: linear-gradient(91.58deg, #7c3aed -29.55%, #0ebcf3 75.22%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -663,8 +663,8 @@ button:focus-within {
 
 /* overwrite paging active dark model style  */
 [class*="style_paginatio"] li .text-primary-600 {
-  color: rgb(28 100 242);
-  background-color: rgb(235 245 255);
+  color: rgb(139 92 246);
+  background-color: rgb(250 245 255);
 }
 
 /* support safari 14 and below */

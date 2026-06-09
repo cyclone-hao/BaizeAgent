@@ -940,7 +940,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Izvedi več',
         title: 'Prosimo, izberite strukturo kosov',
-        message: 'Baza znanja Dify podpira tri strukture del: Splošno, Staršev-otrok in Vprašanja in odgovori. Vsaka baza znanja ima lahko samo eno strukturo. Izhod iz prejšnjega vozlišča mora biti poravnan z izbrano strukturo kosov. Upoštevajte, da izbira strukture koščkov vpliva na razpoložljive metode indeksa.',
+        message: 'Baza znanja AgentFlow podpira tri strukture del: Splošno, Staršev-otrok in Vprašanja in odgovori. Vsaka baza znanja ima lahko samo eno strukturo. Izhod iz prejšnjega vozlišča mora biti poravnan z izbrano strukturo kosov. Upoštevajte, da izbira strukture koščkov vpliva na razpoložljive metode indeksa.',
       },
       chunkIsRequired: 'Potrebna je struktura kosov',
       chooseChunkStructure: 'Izbira strukture koščka',

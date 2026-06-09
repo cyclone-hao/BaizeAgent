@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Aprende más',
         title: 'Elija una estructura de fragmentos',
-        message: 'La base de conocimientos de Dify admite tres estructuras de fragmentación: General, Padre-hijo y Preguntas y respuestas. Cada base de conocimiento solo puede tener una estructura. La salida del nodo anterior debe alinearse con la estructura de fragmentos seleccionada. Tenga en cuenta que la elección de la estructura de fragmentación afecta a los métodos de índice disponibles.',
+        message: 'La base de conocimientos de AgentFlow admite tres estructuras de fragmentación: General, Padre-hijo y Preguntas y respuestas. Cada base de conocimiento solo puede tener una estructura. La salida del nodo anterior debe alinearse con la estructura de fragmentos seleccionada. Tenga en cuenta que la elección de la estructura de fragmentación afecta a los métodos de índice disponibles.',
       },
       chooseChunkStructure: 'Elegir una estructura de fragmentos',
       indexMethodIsRequired: 'Se requiere el método de índice',

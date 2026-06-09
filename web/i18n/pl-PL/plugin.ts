@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Wtyczki',
   },
-  difyVersionNotCompatible: 'Obecna wersja Dify nie jest kompatybilna z tym wtyczką, proszę zaktualizować do minimalnej wymaganej wersji: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Obecna wersja AgentFlow nie jest kompatybilna z tym wtyczką, proszę zaktualizować do minimalnej wymaganej wersji: {{minimalDifyVersion}}',
   requestAPlugin: 'Poproś o wtyczkę',
   publishPlugins: 'Publikowanie wtyczek',
   auth: {

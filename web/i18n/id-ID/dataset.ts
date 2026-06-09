@@ -183,7 +183,7 @@ const translation = {
   deleteDatasetConfirmTitle: 'Hapus Pengetahuan ini?',
   datasetDeleteFailed: 'Gagal menghapus Pengetahuan',
   allKnowledge: 'Semua Pengetahuan',
-  externalAPIPanelDescription: 'API pengetahuan eksternal digunakan untuk terhubung ke pangkalan pengetahuan di luar Dify dan mengambil pengetahuan dari basis pengetahuan tersebut.',
+  externalAPIPanelDescription: 'API pengetahuan eksternal digunakan untuk terhubung ke pangkalan pengetahuan di luar AgentFlow dan mengambil pengetahuan dari basis pengetahuan tersebut.',
   externalKnowledgeNamePlaceholder: 'Silakan masukkan nama basis pengetahuan',
   externalAPIPanelDocumentation: 'Pelajari cara membuat API Pengetahuan Eksternal',
   wordCount: 'K Kata-kata',

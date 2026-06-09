@@ -7,7 +7,7 @@ type ProgressBarProps = {
 
 const ProgressBar = ({
   percent = 0,
-  color = '#2970FF',
+  color = '#a855f7',
 }: ProgressBarProps) => {
   return (
     <div className='overflow-hidden rounded-[6px] bg-components-progress-bar-bg'>

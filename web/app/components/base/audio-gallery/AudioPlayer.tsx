@@ -237,7 +237,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src }) => {
       let color
 
       if (index * barWidth <= playedWidth)
-        color = theme === Theme.light ? '#296DFF' : '#84ABFF'
+        color = theme === Theme.light ? '#a855f7' : '#d8b4fe'
       else if ((index * barWidth / width) * duration <= hoverTime)
         color = theme === Theme.light ? 'rgba(21,90,239,.40)' : 'rgba(200, 206, 218, 0.28)'
       else

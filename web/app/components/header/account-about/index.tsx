@@ -1,12 +1,10 @@
 'use client'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
 import dayjs from 'dayjs'
 import { RiCloseLine } from '@remixicon/react'
 import Modal from '@/app/components/base/modal'
 import Button from '@/app/components/base/button'
 import type { LangGeniusVersionResponse } from '@/models/common'
-import { IS_CE_EDITION } from '@/config'
 import DifyLogo from '@/app/components/base/logo/dify-logo'
 
 import { useGlobalPublicStore } from '@/context/global-public-context'
@@ -45,17 +43,7 @@ export default function AccountAbout({
 
           <div className='text-center text-xs font-normal text-text-tertiary'>Version {langGeniusVersionInfo?.current_version}</div>
           <div className='flex flex-col items-center gap-2 text-center text-xs font-normal text-text-secondary'>
-            <div>© {dayjs().year()} LangGenius, Inc., Contributors.</div>
-            <div className='text-text-accent'>
-              {
-                IS_CE_EDITION
-                  ? <Link href={'https://github.com/langgenius/dify/blob/main/LICENSE'} target='_blank' rel='noopener noreferrer'>Open Source License</Link>
-                  : <>
-                    <Link href='https://dify.ai/privacy' target='_blank' rel='noopener noreferrer'>Privacy Policy</Link>,&nbsp;
-                    <Link href='https://dify.ai/terms' target='_blank' rel='noopener noreferrer'>Terms of Service</Link>
-                  </>
-              }
-            </div>
+            <div>© {dayjs().year()} AgentFlow. All rights reserved.</div>
           </div>
         </div>
         <div className='-mx-8 mb-4 h-[0.5px] bg-divider-regular' />
@@ -68,23 +56,10 @@ export default function AccountAbout({
             }
           </div>
           <div className='flex items-center'>
-            <Button className='mr-2' size='small'>
-              <Link
-                href={'https://github.com/langgenius/dify/releases'}
-                target='_blank' rel='noopener noreferrer'
-              >
-                {t('common.about.changeLog')}
-              </Link>
-            </Button>
             {
-              !isLatest && !IS_CE_EDITION && (
+              !isLatest && (
                 <Button variant='primary' size='small'>
-                  <Link
-                    href={langGeniusVersionInfo.release_notes}
-                    target='_blank' rel='noopener noreferrer'
-                  >
-                    {t('common.about.updateNow')}
-                  </Link>
+                  {t('common.about.updateNow')}
                 </Button>
               )
             }

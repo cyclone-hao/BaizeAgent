@@ -147,7 +147,7 @@ const translation = {
   editPipelineInfo: 'Bearbeiten von Pipeline-Informationen',
   knowledgeNameAndIcon: 'Name und Symbol des Wissens',
   pipelineNameAndIcon: 'Name und Symbol der Pipeline',
-  knowledgeDescriptionPlaceholder: 'Beschreiben Sie, was in dieser Wissensdatenbank enthalten ist. Eine detaillierte Beschreibung ermöglicht es der KI, genauer auf den Inhalt des Datensatzes zuzugreifen. Wenn das Feld leer ist, verwendet Dify die Standard-Trefferstrategie. (Fakultativ)',
+  knowledgeDescriptionPlaceholder: 'Beschreiben Sie, was in dieser Wissensdatenbank enthalten ist. Eine detaillierte Beschreibung ermöglicht es der KI, genauer auf den Inhalt des Datensatzes zuzugreifen. Wenn das Feld leer ist, verwendet AgentFlow die Standard-Trefferstrategie. (Fakultativ)',
   knowledgeNameAndIconPlaceholder: 'Bitte geben Sie den Namen der Knowledge Base ein.',
 }
 

@@ -161,7 +161,7 @@ const translation = {
     },
     aliyun: {
       title: 'Surveillance Cloud',
-      description: 'La plateforme d\'observabilité entièrement gérée et sans maintenance fournie par Alibaba Cloud permet une surveillance, un traçage et une évaluation prêts à l\'emploi des applications Dify.',
+      description: 'La plateforme d\'observabilité entièrement gérée et sans maintenance fournie par Alibaba Cloud permet une surveillance, un traçage et une évaluation prêts à l\'emploi des applications AgentFlow.',
     },
   },
   answerIcon: {

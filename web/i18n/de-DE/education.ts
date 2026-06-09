@@ -1,7 +1,7 @@
 const translation = {
   toVerifiedTip: {
     coupon: 'exklusiver 100% Gutschein',
-    end: 'für den Dify Professional Plan.',
+    end: 'für den AgentFlow Professional Plan.',
     front: 'Sie sind jetzt berechtigt, den Status „Bildung verifiziert“ zu erhalten. Bitte geben Sie unten Ihre Bildungsinformationen ein, um den Prozess abzuschließen und eine Zu erhalten.',
   },
   form: {
@@ -26,7 +26,7 @@ const translation = {
         front: 'Ihre Informationen und die Nutzung des Status "Bildung bestätigt" unterliegen unseren',
       },
       option: {
-        inSchool: 'Ich bestätige, dass ich an der angegebenen Einrichtung eingeschrieben oder angestellt bin. Dify kann einen Nachweis über die Einschreibung/Anstellung anfordern. Wenn ich meine Berechtigung falsch darstelle, stimme ich zu, alle Gebühren zu zahlen, die aufgrund meines Bildungsstatus ursprünglich erlassen wurden.',
+        inSchool: 'Ich bestätige, dass ich an der angegebenen Einrichtung eingeschrieben oder angestellt bin. AgentFlow kann einen Nachweis über die Einschreibung/Anstellung anfordern. Wenn ich meine Berechtigung falsch darstelle, stimme ich zu, alle Gebühren zu zahlen, die aufgrund meines Bildungsstatus ursprünglich erlassen wurden.',
         age: 'Ich bestätige, dass ich mindestens 18 Jahre alt bin.',
       },
       title: 'Allgemeine Geschäftsbedingungen',
@@ -37,15 +37,15 @@ const translation = {
   currentSigned: 'DERZEIT ANGEMELDET ALS',
   submit: 'Einreichen',
   submitError: 'Die Formularübermittlung ist fehlgeschlagen. Bitte versuchen Sie es später erneut.',
-  rejectContent: 'Leider sind Sie nicht für den Status "Education Verified" berechtigt und können daher den exklusiven 100%-Gutschein für den Dify Professional Plan nicht erhalten, wenn Sie diese E-Mail-Adresse verwenden.',
-  successContent: 'Wir haben einen 100% Rabattgutschein für den Dify Professional Plan auf Ihr Konto ausgestellt. Der Gutschein ist ein Jahr lang gültig, bitte nutzen Sie ihn innerhalb des Gültigkeitszeitraums.',
+  rejectContent: 'Leider sind Sie nicht für den Status "Education Verified" berechtigt und können daher den exklusiven 100%-Gutschein für den AgentFlow Professional Plan nicht erhalten, wenn Sie diese E-Mail-Adresse verwenden.',
+  successContent: 'Wir haben einen 100% Rabattgutschein für den AgentFlow Professional Plan auf Ihr Konto ausgestellt. Der Gutschein ist ein Jahr lang gültig, bitte nutzen Sie ihn innerhalb des Gültigkeitszeitraums.',
   learn: 'Erfahren Sie, wie Sie Ihre Ausbildung überprüfen lassen.',
   emailLabel: 'Ihre aktuelle E-Mail',
   successTitle: 'Sie haben die Dify-Ausbildung verifiziert',
   notice: {
     expired: {
       summary: {
-        line1: 'Sie können weiterhin auf Dify zugreifen und es nutzen.',
+        line1: 'Sie können weiterhin auf AgentFlow zugreifen und es nutzen.',
         line2: 'Allerdings sind Sie nicht mehr berechtigt, neue Bildungsgutscheine zu erhalten.',
       },
       title: 'Ihr Bildungsstatus ist abgelaufen.',

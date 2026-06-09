@@ -199,7 +199,7 @@ const translation = {
     noPluginFound: 'Nobenega vtičnika ni bilo najti.',
     viewMore: 'Oglejte si več',
     moreFrom: 'Več iz tržnice',
-    difyMarketplace: 'Dify Marketplace',
+    difyMarketplace: 'AgentFlow Marketplace',
   },
   task: {
     installing: 'Namestitev {{installingLength}} vtičnikov, 0 končanih.',
@@ -223,7 +223,7 @@ const translation = {
   findMoreInMarketplace: 'Poiščite več v Tržnici',
   install: '{{num}} namestitev',
   allCategories: 'Vse kategorije',
-  difyVersionNotCompatible: 'Trenutna različica Dify ni združljiva s to vtičnico, prosimo, posodobite na minimalno zahtevano različico: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Trenutna različica AgentFlow ni združljiva s to vtičnico, prosimo, posodobite na minimalno zahtevano različico: {{minimalDifyVersion}}',
   requestAPlugin: 'Zahtevajte vtičnik',
   publishPlugins: 'Objavljanje vtičnikov',
   auth: {

@@ -132,7 +132,7 @@ const translation = {
   },
   externalTag: 'Äußerlich',
   createExternalAPI: 'Hinzufügen einer externen Knowledge-API',
-  externalAPIPanelDescription: 'Die API für externes Wissen wird verwendet, um eine Verbindung zu einer Wissensdatenbank außerhalb von Dify herzustellen und Wissen aus dieser Wissensdatenbank abzurufen.',
+  externalAPIPanelDescription: 'Die API für externes Wissen wird verwendet, um eine Verbindung zu einer Wissensdatenbank außerhalb von AgentFlow herzustellen und Wissen aus dieser Wissensdatenbank abzurufen.',
   createNewExternalAPI: 'Erstellen einer neuen API für externes Wissen',
   externalKnowledgeDescriptionPlaceholder: 'Beschreiben Sie, was in dieser Wissensdatenbank enthalten ist (optional)',
   externalAPIPanelDocumentation: 'Erfahren Sie, wie Sie eine API für externes Wissen erstellen',

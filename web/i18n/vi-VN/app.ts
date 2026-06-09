@@ -161,7 +161,7 @@ const translation = {
     },
     aliyun: {
       title: 'Giám sát Đám mây',
-      description: 'Nền tảng quan sát được quản lý hoàn toàn và không cần bảo trì do Alibaba Cloud cung cấp, cho phép giám sát, theo dõi và đánh giá các ứng dụng Dify ngay lập tức.',
+      description: 'Nền tảng quan sát được quản lý hoàn toàn và không cần bảo trì do Alibaba Cloud cung cấp, cho phép giám sát, theo dõi và đánh giá các ứng dụng AgentFlow ngay lập tức.',
     },
   },
   answerIcon: {

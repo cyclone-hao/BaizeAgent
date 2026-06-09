@@ -1,8 +1,8 @@
 const translation = {
   tips: {
-    notLoggedIn: 'このアプリはあなたのDify Cloudアカウントにアクセスしたいです',
+    notLoggedIn: 'このアプリはあなたのAgentFlow Cloudアカウントにアクセスしたいです',
     needLogin: 'ログインして認証してください',
-    loggedIn: 'このアプリはあなたのDify Cloudアカウントから以下の情報にアクセスしたいと思っています。',
+    loggedIn: 'このアプリはあなたのAgentFlow Cloudアカウントから以下の情報にアクセスしたいと思っています。',
     common: '私たちはあなたのプライバシーを尊重し、この情報を私たちの開発者ツールによる体験を向上させるためにのみ使用します。',
   },
   scopes: {

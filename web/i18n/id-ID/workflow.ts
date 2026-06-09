@@ -908,7 +908,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Pelajari lebih lanjut',
         title: 'Silakan pilih struktur potongan',
-        message: 'Basis Pengetahuan Dify mendukung tiga struktur pemotongan: Umum, Induk-anak, dan Tanya Jawab. Setiap basis pengetahuan hanya dapat memiliki satu struktur. Output dari simpul sebelumnya harus selaras dengan struktur potongan yang dipilih. Perhatikan bahwa pilihan struktur chunking memengaruhi metode indeks yang tersedia.',
+        message: 'Basis Pengetahuan AgentFlow mendukung tiga struktur pemotongan: Umum, Induk-anak, dan Tanya Jawab. Setiap basis pengetahuan hanya dapat memiliki satu struktur. Output dari simpul sebelumnya harus selaras dengan struktur potongan yang dipilih. Perhatikan bahwa pilihan struktur chunking memengaruhi metode indeks yang tersedia.',
       },
       chooseChunkStructure: 'Pilih struktur potongan',
       aboutRetrieval: 'tentang metode pengambilan.',

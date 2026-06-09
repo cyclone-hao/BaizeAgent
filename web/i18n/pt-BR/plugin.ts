@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugins',
   },
-  difyVersionNotCompatible: 'A versão atual do Dify não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'A versão atual do AgentFlow não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimalDifyVersion}}',
   requestAPlugin: 'Solicitar um plugin',
   publishPlugins: 'Publicar plugins',
   auth: {

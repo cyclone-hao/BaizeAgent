@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Мені цікаво зробити свій внесок',
-    line2: 'створення інструментів для Dify.',
+    line2: 'створення інструментів для AgentFlow.',
     viewGuide: 'Переглянути інструкцію',
   },
   author: 'Автор',

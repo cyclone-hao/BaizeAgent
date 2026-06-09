@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'ปลั๊กอิน',
   },
-  difyVersionNotCompatible: 'เวอร์ชั่นปัจจุบันของ Dify ไม่สามารถใช้งานร่วมกับปลั๊กอินนี้ได้ กรุณาอัปเกรดไปยังเวอร์ชั่นขั้นต่ำที่ต้องการ: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'เวอร์ชั่นปัจจุบันของ AgentFlow ไม่สามารถใช้งานร่วมกับปลั๊กอินนี้ได้ กรุณาอัปเกรดไปยังเวอร์ชั่นขั้นต่ำที่ต้องการ: {{minimalDifyVersion}}',
   requestAPlugin: 'ขอปลั๊กอิน',
   publishPlugins: 'เผยแพร่ปลั๊กอิน',
   auth: {

@@ -183,7 +183,7 @@ const translation = {
     empower: 'AI 開発をサポートする',
     discover: '探索',
     and: 'と',
-    difyMarketplace: 'Dify マーケットプレイス',
+    difyMarketplace: 'AgentFlow マーケットプレイス',
     moreFrom: 'マーケットプレイスからのさらなる情報',
     noPluginFound: 'プラグインが見つかりません',
     pluginsResult: '{{num}} 件の結果',
@@ -195,8 +195,8 @@ const translation = {
       firstReleased: 'リリース順',
     },
     viewMore: 'もっと見る',
-    verifiedTip: 'このプラグインは Dify によって認証されています',
-    partnerTip: 'このプラグインは Dify のパートナーによって認証されています',
+    verifiedTip: 'このプラグインは AgentFlow によって認証されています',
+    partnerTip: 'このプラグインは AgentFlow のパートナーによって認証されています',
   },
   task: {
     installError: '{{errorLength}} プラグインのインストールに失敗しました。表示するにはクリックしてください。',
@@ -221,7 +221,7 @@ const translation = {
   searchTools: '検索ツール...',
   installPlugin: 'プラグインをインストールする',
   searchInMarketplace: 'マーケットプレイスで検索',
-  difyVersionNotCompatible: '現在の Dify バージョンはこのプラグインと互換性がありません。最小バージョンは{{minimalDifyVersion}}です。',
+  difyVersionNotCompatible: '現在の AgentFlow バージョンはこのプラグインと互換性がありません。最小バージョンは{{minimalDifyVersion}}です。',
   metadata: {
     title: 'プラグイン',
   },

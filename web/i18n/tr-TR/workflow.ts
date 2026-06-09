@@ -934,7 +934,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Daha fazla bilgi edinin',
         title: 'Lütfen bir yığın yapısı seçin',
-        message: 'Dify Bilgi Bankası üç parçalı yapıyı destekler: Genel, Üst-alt ve Soru-Cevap. Her bilgi tabanı yalnızca bir yapıya sahip olabilir. Önceki düğümden gelen çıktı, seçilen öbek yapısıyla hizalanmalıdır. Yığın yapısı seçiminin mevcut dizin yöntemlerini etkilediğini unutmayın.',
+        message: 'AgentFlow Bilgi Bankası üç parçalı yapıyı destekler: Genel, Üst-alt ve Soru-Cevap. Her bilgi tabanı yalnızca bir yapıya sahip olabilir. Önceki düğümden gelen çıktı, seçilen öbek yapısıyla hizalanmalıdır. Yığın yapısı seçiminin mevcut dizin yöntemlerini etkilediğini unutmayın.',
       },
       chooseChunkStructure: 'Bir yığın yapısı seçin',
       chunkIsRequired: 'Yığın yapısı gereklidir',

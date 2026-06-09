@@ -231,7 +231,7 @@ const translation = {
     moreFrom: 'Selengkapnya dari Marketplace',
     sortBy: 'Urutkan berdasarkan',
     and: 'dan',
-    difyMarketplace: 'Dify Marketplace',
+    difyMarketplace: 'AgentFlow Marketplace',
     verifiedTip: 'Diverifikasi oleh Dify',
   },
   task: {

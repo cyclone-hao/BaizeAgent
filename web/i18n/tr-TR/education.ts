@@ -1,6 +1,6 @@
 const translation = {
   toVerifiedTip: {
-    end: 'Dify Profesyonel Planı için.',
+    end: 'AgentFlow Profesyonel Planı için.',
     front: 'Artık Eğitim Doğrulandı statüsüne uygun oldunuz. Lütfen süreci tamamlamak ve bir almak için eğitim bilgilerinizi aşağıya girin.',
     coupon: 'özel %100 kupon',
   },
@@ -27,7 +27,7 @@ const translation = {
       },
       option: {
         age: 'En az 18 yaşında olduğumu onaylıyorum.',
-        inSchool: 'Verilen kurumda kayıtlı veya istihdamda olduğumu onaylıyorum. Dify, kayıt veya istihdam kanıtı talep edebilir. Uygunluğumu yanlış beyan edersem, eğitim durumuma dayalı olarak başlangıçta feragat edilen her türlü ücreti ödemeyi kabul ediyorum.',
+        inSchool: 'Verilen kurumda kayıtlı veya istihdamda olduğumu onaylıyorum. AgentFlow, kayıt veya istihdam kanıtı talep edebilir. Uygunluğumu yanlış beyan edersem, eğitim durumuma dayalı olarak başlangıçta feragat edilen her türlü ücreti ödemeyi kabul ediyorum.',
       },
       title: 'Şartlar ve Koşullar',
     },
@@ -35,18 +35,18 @@ const translation = {
   toVerified: 'Eğitim Bilgilerinizi Doğrulayın',
   currentSigned: 'ŞU ANDA GİRİŞ YAPILDIĞI KİŞİ',
   submitError: 'Form gönderimi başarısız oldu. Lütfen daha sonra tekrar deneyin.',
-  rejectTitle: 'Dify Eğitim Doğrulamanız Rededildi',
+  rejectTitle: 'AgentFlow Eğitim Doğrulamanız Rededildi',
   emailLabel: 'Şu anki e-posta adresin',
   submit: 'Gönder',
-  rejectContent: 'Maalesef, Eğitim Doğrulama statüsüne uygun değilsiniz ve bu nedenle bu e-posta adresini kullanıyorsanız Dify Profesyonel Planı için özel %100 kuponu alamazsınız.',
+  rejectContent: 'Maalesef, Eğitim Doğrulama statüsüne uygun değilsiniz ve bu nedenle bu e-posta adresini kullanıyorsanız AgentFlow Profesyonel Planı için özel %100 kuponu alamazsınız.',
   learn: 'Eğitim doğrulamasının nasıl yapılacağını öğrenin',
-  successContent: 'Hesabınıza Dify Profesyonel planı için %100 indirim kuponu verdik. Kuponun geçerlilik süresi bir yıldır, lütfen bu süre içinde kullanın.',
-  successTitle: 'Dify Eğitim Onayınız Var',
+  successContent: 'Hesabınıza AgentFlow Profesyonel planı için %100 indirim kuponu verdik. Kuponun geçerlilik süresi bir yıldır, lütfen bu süre içinde kullanın.',
+  successTitle: 'AgentFlow Eğitim Onayınız Var',
   notice: {
     expired: {
       summary: {
         line2: 'Ancak, artık yeni eğitim indirim kuponları için uygun değilsiniz.',
-        line1: 'Dify\'e hala erişebilir ve kullanabilirsiniz.',
+        line1: 'AgentFlow\'e hala erişebilir ve kullanabilirsiniz.',
       },
       title: 'Eğitim durumunuzun süresi dolmuştur',
     },

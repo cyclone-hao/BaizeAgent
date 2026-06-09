@@ -134,7 +134,7 @@ const translation = {
     },
     aliyun: {
       title: 'Monitor Awan',
-      description: 'Platform observabilitas yang dikelola sepenuhnya dan bebas perawatan yang disediakan oleh Alibaba Cloud, memungkinkan pemantauan, pelacakan, dan evaluasi aplikasi Dify yang out-of-the-box.',
+      description: 'Platform observabilitas yang dikelola sepenuhnya dan bebas perawatan yang disediakan oleh Alibaba Cloud, memungkinkan pemantauan, pelacakan, dan evaluasi aplikasi AgentFlow yang out-of-the-box.',
     },
     configProvider: {
       project: 'Proyek',

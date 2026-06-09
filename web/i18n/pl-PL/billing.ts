@@ -76,7 +76,7 @@ const translation = {
         'Ręczna edycja i adnotacja odpowiedzi zapewniają możliwość dostosowania wysokiej jakości odpowiedzi na pytania dla aplikacji. (Stosowane tylko w aplikacjach czatowych)',
     },
     ragAPIRequestTooltip:
-      'Odnosi się do liczby wywołań API wykorzystujących tylko zdolności przetwarzania bazy wiedzy Dify.',
+      'Odnosi się do liczby wywołań API wykorzystujących tylko zdolności przetwarzania bazy wiedzy AgentFlow.',
     receiptInfo:
       'Tylko właściciel zespołu i administrator zespołu mogą subskrybować i przeglądać informacje o rozliczeniach',
     annotationQuota: 'Przydział adnotacji',
@@ -96,7 +96,7 @@ const translation = {
     teamMember_one: '{{count,number}} Członek zespołu',
     priceTip: 'na przestrzeń roboczą/',
     self: 'Samo-hostowane',
-    apiRateLimitTooltip: 'Limit aktywności API dotyczy wszystkich żądań składanych za pośrednictwem API Dify, w tym generowania tekstu, rozmów czatowych, wykonywania przepływów pracy i przetwarzania dokumentów.',
+    apiRateLimitTooltip: 'Limit aktywności API dotyczy wszystkich żądań składanych za pośrednictwem API AgentFlow, w tym generowania tekstu, rozmów czatowych, wykonywania przepływów pracy i przetwarzania dokumentów.',
     freeTrialTipSuffix: 'Nie jest wymagana karta kredytowa',
     documentsRequestQuota: '{{count,number}}/min Limit wiedzy na żądanie',
     documentsRequestQuotaTooltip: 'Określa całkowitą liczbę działań, jakie przestrzeń robocza może wykonać na minutę w ramach bazy wiedzy, w tym tworzenie zbiorów danych, usuwanie, aktualizacje, przesyłanie dokumentów, modyfikacje, archiwizowanie i zapytania do bazy wiedzy. Ta metryka jest używana do oceny wydajności zapytań do bazy wiedzy. Na przykład, jeśli użytkownik Sandbox wykona 10 kolejnych testów w ciągu jednej minuty, jego przestrzeń robocza zostanie tymczasowo ograniczona w wykonywaniu następujących działań przez następną minutę: tworzenie zbiorów danych, usuwanie, aktualizacje oraz przesyłanie lub modyfikacje dokumentów.',
@@ -129,8 +129,8 @@ const translation = {
         4: 'Usługi rejestracji jednokrotnej',
         3: 'Wiele przestrzeni roboczych i zarządzanie przedsiębiorstwem',
         8: 'Profesjonalne wsparcie techniczne',
-        7: 'Aktualizacje i konserwacja przez Dify oficjalnie',
-        5: 'Umowy SLA wynegocjowane przez Dify Partners',
+        7: 'Aktualizacje i konserwacja przez AgentFlow oficjalnie',
+        5: 'Umowy SLA wynegocjowane przez AgentFlow Partners',
         0: 'Skalowalne rozwiązania wdrożeniowe klasy korporacyjnej',
         2: 'Wyjątkowe funkcje dla przedsiębiorstw',
         1: 'Autoryzacja licencji komercyjnej',
@@ -144,7 +144,7 @@ const translation = {
     community: {
       features: {
         1: 'Pojedyncza przestrzeń robocza',
-        2: 'Zgodny z licencją Dify Open Source',
+        2: 'Zgodny z licencją AgentFlow Open Source',
         0: 'Wszystkie podstawowe funkcje udostępnione w repozytorium publicznym',
       },
       includesTitle: 'Darmowe funkcje:',

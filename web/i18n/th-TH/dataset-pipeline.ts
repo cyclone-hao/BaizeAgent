@@ -148,7 +148,7 @@ const translation = {
   knowledgeNameAndIconPlaceholder: 'โปรดป้อนชื่อฐานความรู้',
   editPipelineInfo: 'แก้ไขข้อมูลไปป์ไลน์',
   pipelineNameAndIcon: 'ชื่อและไอคอนไปป์ไลน์',
-  knowledgeDescriptionPlaceholder: 'อธิบายสิ่งที่อยู่ในฐานความรู้นี้ คําอธิบายโดยละเอียดช่วยให้ AI สามารถเข้าถึงเนื้อหาของชุดข้อมูลได้แม่นยํายิ่งขึ้น หากว่างเปล่า Dify จะใช้กลยุทธ์การโจมตีเริ่มต้น (ไม่บังคับ)',
+  knowledgeDescriptionPlaceholder: 'อธิบายสิ่งที่อยู่ในฐานความรู้นี้ คําอธิบายโดยละเอียดช่วยให้ AI สามารถเข้าถึงเนื้อหาของชุดข้อมูลได้แม่นยํายิ่งขึ้น หากว่างเปล่า AgentFlow จะใช้กลยุทธ์การโจมตีเริ่มต้น (ไม่บังคับ)',
 }
 
 export default translation

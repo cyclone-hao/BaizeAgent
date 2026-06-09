@@ -21,7 +21,7 @@ const translation = {
     permissionsAllMember: 'Semua anggota tim',
     desc: 'Deskripsi Pengetahuan',
     upgradeHighQualityTip: 'Setelah memutakhirkan ke mode Kualitas Tinggi, kembali ke mode Ekonomis tidak tersedia',
-    descPlaceholder: 'Jelaskan apa yang ada dalam kumpulan data ini. Deskripsi terperinci memungkinkan AI mengakses konten kumpulan data tepat waktu. Jika kosong, Dify akan menggunakan strategi hit default.',
+    descPlaceholder: 'Jelaskan apa yang ada dalam kumpulan data ini. Deskripsi terperinci memungkinkan AI mengakses konten kumpulan data tepat waktu. Jika kosong, AgentFlow akan menggunakan strategi hit default.',
     retrievalSettings: 'Pengaturan Pengambilan',
     indexMethodChangeToEconomyDisabledTip: 'Tidak tersedia untuk downgrade dari HQ ke ECO',
     indexMethod: 'Metode Indeks',
