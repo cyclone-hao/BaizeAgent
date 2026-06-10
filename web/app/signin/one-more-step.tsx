@@ -79,7 +79,7 @@ const OneMoreStep = () => {
       dispatch({ type: 'failed', payload: null })
     }
     if (data)
-      router.push('/apps')
+      router.push('/home')
   }, [data, error])
 
   return (
@@ -99,7 +99,7 @@ const OneMoreStep = () => {
                   <div className='w-[256px] text-xs font-medium'>
                     <div className='font-medium'>{t('login.sendUsMail')}</div>
                     <div className='cursor-pointer text-xs font-medium text-text-accent-secondary'>
-                      <a href="mailto:request-invitation@langgenius.ai">request-invitation@langgenius.ai</a>
+                      <a href="mailto:support@agentflow.ai">support@agentflow.ai</a>
                     </div>
                   </div>
                 }

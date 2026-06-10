@@ -14,7 +14,7 @@ const Header = () => {
   const systemFeatures = useGlobalPublicStore(s => s.systemFeatures)
 
   const goToStudio = useCallback(() => {
-    router.push('/apps')
+    router.push('/home')
   }, [router])
 
   return (
@@ -25,7 +25,7 @@ const Header = () => {
             ? <img
               src={systemFeatures.branding.login_page_logo}
               className='block h-[22px] w-auto object-contain'
-              alt='Dify logo'
+              alt='AgentFlow logo'
             />
             : <DifyLogo />}
         </div>

@@ -62,7 +62,7 @@ export default function InviteSettingsPage() {
         localStorage.setItem('refresh_token', res.data.refresh_token)
         await setLocaleOnClient(language, false)
         const redirectUrl = resolvePostLoginRedirect(searchParams)
-        router.replace(redirectUrl || '/apps')
+        router.replace(redirectUrl || '/home')
       }
     }
     catch {

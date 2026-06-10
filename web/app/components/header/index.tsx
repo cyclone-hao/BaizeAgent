@@ -46,7 +46,7 @@ const Header = () => {
       <div className=''>
         <div className='flex items-center justify-between px-2'>
           <div className='flex items-center'>
-            <Link href="/apps" className='flex h-8 shrink-0 items-center justify-center px-0.5'>
+            <Link href="/home" className='flex h-8 shrink-0 items-center justify-center px-0.5'>
               {systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo
                 ? <img
                   src={systemFeatures.branding.workspace_logo}
@@ -81,7 +81,7 @@ const Header = () => {
   return (
     <div className='flex h-[56px] items-center'>
       <div className='flex min-w-0 flex-[1]  items-center pl-3 pr-2 min-[1280px]:pr-3'>
-        <Link href="/apps" className='flex h-8 shrink-0 items-center justify-center px-0.5'>
+        <Link href="/home" className='flex h-8 shrink-0 items-center justify-center px-0.5'>
           {systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo
             ? <img
               src={systemFeatures.branding.workspace_logo}

@@ -6,6 +6,8 @@ import {
   RiBook2Line,
   RiHammerFill,
   RiHammerLine,
+  RiHome4Fill,
+  RiHome4Line,
   RiPlanetFill,
   RiPlanetLine,
   RiRobot2Fill,
@@ -13,7 +15,6 @@ import {
 } from '@remixicon/react'
 import SidebarNavItem from './nav-item'
 import { useEventEmitterContextContext } from '@/context/event-emitter'
-import DifyLogo from '@/app/components/base/logo/dify-logo'
 import AccountDropdown from '@/app/components/header/account-dropdown'
 import { Group } from '@/app/components/base/icons/src/vender/other'
 import cn from '@/utils/classnames'
@@ -63,25 +64,34 @@ const GlobalSidebar = () => {
     >
       {/* Top: Logo */}
       <div
-        className="flex h-[56px] shrink-0 cursor-pointer items-center justify-center border-b border-divider-subtle"
+        className="flex h-[56px] shrink-0 cursor-pointer items-center gap-2 border-b border-divider-subtle px-3"
         onClick={handleToggle}
       >
-        {expand
-          ? <DifyLogo size='large' />
-          : (
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
-              <span className="text-sm font-bold text-white">A</span>
-            </div>
-          )}
+        <img
+          src="/logo/logo1.png"
+          alt="AgentFlow logo"
+          className={cn('shrink-0 object-contain', expand ? 'h-7' : 'h-6')}
+        />
+        {expand && (
+          <span className="text-xs font-semibold text-primary-600">AgentFlow</span>
+        )}
       </div>
 
       {/* Middle: Navigation */}
       <nav className="flex grow flex-col gap-y-1 px-2 py-3">
         <SidebarNavItem
           expand={expand}
+          icon={<RiHome4Line className="h-5 w-5" />}
+          activeIcon={<RiHome4Fill className="h-5 w-5" />}
+          text="首页"
+          href="/home"
+          activeSegment="home"
+        />
+        <SidebarNavItem
+          expand={expand}
           icon={<RiPlanetLine className="h-5 w-5" />}
           activeIcon={<RiPlanetFill className="h-5 w-5" />}
-          text="探索"
+          text="Skills市场"
           href="/explore/apps"
           activeSegment="explore"
         />

@@ -60,7 +60,7 @@ const ChangePasswordForm = () => {
         })
         localStorage.setItem('console_token', data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
-        router.replace('/apps')
+        router.replace('/home')
       }
     }
     catch (error) {

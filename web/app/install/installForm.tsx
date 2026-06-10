@@ -74,7 +74,7 @@ const InstallForm = () => {
     if (loginRes.result === 'success') {
       localStorage.setItem('console_token', loginRes.data.access_token)
       localStorage.setItem('refresh_token', loginRes.data.refresh_token)
-      router.replace('/apps')
+      router.replace('/home')
     }
     else {
       // Fallback to signin page if auto-login fails

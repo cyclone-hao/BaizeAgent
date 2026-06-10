@@ -129,7 +129,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/apps',
+        destination: '/home',
         permanent: false,
       },
     ]
