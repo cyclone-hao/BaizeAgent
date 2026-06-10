@@ -195,8 +195,8 @@ const translation = {
     difyMarketplace: 'AgentFlow Marketplace',
     viewMore: 'Дивитись більше',
     noPluginFound: 'Плагін не знайдено',
-    verifiedTip: 'Перевірено Dify',
-    partnerTip: 'Перевірено партнером Dify',
+    verifiedTip: 'Перевірено AgentFlow',
+    partnerTip: 'Перевірено партнером AgentFlow',
   },
   task: {
     installingWithError: 'Не вдалося встановити плагіни {{installingLength}}, успіх {{successLength}}, {{errorLength}}',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагіни',
   },
-  difyVersionNotCompatible: 'Поточна версія AgentFlow не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Поточна версія AgentFlow не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'Запросити плагін',
   publishPlugins: 'Публікація плагінів',
   auth: {

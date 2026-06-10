@@ -34,7 +34,7 @@ const translation = {
   },
   toVerified: 'Preverite izobrazbo',
   successContent: 'Za vaše račune smo izdali kupon za 100% popust na profesionalni načrt AgentFlow. Kupon je veljaven eno leto, prosimo, uporabite ga v veljavnem obdobju.',
-  successTitle: 'Imate verifikacijo izobraževanja Dify',
+  successTitle: 'Imate verifikacijo izobraževanja AgentFlow',
   submitError: 'Pošiljanje obrazca ni uspelo. Prosimo, poskusite znova kasneje.',
   submit: 'Predloži',
   rejectTitle: 'Vaša AgentFlow izobraževalna verifikacija je bila zavrnjena.',

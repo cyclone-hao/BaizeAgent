@@ -1,22 +1,10 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
-import Input from '@/app/components/base/input'
+import { useMemo } from 'react'
 
 type GreetingSectionProps = {
   userName: string
-  searchKeywords: string
-  onSearchChange: (keywords: string) => void
 }
-
-const SUGGESTED_PROMPTS = [
-  '帮我写一份周报',
-  '分析这段数据',
-  '翻译以下文档',
-  '生成产品需求文档',
-  '整理会议纪要',
-  '优化代码性能',
-]
 
 const getGreeting = (): string => {
   const hour = new Date().getHours()
@@ -33,56 +21,17 @@ const getGreeting = (): string => {
   return '晚上好'
 }
 
-const GreetingSection = ({
-  userName,
-  searchKeywords,
-  onSearchChange,
-}: GreetingSectionProps) => {
+const GreetingSection = ({ userName }: GreetingSectionProps) => {
   const greeting = useMemo(() => getGreeting(), [])
-
-  const handlePromptClick = useCallback((prompt: string) => {
-    onSearchChange(prompt)
-  }, [onSearchChange])
-
-  const handleClear = useCallback(() => {
-    onSearchChange('')
-  }, [onSearchChange])
 
   return (
     <div className="mb-8">
-      {/* Greeting */}
       <h1 className="mb-1 text-2xl font-semibold text-text-secondary">
         {greeting}，{userName || '用户'}
       </h1>
-      <p className="mb-6 text-sm text-text-tertiary">
+      <p className="text-sm text-text-tertiary">
         有什么我可以帮你的？
       </p>
-
-      {/* Search Input */}
-      <div className="mb-4 max-w-2xl">
-        <Input
-          showLeftIcon
-          showClearIcon
-          size="large"
-          placeholder="输入问题，或描述你需要完成的任务"
-          value={searchKeywords}
-          onChange={e => onSearchChange(e.target.value)}
-          onClear={handleClear}
-        />
-      </div>
-
-      {/* Suggested Prompts */}
-      <div className="flex flex-wrap gap-2">
-        {SUGGESTED_PROMPTS.map(prompt => (
-          <button
-            key={prompt}
-            className="rounded-lg border border-divider-regular bg-components-panel-on-panel-item-bg px-3 py-1.5 text-xs text-text-tertiary transition-colors hover:border-components-input-border-hover hover:bg-state-base-hover hover:text-text-secondary"
-            onClick={() => handlePromptClick(prompt)}
-          >
-            {prompt}
-          </button>
-        ))}
-      </div>
     </div>
   )
 }

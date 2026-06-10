@@ -202,7 +202,7 @@ const translation = {
     newPassword: 'Nuova password',
     confirmPassword: 'Conferma password',
     notEqual: 'Le due password sono diverse.',
-    langGeniusAccount: 'Account Dify',
+    langGeniusAccount: 'Account AgentFlow',
     langGeniusAccountTip: 'Il tuo account AgentFlow e i dati utente associati.',
     editName: 'Modifica Nome',
     showAppLength: 'Mostra {{length}} app',

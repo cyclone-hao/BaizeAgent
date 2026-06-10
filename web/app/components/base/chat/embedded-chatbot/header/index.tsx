@@ -47,13 +47,13 @@ const Header: FC<IHeaderProps> = ({
 
   const handleMessageReceived = useCallback((event: MessageEvent) => {
     let currentParentOrigin = parentOrigin
-    if (!currentParentOrigin && event.data.type === 'dify-chatbot-config') {
+    if (!currentParentOrigin && event.data.type === 'agentflow-chatbot-config') {
       currentParentOrigin = event.origin
       setParentOrigin(event.origin)
     }
     if (event.origin !== currentParentOrigin)
       return
-    if (event.data.type === 'dify-chatbot-config')
+    if (event.data.type === 'agentflow-chatbot-config')
       setShowToggleExpandButton(event.data.payload.isToggledByButton && !event.data.payload.isDraggable)
   }, [parentOrigin])
 
@@ -63,7 +63,7 @@ const Header: FC<IHeaderProps> = ({
     const listener = (event: MessageEvent) => handleMessageReceived(event)
     window.addEventListener('message', listener)
 
-    window.parent.postMessage({ type: 'dify-chatbot-iframe-ready' }, '*')
+    window.parent.postMessage({ type: 'agentflow-chatbot-iframe-ready' }, '*')
 
     return () => window.removeEventListener('message', listener)
   }, [isIframe, handleMessageReceived])
@@ -72,7 +72,7 @@ const Header: FC<IHeaderProps> = ({
     if (!isIframe || !showToggleExpandButton) return
     setExpanded(!expanded)
     window.parent.postMessage({
-      type: 'dify-chatbot-expand-change',
+      type: 'agentflow-chatbot-expand-change',
     }, parentOrigin)
   }, [isIframe, parentOrigin, showToggleExpandButton, expanded])
 

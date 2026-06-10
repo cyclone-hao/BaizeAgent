@@ -108,7 +108,7 @@ const translation = {
       features: {
         0: 'Semua fitur inti dirilis di bawah repositori publik',
         1: 'Ruang Kerja Tunggal',
-        2: 'Sesuai dengan Lisensi Sumber Terbuka Dify',
+        2: 'Sesuai dengan Lisensi Sumber Terbuka AgentFlow',
       },
       price: 'Bebas',
       for: 'Untuk Pengguna Individu, Tim Kecil, atau Proyek Non-Komersial',
@@ -135,7 +135,7 @@ const translation = {
     },
     enterprise: {
       features: {
-        5: 'SLA yang Dinegosiasikan oleh Mitra Dify',
+        5: 'SLA yang Dinegosiasikan oleh Mitra AgentFlow',
         3: 'Beberapa Ruang Kerja & Manajemen Perusahaan',
         4: 'SSO',
         2: 'Fitur Eksklusif Enterprise',

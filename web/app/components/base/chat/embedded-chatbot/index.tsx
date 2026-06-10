@@ -8,7 +8,7 @@ import {
   useEmbeddedChatbotContext,
 } from './context'
 import { useEmbeddedChatbot } from './hooks'
-import { isDify } from './utils'
+import { isAgentFlow } from './utils'
 import { useThemeContext } from './theme/theme-context'
 import { CssTransform } from './theme/utils'
 import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
@@ -58,7 +58,7 @@ const Chatbot = () => {
           isMobile={isMobile}
           allowResetChat={allowResetChat}
           title={site?.title || ''}
-          customerIcon={isDify() ? difyIcon : ''}
+          customerIcon={isAgentFlow() ? difyIcon : ''}
           theme={themeBuilder?.theme}
           onCreateNewChat={handleNewConversation}
         />

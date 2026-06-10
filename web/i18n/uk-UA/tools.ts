@@ -163,7 +163,7 @@ const translation = {
     },
   },
   openInStudio: 'Відкрити в Студії',
-  customToolTip: 'Дізнайтеся більше про користувацькі інструменти Dify',
+  customToolTip: 'Дізнайтеся більше про користувацькі інструменти AgentFlow',
   toolNameUsageTip: 'Ім\'я виклику інструменту для міркувань і підказок агента',
   copyToolName: 'Ім\'я копії',
   noTools: 'Інструментів не знайдено',

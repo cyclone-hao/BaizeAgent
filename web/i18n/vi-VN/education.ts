@@ -33,7 +33,7 @@ const translation = {
     },
   },
   toVerified: 'Xác thực giáo dục',
-  successTitle: 'Bạn đã được xác minh giáo dục Dify',
+  successTitle: 'Bạn đã được xác minh giáo dục AgentFlow',
   submit: 'Gửi',
   rejectTitle: 'Yêu cầu xác minh giáo dục AgentFlow của bạn đã bị từ chối',
   successContent: 'Chúng tôi đã phát hành một phiếu giảm giá 100% cho gói AgentFlow Professional vào tài khoản của bạn. Phiếu giảm giá có hiệu lực trong một năm, vui lòng sử dụng nó trong thời gian hiệu lực.',

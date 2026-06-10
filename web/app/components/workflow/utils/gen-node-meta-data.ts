@@ -19,7 +19,7 @@ export const genNodeMetaData = ({
   sort,
   type,
   title = '',
-  author = 'Dify',
+  author = 'AgentFlow',
   helpLinkUri,
   isRequired = false,
   isUndeletable = false,

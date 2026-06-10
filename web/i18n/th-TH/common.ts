@@ -194,7 +194,7 @@ const translation = {
     newPassword: 'รหัสผ่านใหม่',
     confirmPassword: 'ยืนยันรหัสผ่าน',
     notEqual: 'รหัสผ่านสองรหัสผ่านแตกต่างกัน',
-    langGeniusAccount: 'บัญชี Dify',
+    langGeniusAccount: 'บัญชี AgentFlow',
     langGeniusAccountTip: 'บัญชี AgentFlow และข้อมูลผู้ใช้ที่เกี่ยวข้อง',
     editName: 'แก้ไขชื่อ',
     showAppLength: 'แสดง {{length}} แอป',
@@ -542,7 +542,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'ส่วนขยาย API ให้การจัดการ API แบบรวมศูนย์ ทําให้การกําหนดค่าง่ายขึ้นเพื่อให้ใช้งานได้ง่ายในแอปพลิเคชันของ Dify',
+    title: 'ส่วนขยาย API ให้การจัดการ API แบบรวมศูนย์ ทําให้การกําหนดค่าง่ายขึ้นเพื่อให้ใช้งานได้ง่ายในแอปพลิเคชันของ AgentFlow',
     link: 'เรียนรู้วิธีพัฒนาส่วนขยาย API ของคุณเอง',
     add: 'เพิ่มส่วนขยาย API',
     selector: {

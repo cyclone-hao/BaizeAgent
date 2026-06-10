@@ -313,17 +313,23 @@ grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4
 ### 组件结构
 ```
 app/(commonLayout)/home/page.tsx          # 路由入口
-└── app/components/home/index.tsx         # 主容器（搜索状态管理）
-    ├── greeting-section.tsx              # 问候 + 搜索框 + 推荐标签
-    ├── recently-used.tsx                 # 最近使用（横向滚动卡片）
+└── app/components/home/index.tsx         # 主容器（单列布局，max-w-4xl 居中）
+    ├── greeting-section.tsx              # 问候文字（时段问候 + 用户名）
+    ├── ai-assistant.tsx                  # AI 助手（对话输入 + 消息流）
+    │   └── home-chat/
+    │       ├── config.ts                 # App ID + 功能开关配置
+    │       ├── use-home-chat.ts          # useChat() hook 封装
+    │       └── chat-toggles.tsx          # 深度思考 + 智能搜索 toggle
+    ├── recently-used.tsx                 # 最近对话（历史对话记录）
     └── agent-plaza.tsx                   # 智能体广场（分类Tab + 卡片网格）
 ```
 
 ### 数据流
 - 用户名：`useAppContext().userProfile.name`
-- 最近使用：`useSWR({ url: 'apps', params: { page: 1, limit: 8 } }, fetchAppList)` — 控制台 API
+- AI 对话：`useHomeChat()` → `useChat()` hook → SSE 流式 → Dify installed-apps API
+  - 环境变量 `NEXT_PUBLIC_HOME_CHAT_APP_ID` 配置已安装应用 ID
+  - 深度思考/智能搜索作为 `inputs.deep_thinking` / `inputs.web_search` 传入请求体
 - 智能体广场：`useSWR(['/explore/apps'], () => fetchAppList())` — 探索 API
-- 搜索联动：首页搜索框 → searchKeywords → AgentPlaza 过滤
 
 ### 重定向链路
 以下位置均指向 `/home` 作为默认落地页：

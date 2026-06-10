@@ -53,14 +53,11 @@ const APIKeyInfoPanel: FC = () => {
         <LinkExternal02 className='h-4 w-4' />
       </Button>
       {!isCloud && (
-        <a
-          className='mt-2 flex h-[26px] items-center space-x-1  p-1 text-xs font-medium text-[#155EEF]'
-          href='https://cloud.dify.ai/apps'
-          target='_blank' rel='noopener noreferrer'
+        <div
+          className='mt-2 flex h-[26px] items-center space-x-1 p-1 text-xs font-medium text-[#155EEF]'
         >
           <div>{t('appOverview.apiKeyInfo.tryCloud')}</div>
-          <LinkExternal02 className='h-3 w-3' />
-        </a>
+        </div>
       )}
       <div
         onClick={() => setIsShow(false)}

@@ -191,12 +191,12 @@ const translation = {
     noPluginFound: 'Плагин не найден',
     sortBy: 'Черный город',
     empower: 'Расширьте возможности разработки ИИ',
-    difyMarketplace: 'Торговая площадка Dify',
+    difyMarketplace: 'Торговая площадка AgentFlow',
     viewMore: 'Подробнее',
     and: 'и',
     discover: 'Обнаруживать',
-    verifiedTip: 'Подтверждено Dify',
-    partnerTip: 'Подтверждено партнером Dify',
+    verifiedTip: 'Подтверждено AgentFlow',
+    partnerTip: 'Подтверждено партнером AgentFlow',
   },
   task: {
     installing: 'Установка плагинов {{installingLength}}, 0 готово.',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагины',
   },
-  difyVersionNotCompatible: 'Текущая версия AgentFlow не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Текущая версия AgentFlow не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'Запросите плагин',
   publishPlugins: 'Публикация плагинов',
   auth: {

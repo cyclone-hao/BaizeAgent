@@ -160,7 +160,7 @@ const translation = {
   knowledgeNameAndIconPlaceholder: 'ナレッジベースの名前を入力してください',
   editPipelineInfo: 'パイプライン情報を編集する',
   knowledgeDescription: '知識の説明',
-  knowledgeDescriptionPlaceholder: 'このナレッジベースに何が含まれているかを説明してください。詳細な説明は、AIがデータセットの内容により正確にアクセスできるようにします。空の場合、Difyはデフォルトのヒット戦略を使用します。（オプション）',
+  knowledgeDescriptionPlaceholder: 'このナレッジベースに何が含まれているかを説明してください。詳細な説明は、AIがデータセットの内容により正確にアクセスできるようにします。空の場合、AgentFlowはデフォルトのヒット戦略を使用します。（オプション）',
 }
 
 export default translation

@@ -243,7 +243,7 @@ const translation = {
     title: 'प्लगइन्स',
   },
   difyVersionNotCompatible:
-    'वर्तमान डिफाई संस्करण इस प्लगइन के साथ संगत नहीं है, कृपया आवश्यक न्यूनतम संस्करण में अपग्रेड करें: {{minimalDifyVersion}}',
+    'वर्तमान डिफाई संस्करण इस प्लगइन के साथ संगत नहीं है, कृपया आवश्यक न्यूनतम संस्करण में अपग्रेड करें: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'एक प्लगइन का अनुरोध करें',
   publishPlugins: 'प्लगइन प्रकाशित करें',
   auth: {

@@ -25,7 +25,7 @@ const translation = {
     callTimes: 'Çağrı süresi',
     usedToken: 'Kullanılan token',
     setAPIBtn: 'Model sağlayıcısını ayarlamaya git',
-    tryCloud: 'Veya Dify\'nin bulut sürümünü ücretsiz kotayla deneyin',
+    tryCloud: 'Veya AgentFlow\'nin bulut sürümünü ücretsiz kotayla deneyin',
   },
   overview: {
     title: 'Genel Bakış',
@@ -62,7 +62,7 @@ const translation = {
           copyRightPlaceholder: 'Yazarın veya kuruluşun adını girin',
           privacyPolicy: 'Gizlilik Politikası',
           privacyPolicyPlaceholder: 'Gizlilik politikası bağlantısını girin',
-          privacyPolicyTip: 'Ziyaretçilerin uygulamanın topladığı verileri anlamalarına yardımcı olur, Dify\'nin <privacyPolicyLink>Gizlilik Politikası</privacyPolicyLink>\'na bakın.',
+          privacyPolicyTip: 'Ziyaretçilerin uygulamanın topladığı verileri anlamalarına yardımcı olur, AgentFlow\'nin <privacyPolicyLink>Gizlilik Politikası</privacyPolicyLink>\'na bakın.',
           customDisclaimer: 'Özel İfşa',
           customDisclaimerPlaceholder: 'Özel ifşa metnini girin',
           customDisclaimerTip: 'Özel ifşa metni istemci tarafında görüntülenecek ve uygulama hakkında ek bilgiler sağlayacak',

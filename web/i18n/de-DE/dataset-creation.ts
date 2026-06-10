@@ -205,7 +205,7 @@ const translation = {
   otherDataSource: {
     learnMore: 'Weitere Informationen',
     title: 'Verbinden Sie sich mit anderen Datenquellen?',
-    description: 'Derzeit verfügt die Wissensdatenbank von AgentFlow nur über begrenzte Datenquellen. Das Beitragen einer Datenquelle zur Dify-Wissensdatenbank ist eine fantastische Möglichkeit, die Flexibilität und Leistungsfähigkeit der Plattform für alle Benutzer zu verbessern. Unser Beitragsleitfaden erleichtert Ihnen den Einstieg. Bitte klicken Sie auf den untenstehenden Link, um mehr zu erfahren.',
+    description: 'Derzeit verfügt die Wissensdatenbank von AgentFlow nur über begrenzte Datenquellen. Das Beitragen einer Datenquelle zur AgentFlow-Wissensdatenbank ist eine fantastische Möglichkeit, die Flexibilität und Leistungsfähigkeit der Plattform für alle Benutzer zu verbessern. Unser Beitragsleitfaden erleichtert Ihnen den Einstieg. Bitte klicken Sie auf den untenstehenden Link, um mehr zu erfahren.',
   },
   watercrawl: {
     configWatercrawl: 'Wasserkrabbe konfigurieren',

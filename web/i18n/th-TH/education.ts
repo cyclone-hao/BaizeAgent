@@ -36,7 +36,7 @@ const translation = {
   rejectTitle: 'การตรวจสอบการศึกษา AgentFlow ของคุณถูกปฏิเสธ',
   emailLabel: 'อีเมลปัจจุบันของคุณ',
   currentSigned: 'ลงชื่อเข้าใช้ในฐานะ',
-  successTitle: 'คุณได้รับการรับรองการศึกษา Dify',
+  successTitle: 'คุณได้รับการรับรองการศึกษา AgentFlow',
   learn: 'เรียนรู้วิธีการตรวจสอบการศึกษา',
   submitError: 'การส่งแบบฟอร์มล้มเหลว โปรดลองอีกครั้งในภายหลัง.',
   submit: 'ส่ง',

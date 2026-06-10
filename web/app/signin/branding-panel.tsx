@@ -19,12 +19,11 @@ const BrandingPanel = () => {
       <div className="relative z-10 flex h-full flex-col justify-between p-12">
         {/* Logo */}
         <div>
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-              <span className="text-xl font-bold text-white">A</span>
-            </div>
-            <span className="text-2xl font-bold text-white">AgentFlow</span>
-          </div>
+          <img
+            src="/logo/logo1.png"
+            alt="AgentFlow logo"
+            className="h-8 w-auto object-contain"
+          />
         </div>
 
         {/* Center hero */}

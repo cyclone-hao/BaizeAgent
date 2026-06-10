@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Weitere Informationen',
         title: 'Bitte wählen Sie eine Chunk-Struktur',
-        message: 'Die Dify-Wissensdatenbank unterstützt drei Chunking-Strukturen: Allgemein, Über- und Untergeordnetes Element und Q&A. Jede Wissensdatenbank kann nur eine Struktur haben. Die Ausgabe des vorherigen Knotens muss an der ausgewählten Blockstruktur ausgerichtet sein. Beachten Sie, dass sich die Wahl der Chunking-Struktur auf die verfügbaren Indexmethoden auswirkt.',
+        message: 'Die AgentFlow-Wissensdatenbank unterstützt drei Chunking-Strukturen: Allgemein, Über- und Untergeordnetes Element und Q&A. Jede Wissensdatenbank kann nur eine Struktur haben. Die Ausgabe des vorherigen Knotens muss an der ausgewählten Blockstruktur ausgerichtet sein. Beachten Sie, dass sich die Wahl der Chunking-Struktur auf die verfügbaren Indexmethoden auswirkt.',
       },
       changeChunkStructure: 'Chunk-Struktur ändern',
       retrievalSettingIsRequired: 'Abrufeinstellung ist erforderlich',

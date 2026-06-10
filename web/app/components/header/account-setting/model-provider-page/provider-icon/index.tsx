@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useState } from 'react'
 import type { ModelProvider } from '../declarations'
 import { useLanguage } from '../hooks'
 import { Openai } from '@/app/components/base/icons/src/vender/other'
@@ -18,6 +19,7 @@ const ProviderIcon: FC<ProviderIconProps> = ({
 }) => {
   const { theme } = useTheme()
   const language = useLanguage()
+  const [imgError, setImgError] = useState(false)
 
   if (provider.provider === 'langgenius/anthropic/anthropic') {
     return (
@@ -36,13 +38,26 @@ const ProviderIcon: FC<ProviderIconProps> = ({
     )
   }
 
+  const iconUrl = provider.icon_small ? renderI18nObject(provider.icon_small, language) : ''
+
   return (
     <div className={cn('inline-flex items-center gap-2', className)}>
-      <img
-        alt='provider-icon'
-        src={renderI18nObject(provider.icon_small, language)}
-        className='h-6 w-6'
-      />
+      {iconUrl && !imgError
+        ? (
+          <img
+            alt='provider-icon'
+            src={iconUrl}
+            className='h-6 w-6 object-contain'
+            onError={() => setImgError(true)}
+          />
+        )
+        : (
+          <div className='flex h-6 w-6 items-center justify-center rounded-md border-[0.5px] border-components-panel-border-subtle bg-background-default-subtle'>
+            <span className='text-xs text-text-quaternary'>
+              {renderI18nObject(provider.label, language)?.[0] || '?'}
+            </span>
+          </div>
+        )}
       <div className='system-md-semibold text-text-primary'>
         {renderI18nObject(provider.label, language)}
       </div>

@@ -65,7 +65,7 @@ export default function Support() {
                     className={cn(itemClassName, 'group justify-between',
                       'data-[active]:bg-state-base-hover',
                     )}
-                    href='https://github.com/langgenius/dify/discussions/categories/feedbacks'
+                    href='#'
                     target='_blank' rel='noopener noreferrer'>
                     <RiFeedbackLine className='size-4 shrink-0 text-text-tertiary' />
                     <div className='system-md-regular grow px-1 text-text-secondary'>{t('common.userProfile.communityFeedback')}</div>
@@ -77,7 +77,7 @@ export default function Support() {
                     className={cn(itemClassName, 'group justify-between',
                       'data-[active]:bg-state-base-hover',
                     )}
-                    href='https://discord.gg/5AEfbxcd9k'
+                    href='#'
                     target='_blank' rel='noopener noreferrer'>
                     <RiDiscordLine className='size-4 shrink-0 text-text-tertiary' />
                     <div className='system-md-regular grow px-1 text-text-secondary'>{t('common.userProfile.community')}</div>

@@ -100,7 +100,7 @@ const translation = {
   usePassword: 'Passwort verwenden',
   noLoginMethod: 'Authentifizierungsmethode nicht konfiguriert',
   licenseExpired: 'Lizenz abgelaufen',
-  licenseLostTip: 'Fehler beim Verbinden des Dify-Lizenzservers. Wenden Sie sich an Ihren Administrator, um AgentFlow weiterhin zu verwenden.',
+  licenseLostTip: 'Fehler beim Verbinden des AgentFlow-Lizenzservers. Wenden Sie sich an Ihren Administrator, um AgentFlow weiterhin zu verwenden.',
   licenseInactive: 'Lizenz inaktiv',
   licenseInactiveTip: 'Die AgentFlow Enterprise-Lizenz für Ihren Arbeitsbereich ist inaktiv. Wenden Sie sich an Ihren Administrator, um AgentFlow weiterhin zu verwenden.',
   licenseExpiredTip: 'Die AgentFlow Enterprise-Lizenz für Ihren Arbeitsbereich ist abgelaufen. Wenden Sie sich an Ihren Administrator, um AgentFlow weiterhin zu verwenden.',

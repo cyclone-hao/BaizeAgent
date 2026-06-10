@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Eklentiler',
   },
-  difyVersionNotCompatible: 'Mevcut AgentFlow sürümü bu eklentiyle uyumlu değil, lütfen gerekli minimum sürüme güncelleyin: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'Mevcut AgentFlow sürümü bu eklentiyle uyumlu değil, lütfen gerekli minimum sürüme güncelleyin: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'Bir eklenti iste',
   publishPlugins: 'Eklentileri yayınlayın',
   auth: {

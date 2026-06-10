@@ -2,7 +2,6 @@
 
 import React, { useCallback, useMemo, useState } from 'react'
 import useSWR from 'swr'
-import { useDebounceFn } from 'ahooks'
 import Category from '@/app/components/explore/category'
 import AppCard from '@/app/components/explore/app-card'
 import { fetchAppDetail, fetchAppList } from '@/service/explore'
@@ -17,25 +16,10 @@ import DSLConfirmModal from '@/app/components/app/create-from-dsl-modal/dsl-conf
 import { useAppContext } from '@/context/app-context'
 import exploreI18n from '@/i18n/en-US/explore'
 
-type AgentPlazaProps = {
-  searchKeywords?: string
-}
-
 const allCategoriesEn = exploreI18n.apps.allCategories
 
-const AgentPlaza = ({ searchKeywords = '' }: AgentPlazaProps) => {
+const AgentPlaza = () => {
   const { isCurrentWorkspaceEditor } = useAppContext()
-
-  const [debouncedSearch, setDebouncedSearch] = useState('')
-
-  const { run: handleDebouncedSearch } = useDebounceFn((value: string) => {
-    setDebouncedSearch(value)
-  }, { wait: 300 })
-
-  // Update debounced search when prop changes
-  React.useEffect(() => {
-    handleDebouncedSearch(searchKeywords)
-  }, [searchKeywords])
 
   const [currCategory, setCurrCategory] = useTabSearchParams({
     defaultTab: allCategoriesEn,
@@ -65,17 +49,6 @@ const AgentPlaza = ({ searchKeywords = '' }: AgentPlazaProps) => {
       return []
     return allList.filter(item => currCategory === allCategoriesEn || item.category === currCategory)
   }, [currCategory, allList])
-
-  const searchFilteredList = useMemo(() => {
-    if (!debouncedSearch || !filteredList || filteredList.length === 0)
-      return filteredList
-
-    const lower = debouncedSearch.toLowerCase()
-    return filteredList.filter(item =>
-      (item.app?.name?.toLowerCase().includes(lower))
-      || (item.description?.toLowerCase().includes(lower)),
-    )
-  }, [debouncedSearch, filteredList])
 
   const [currApp, setCurrApp] = useState<App | null>(null)
   const [isShowCreateModal, setIsShowCreateModal] = useState(false)
@@ -144,7 +117,7 @@ const AgentPlaza = ({ searchKeywords = '' }: AgentPlazaProps) => {
       </div>
 
       {/* App Grid */}
-      {searchFilteredList.length === 0
+      {filteredList.length === 0
         ? (
           <div className="rounded-xl border border-dashed border-divider-regular bg-state-base-hover px-4 py-12 text-center text-sm text-text-quaternary">
             暂无匹配的智能体
@@ -152,7 +125,7 @@ const AgentPlaza = ({ searchKeywords = '' }: AgentPlazaProps) => {
         )
         : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-            {searchFilteredList.map(app => (
+            {filteredList.map(app => (
               <AppCard
                 key={app.app_id}
                 isExplore

@@ -221,7 +221,7 @@ const translation = {
   searchTools: '検索ツール...',
   installPlugin: 'プラグインをインストールする',
   searchInMarketplace: 'マーケットプレイスで検索',
-  difyVersionNotCompatible: '現在の AgentFlow バージョンはこのプラグインと互換性がありません。最小バージョンは{{minimalDifyVersion}}です。',
+  difyVersionNotCompatible: '現在の AgentFlow バージョンはこのプラグインと互換性がありません。最小バージョンは{{minimalAgentFlowVersion}}です。',
   metadata: {
     title: 'プラグイン',
   },

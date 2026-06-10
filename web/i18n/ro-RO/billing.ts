@@ -123,7 +123,7 @@ const translation = {
         0: 'Soluții de implementare scalabile la nivel de întreprindere',
         4: 'SSO',
         8: 'Asistență tehnică profesională',
-        5: 'SLA-uri negociate de partenerii Dify',
+        5: 'SLA-uri negociate de partenerii AgentFlow',
         6: 'Securitate și controale avansate',
       },
       for: 'Pentru echipe de mari dimensiuni',

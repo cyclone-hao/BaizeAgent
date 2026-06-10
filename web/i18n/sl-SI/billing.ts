@@ -133,7 +133,7 @@ const translation = {
     },
     community: {
       features: {
-        2: 'Skladen z odprtokodno licenco Dify',
+        2: 'Skladen z odprtokodno licenco AgentFlow',
         1: 'En delovni prostor',
         0: 'Vse osnovne funkcije, izdane v javnem repozitoriju',
       },

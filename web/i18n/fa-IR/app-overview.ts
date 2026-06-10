@@ -83,7 +83,7 @@ const translation = {
         explanation: 'روش‌های جاسازی برنامه چت در وب‌سایت خود را انتخاب کنید',
         iframe: 'برای افزودن برنامه چت در هرجای وب‌سایت خود، این iframe را به کد HTML خود اضافه کنید.',
         scripts: 'برای افزودن برنامه چت به گوشه پایین سمت راست وب‌سایت خود، این کد را به HTML خود اضافه کنید.',
-        chromePlugin: 'نصب افزونه Chrome Chatbot Dify',
+        chromePlugin: 'نصب افزونه Chrome Chatbot AgentFlow',
         copied: 'کپی شد',
         copy: 'کپی',
       },

@@ -17,7 +17,7 @@ export const feedbackCommand: SlashCommandHandler<FeedbackDeps> = {
 
   // Direct execution function
   execute: () => {
-    const url = 'https://github.com/langgenius/dify/discussions/categories/feedbacks'
+    const url = '#'
     window.open(url, '_blank', 'noopener,noreferrer')
   },
 
@@ -32,14 +32,14 @@ export const feedbackCommand: SlashCommandHandler<FeedbackDeps> = {
           <RiFeedbackLine className='h-4 w-4 text-text-tertiary' />
         </div>
       ),
-      data: { command: 'navigation.feedback', args: { url: 'https://github.com/langgenius/dify/discussions/categories/feedbacks' } },
+      data: { command: 'navigation.feedback', args: { url: '#' } },
     }]
   },
 
   register(_deps: FeedbackDeps) {
     registerCommands({
       'navigation.feedback': async (args) => {
-        const url = args?.url || 'https://github.com/langgenius/dify/discussions/categories/feedbacks'
+        const url = args?.url || '#'
         window.open(url, '_blank', 'noopener,noreferrer')
       },
     })

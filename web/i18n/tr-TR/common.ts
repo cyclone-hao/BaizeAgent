@@ -271,7 +271,7 @@ const translation = {
     sendInvite: 'Davet Gönder',
     invitedAsRole: '{{role}} kullanıcısı olarak davet edildi',
     invitationSent: 'Davet gönderildi',
-    invitationSentTip: 'Davet gönderildi, Dify\'ye giriş yaparak takım verilerinize erişebilirler.',
+    invitationSentTip: 'Davet gönderildi, AgentFlow\'ye giriş yaparak takım verilerinize erişebilirler.',
     invitationLink: 'Davet Linki',
     failedInvitationEmails: 'Aşağıdaki kullanıcılar başarıyla davet edilmedi',
     ok: 'Tamam',
@@ -547,7 +547,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'API uzantıları merkezi API yönetimi sağlar, Dify\'nin uygulamaları arasında kolay kullanım için yapılandırmayı basitleştirir.',
+    title: 'API uzantıları merkezi API yönetimi sağlar, AgentFlow\'nin uygulamaları arasında kolay kullanım için yapılandırmayı basitleştirir.',
     link: 'Kendi API Uzantınızı nasıl geliştireceğinizi öğrenin.',
     add: 'API Uzantısı Ekle',
     selector: {

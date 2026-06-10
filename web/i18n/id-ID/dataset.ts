@@ -200,7 +200,7 @@ const translation = {
   mixtureHighQualityAndEconomicTip: 'Model Rerank diperlukan untuk campuran basis pengetahuan berkualitas tinggi dan ekonomis.',
   datasetDeleted: 'Pengetahuan dihapus',
   createDatasetIntro: 'Impor data teks Anda sendiri atau tulis data secara real-time melalui Webhook untuk peningkatan konteks LLM.',
-  intro1: 'Pengetahuan dapat diintegrasikan ke dalam aplikasi Dify',
+  intro1: 'Pengetahuan dapat diintegrasikan ke dalam aplikasi AgentFlow',
   rerankSettings: 'Pengaturan Peringkat Ulang',
   intro3: ',',
   externalKnowledgeIdPlaceholder: 'Silakan masukkan ID Pengetahuan',

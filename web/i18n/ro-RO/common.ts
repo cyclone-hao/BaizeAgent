@@ -192,7 +192,7 @@ const translation = {
     newPassword: 'Parolă nouă',
     confirmPassword: 'Confirmă parola',
     notEqual: 'Cele două parole sunt diferite.',
-    langGeniusAccount: 'Cont Dify',
+    langGeniusAccount: 'Cont AgentFlow',
     langGeniusAccountTip: 'Contul AgentFlow și datele de utilizator asociate.',
     editName: 'Editează Nume',
     showAppLength: 'Afișează {{length}} aplicații',

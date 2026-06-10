@@ -33,7 +33,7 @@ const translation = {
     },
   },
   toVerified: 'Bildung überprüfen lassen',
-  rejectTitle: 'Ihre Dify-Ausbildungsüberprüfung wurde abgelehnt.',
+  rejectTitle: 'Ihre AgentFlow-Ausbildungsüberprüfung wurde abgelehnt.',
   currentSigned: 'DERZEIT ANGEMELDET ALS',
   submit: 'Einreichen',
   submitError: 'Die Formularübermittlung ist fehlgeschlagen. Bitte versuchen Sie es später erneut.',
@@ -41,7 +41,7 @@ const translation = {
   successContent: 'Wir haben einen 100% Rabattgutschein für den AgentFlow Professional Plan auf Ihr Konto ausgestellt. Der Gutschein ist ein Jahr lang gültig, bitte nutzen Sie ihn innerhalb des Gültigkeitszeitraums.',
   learn: 'Erfahren Sie, wie Sie Ihre Ausbildung überprüfen lassen.',
   emailLabel: 'Ihre aktuelle E-Mail',
-  successTitle: 'Sie haben die Dify-Ausbildung verifiziert',
+  successTitle: 'Sie haben die AgentFlow-Ausbildung verifiziert',
   notice: {
     expired: {
       summary: {

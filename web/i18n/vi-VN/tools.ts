@@ -163,7 +163,7 @@ const translation = {
     },
   },
   toolNameUsageTip: 'Tên cuộc gọi công cụ để lý luận và nhắc nhở tổng đài viên',
-  customToolTip: 'Tìm hiểu thêm về các công cụ tùy chỉnh Dify',
+  customToolTip: 'Tìm hiểu thêm về các công cụ tùy chỉnh AgentFlow',
   openInStudio: 'Mở trong Studio',
   noTools: 'Không tìm thấy công cụ',
   copyToolName: 'Sao chép tên',

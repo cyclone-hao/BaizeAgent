@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Personalizza il marchio web app',
-    removeBrand: 'Rimuovi Powered by Dify',
+    removeBrand: 'Rimuovi Powered by AgentFlow',
     changeLogo: 'Cambia immagine del marchio Powered by',
     changeLogoTip: 'Formato SVG o PNG con una dimensione minima di 40x40px',
   },

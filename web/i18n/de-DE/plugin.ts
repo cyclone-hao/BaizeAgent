@@ -214,7 +214,7 @@ const translation = {
     pluginsResult: '{{num}} Ergebnisse',
     empower: 'Unterstützen Sie Ihre KI-Entwicklung',
     and: 'und',
-    partnerTip: 'Von einem Dify-Partner verifiziert',
+    partnerTip: 'Von einem AgentFlow-Partner verifiziert',
     verifiedTip: 'Von AgentFlow überprüft',
   },
   task: {
@@ -246,7 +246,7 @@ const translation = {
     title: 'Plugins',
   },
   difyVersionNotCompatible:
-    'Die aktuelle Dify-Version ist mit diesem Plugin nicht kompatibel, bitte aktualisieren Sie auf die erforderliche Mindestversion: {{minimalDifyVersion}}',
+    'Die aktuelle AgentFlow-Version ist mit diesem Plugin nicht kompatibel, bitte aktualisieren Sie auf die erforderliche Mindestversion: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'Ein Plugin anfordern',
   publishPlugins: 'Plugins veröffentlichen',
   auth: {

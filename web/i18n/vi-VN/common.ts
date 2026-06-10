@@ -192,7 +192,7 @@ const translation = {
     newPassword: 'Mật khẩu mới',
     confirmPassword: 'Xác nhận mật khẩu',
     notEqual: 'Hai mật khẩu không giống nhau.',
-    langGeniusAccount: 'Tài khoản Dify',
+    langGeniusAccount: 'Tài khoản AgentFlow',
     langGeniusAccountTip: 'Tài khoản AgentFlow của bạn và dữ liệu người dùng liên quan.',
     editName: 'Chỉnh sửa Tên',
     showAppLength: 'Hiển thị {{length}} ứng dụng',

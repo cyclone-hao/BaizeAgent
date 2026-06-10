@@ -9,7 +9,7 @@ import type {
 import { useChat } from '../chat/hooks'
 import { getLastAnswer, isValidGeneratedAnswer } from '../utils'
 import { useEmbeddedChatbotContext } from './context'
-import { isDify } from './utils'
+import { isAgentFlow } from './utils'
 import { InputVarType } from '@/app/components/workflow/types'
 import { TransferMethod } from '@/types/app'
 import InputsForm from '@/app/components/base/chat/embedded-chatbot/inputs-form'
@@ -223,7 +223,7 @@ const ChatWrapper = () => {
     )
   }, [appData?.site.icon, appData?.site.icon_background, appData?.site.icon_type, appData?.site.icon_url, chatList, collapsed, currentConversationId, inputsForms.length, respondingState, allInputsHidden])
 
-  const answerIcon = isDify()
+  const answerIcon = isAgentFlow()
     ? <LogoAvatar className='relative shrink-0' />
     : (appData?.site && appData.site.use_icon_as_answer_icon)
       ? <AnswerIcon

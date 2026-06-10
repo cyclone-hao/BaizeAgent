@@ -25,10 +25,7 @@ export const useAvailableNodesMetaData = () => {
   ], [isChatMode])
 
   const prefixLink = useMemo(() => {
-    if (language === 'zh_Hans')
-      return 'https://docs.dify.ai/zh-hans/guides/workflow/node/'
-
-    return 'https://docs.dify.ai/guides/workflow/node/'
+    return '#'
   }, [language])
 
   const availableNodesMetaData = useMemo(() => mergedNodesMetaData.map((node) => {

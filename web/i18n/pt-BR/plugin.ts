@@ -191,12 +191,12 @@ const translation = {
     and: 'e',
     pluginsResult: '{{num}} resultados',
     empower: 'Capacite seu desenvolvimento de IA',
-    difyMarketplace: 'Mercado Dify',
+    difyMarketplace: 'Mercado AgentFlow',
     moreFrom: 'Mais do Marketplace',
     noPluginFound: 'Nenhum plugin encontrado',
     discover: 'Descobrir',
-    verifiedTip: 'Verificado pelo Dify',
-    partnerTip: 'Verificado por um parceiro da Dify',
+    verifiedTip: 'Verificado pelo AgentFlow',
+    partnerTip: 'Verificado por um parceiro da AgentFlow',
   },
   task: {
     installedError: 'Falha na instalação dos plug-ins {{errorLength}}',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugins',
   },
-  difyVersionNotCompatible: 'A versão atual do AgentFlow não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimalDifyVersion}}',
+  difyVersionNotCompatible: 'A versão atual do AgentFlow não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimalAgentFlowVersion}}',
   requestAPlugin: 'Solicitar um plugin',
   publishPlugins: 'Publicar plugins',
   auth: {

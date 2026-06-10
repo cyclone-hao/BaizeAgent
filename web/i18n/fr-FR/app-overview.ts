@@ -101,7 +101,7 @@ const translation = {
           name: 'Faire une copie du code client, le modifier et le déployer sur Vercel (recommandé)',
           step1: 'Faire une copie du code client et le modifier',
           step1Tip: 'Cliquez ici pour faire une copie du code source dans votre compte GitHub et le modifier',
-          step1Operation: 'Client-Web-Dify',
+          step1Operation: 'Client-Web-AgentFlow',
           step2: 'Déployer sur Vercel',
           step2Tip: 'Cliquez ici pour importer le dépôt dans Vercel et le déployer',
           step2Operation: 'Importer le dépôt',

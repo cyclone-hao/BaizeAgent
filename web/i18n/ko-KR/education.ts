@@ -49,7 +49,7 @@ const translation = {
   notice: {
     expired: {
       summary: {
-        line1: '여전히 Dify에 접근하고 사용할 수 있습니다.',
+        line1: '여전히 AgentFlow에 접근하고 사용할 수 있습니다.',
         line2: '하지만, 더 이상 새로운 교육 할인 쿠폰을 받을 수 없습니다.',
       },
       title: '귀하의 교육 상태가 만료되었습니다.',

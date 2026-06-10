@@ -134,7 +134,7 @@ const translation = {
         2: 'Funzionalità esclusive per le aziende',
         3: 'Spazi di lavoro multipli e gestione aziendale',
         0: 'Soluzioni di distribuzione scalabili di livello aziendale',
-        5: 'SLA negoziati dai partner Dify',
+        5: 'SLA negoziati dai partner AgentFlow',
         7: 'Aggiornamenti e manutenzione da parte di AgentFlow ufficialmente',
       },
       price: 'Personalizzato',
@@ -145,7 +145,7 @@ const translation = {
     community: {
       features: {
         0: 'Tutte le funzionalità principali rilasciate nel repository pubblico',
-        2: 'Conforme alla licenza Open Source Dify',
+        2: 'Conforme alla licenza Open Source AgentFlow',
         1: 'Area di lavoro singola',
       },
       name: 'Comunità',

@@ -125,9 +125,9 @@ const translation = {
         'Funciones exclusivas para empresas',
         'Múltiples espacios de trabajo y gestión empresarial',
         'SSO (inicio de sesión único)',
-        'SLAs negociados con socios de Dify',
+        'SLAs negociados con socios de AgentFlow',
         'Seguridad y controles avanzados',
-        'Actualizaciones y mantenimiento oficiales por parte de Dify',
+        'Actualizaciones y mantenimiento oficiales por parte de AgentFlow',
         'Soporte técnico profesional',
       ],
     },
@@ -141,7 +141,7 @@ const translation = {
       features: [
         'Todas las funciones principales publicadas en el repositorio público',
         'Espacio de trabajo único',
-        'Cumple con la licencia de código abierto de Dify',
+        'Cumple con la licencia de código abierto de AgentFlow',
       ],
     },
     premium: {

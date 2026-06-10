@@ -101,7 +101,7 @@ const translation = {
           name: 'Faça um fork do código do cliente, modifique-o e implante-o no Vercel (recomendado)',
           step1: 'Faça um fork do código do cliente e modifique-o',
           step1Tip: 'Clique aqui para fazer um fork do código-fonte na sua conta GitHub e modificar o código',
-          step1Operation: 'Cliente-Web-Dify',
+          step1Operation: 'Cliente-Web-AgentFlow',
           step2: 'Implantar no Vercel',
           step2Tip: 'Clique aqui para importar o repositório no Vercel e implantar',
           step2Operation: 'Importar repositório',

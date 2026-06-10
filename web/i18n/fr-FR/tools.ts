@@ -163,7 +163,7 @@ const translation = {
     },
   },
   openInStudio: 'Ouvrir dans Studio',
-  customToolTip: 'En savoir plus sur les outils personnalisés Dify',
+  customToolTip: 'En savoir plus sur les outils personnalisés AgentFlow',
   toolNameUsageTip: 'Nom de l’appel de l’outil pour le raisonnement et l’invite de l’agent',
   copyToolName: 'Copier le nom',
   noTools: 'Aucun outil trouvé',

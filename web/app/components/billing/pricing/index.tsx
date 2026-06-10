@@ -10,7 +10,7 @@ import { PlanRange } from './plan-switcher/plan-range-switcher'
 import { useKeyPress } from 'ahooks'
 import { useProviderContext } from '@/context/provider-context'
 import { useAppContext } from '@/context/app-context'
-import { useGetPricingPageLanguage } from '@/context/i18n'
+
 import { NoiseBottom, NoiseTop } from './assets'
 
 export type Category = 'cloud' | 'self'
@@ -30,10 +30,7 @@ const Pricing: FC<PricingProps> = ({
 
   useKeyPress(['esc'], onCancel)
 
-  const pricingPageLanguage = useGetPricingPageLanguage()
-  const pricingPageURL = pricingPageLanguage
-    ? `https://dify.ai/${pricingPageLanguage}/pricing#plans-and-features`
-    : 'https://dify.ai/pricing#plans-and-features'
+  const pricingPageURL = '#'
 
   return createPortal(
     <div

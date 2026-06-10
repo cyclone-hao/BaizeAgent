@@ -198,7 +198,7 @@ const translation = {
     newPassword: 'Nowe hasło',
     confirmPassword: 'Potwierdź hasło',
     notEqual: 'Dwa hasła są różne.',
-    langGeniusAccount: 'Konto Dify',
+    langGeniusAccount: 'Konto AgentFlow',
     langGeniusAccountTip: 'Twoje konto AgentFlow i powiązane dane użytkownika.',
     editName: 'Edytuj nazwę',
     showAppLength: 'Pokaż {{length}} aplikacje',

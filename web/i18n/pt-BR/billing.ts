@@ -135,7 +135,7 @@ const translation = {
       features: {
         1: 'Espaço de trabalho individual',
         0: 'Todos os principais recursos lançados no repositório público',
-        2: 'Está em conformidade com a licença de código aberto Dify',
+        2: 'Está em conformidade com a licença de código aberto AgentFlow',
       },
       name: 'Comunidade',
       description: 'Para Usuários Individuais, Pequenas Equipes ou Projetos Não Comerciais',

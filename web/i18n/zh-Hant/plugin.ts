@@ -225,7 +225,7 @@ const translation = {
   metadata: {
     title: '插件',
   },
-  difyVersionNotCompatible: '當前的 AgentFlow 版本與此插件不兼容，請升級至所需的最低版本：{{minimalDifyVersion}}',
+  difyVersionNotCompatible: '當前的 AgentFlow 版本與此插件不兼容，請升級至所需的最低版本：{{minimalAgentFlowVersion}}',
   auth: {
     setDefault: '設置為默認',
     useOAuth: '使用 OAuth',

@@ -8,7 +8,7 @@ const PluginList = async () => {
   return (
     <PluginPage
       plugins={<PluginsPanel />}
-      marketplace={<Marketplace locale={locale} pluginTypeSwitchClassName='top-[60px]' searchBoxAutoAnimate={false} showSearchParams={false} />}
+      marketplace={<Marketplace locale={locale} pluginTypeSwitchClassName='top-0' searchBoxAutoAnimate={false} showSearchParams={false} />}
     />
   )
 }

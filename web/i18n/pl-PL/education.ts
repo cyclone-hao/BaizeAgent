@@ -37,7 +37,7 @@ const translation = {
   rejectContent: 'Niestety, nie kwalifikujesz się do statusu Zweryfikowanej Edukacji i w związku z tym nie możesz otrzymać ekskluzywnego kuponu 100% na plan AgentFlow Professional, jeśli korzystasz z tego adresu e-mail.',
   successContent: 'Wydaliśmy kupon rabatowy na 100% dla planu AgentFlow Professional na Twoje konto. Kupon jest ważny przez jeden rok, prosimy o jego użycie w okresie ważności.',
   currentSigned: 'AKTUALNIE ZALOGOWANY JAKO',
-  successTitle: 'Masz zweryfikowane wykształcenie Dify',
+  successTitle: 'Masz zweryfikowane wykształcenie AgentFlow',
   rejectTitle: 'Twoja weryfikacja edukacyjna AgentFlow została odrzucona',
   learn: 'Dowiedz się, jak uzyskać potwierdzenie wykształcenia',
   emailLabel: 'Twój aktualny email',

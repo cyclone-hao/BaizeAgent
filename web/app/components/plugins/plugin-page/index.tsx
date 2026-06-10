@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useContext } from 'use-context-selector'
 import Link from 'next/link'
 import {
   RiBookOpenLine,
@@ -33,11 +32,9 @@ import {
 import type { Dependency } from '../types'
 import type { PluginDeclaration, PluginManifestInMarket } from '../types'
 import { sleep } from '@/utils'
-import { getDocsUrl } from '@/app/components/plugins/utils'
 import { fetchBundleInfoFromMarketPlace, fetchManifestFromMarketPlace } from '@/service/plugins'
 import { MARKETPLACE_API_PREFIX } from '@/config'
 import { SUPPORT_INSTALL_LOCAL_FILE_EXTENSIONS } from '@/config'
-import I18n from '@/context/i18n'
 import { noop } from 'lodash-es'
 import { PLUGIN_TYPE_SEARCH_MAP } from '../marketplace/plugin-type-switch'
 import { PLUGIN_PAGE_TABS_MAP } from '../hooks'
@@ -56,7 +53,6 @@ const PluginPage = ({
   marketplace,
 }: PluginPageProps) => {
   const { t } = useTranslation()
-  const { locale } = useContext(I18n)
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   useDocumentTitle(t('plugin.metadata.title'))
@@ -163,7 +159,7 @@ const PluginPage = ({
       id='marketplace-container'
       ref={containerRef}
       style={{ scrollbarGutter: 'stable' }}
-      className={cn('relative flex grow flex-col overflow-y-auto border-t border-divider-subtle', isPluginsTab
+      className={cn('relative flex grow flex-col overflow-y-auto', isPluginsTab
         ? 'rounded-t-xl bg-components-panel-bg'
         : 'bg-background-body',
       )}
@@ -197,7 +193,7 @@ const PluginPage = ({
                     </Button>
                   </Link>
                   <Link
-                    href={getDocsUrl(locale, '/plugins/publish-plugins/publish-to-dify-marketplace/README')}
+                    href='#'
                     target='_blank'
                   >
                     <Button
@@ -246,7 +242,7 @@ const PluginPage = ({
           {dragging && (
             <div
               className="absolute inset-0 m-0.5 rounded-2xl border-2 border-dashed border-components-dropzone-border-accent
-                  bg-[rgba(21,90,239,0.14)] p-2">
+                  bg-[rgba(139,92,246,0.14)] p-2">
             </div>
           )}
           <div className={`flex items-center justify-center gap-2 py-4 ${dragging ? 'text-text-accent' : 'text-text-quaternary'}`}>

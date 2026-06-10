@@ -1,7 +1,7 @@
 const translation = {
   title: 'Инструменты',
   createCustomTool: 'Создать пользовательский инструмент',
-  customToolTip: 'Узнать больше о пользовательских инструментах Dify',
+  customToolTip: 'Узнать больше о пользовательских инструментах AgentFlow',
   type: {
     all: 'Все',
     builtIn: 'Встроенные',

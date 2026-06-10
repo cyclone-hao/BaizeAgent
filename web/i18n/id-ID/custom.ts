@@ -7,7 +7,7 @@ const translation = {
   },
   webapp: {
     changeLogoTip: 'Format SVG atau PNG dengan ukuran minimum 40x40px',
-    removeBrand: 'Hapus Branding Dify',
+    removeBrand: 'Hapus Branding AgentFlow',
     changeLogo: 'Ubah Logo Merek',
     title: 'Kustomisasi Branding Aplikasi Web',
   },

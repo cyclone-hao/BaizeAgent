@@ -1,14 +1,8 @@
 'use client'
 import type { FC } from 'react'
 import classNames from '@/utils/classnames'
-import useTheme from '@/hooks/use-theme'
 import { basePath } from '@/utils/var'
 export type LogoStyle = 'default' | 'monochromeWhite'
-
-export const logoPathMap: Record<LogoStyle, string> = {
-  default: '/logo/logo.svg',
-  monochromeWhite: '/logo/logo-monochrome-white.svg',
-}
 
 export type LogoSize = 'large' | 'medium' | 'small'
 
@@ -25,16 +19,12 @@ type DifyLogoProps = {
 }
 
 const DifyLogo: FC<DifyLogoProps> = ({
-  style = 'default',
   size = 'medium',
   className,
 }) => {
-  const { theme } = useTheme()
-  const themedStyle = (theme === 'dark' && style === 'default') ? 'monochromeWhite' : style
-
   return (
     <img
-      src={`${basePath}${logoPathMap[themedStyle]}`}
+      src={`${basePath}/logo/logo1.png`}
       className={classNames('block object-contain', logoSizeMap[size], className)}
       alt='AgentFlow logo'
     />

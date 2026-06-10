@@ -68,7 +68,7 @@ const translation = {
   },
   join: 'शामिल हों',
   joinTipStart: 'आपको आमंत्रित करते हैं',
-  joinTipEnd: 'टीम पर Dify',
+  joinTipEnd: 'टीम पर AgentFlow',
   invalid: 'लिंक समाप्त हो गया है',
   explore: 'AgentFlow का अन्वेषण करें',
   activatedTipStart: 'आप शामिल हो गए हैं',

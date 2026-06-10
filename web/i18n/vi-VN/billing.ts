@@ -134,7 +134,7 @@ const translation = {
     community: {
       features: {
         0: 'Tất cả các tính năng cốt lõi được phát hành trong kho lưu trữ công cộng',
-        2: 'Tuân thủ Giấy phép nguồn mở Dify',
+        2: 'Tuân thủ Giấy phép nguồn mở AgentFlow',
         1: 'Không gian làm việc đơn',
       },
       description: 'Dành cho người dùng cá nhân, nhóm nhỏ hoặc các dự án phi thương mại',

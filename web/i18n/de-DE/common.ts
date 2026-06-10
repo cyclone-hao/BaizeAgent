@@ -193,7 +193,7 @@ const translation = {
     confirmPassword: 'Passwort bestätigen',
     notEqual: 'Die Passwörter sind unterschiedlich.',
     langGeniusAccount: 'AgentFlow-Konto',
-    langGeniusAccountTip: 'Ihr Dify-Konto und zugehörige Benutzerdaten.',
+    langGeniusAccountTip: 'Ihr AgentFlow-Konto und zugehörige Benutzerdaten.',
     editName: 'Namen bearbeiten',
     showAppLength: '{{length}} Apps anzeigen',
     delete: 'Konto löschen',
@@ -543,7 +543,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'API-Erweiterungen bieten zentralisiertes API-Management und vereinfachen die Konfiguration für eine einfache Verwendung in Difys Anwendungen.',
+    title: 'API-Erweiterungen bieten zentralisiertes API-Management und vereinfachen die Konfiguration für eine einfache Verwendung in AgentFlows Anwendungen.',
     link: 'Erfahren Sie, wie Sie Ihre eigene API-Erweiterung entwickeln.',
     add: 'API-Erweiterung hinzufügen',
     selector: {

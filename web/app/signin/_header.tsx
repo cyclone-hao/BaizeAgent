@@ -6,14 +6,9 @@ import Divider from '@/app/components/base/divider'
 import { languages } from '@/i18n-config/language'
 import type { Locale } from '@/i18n-config'
 import I18n from '@/context/i18n'
-import dynamic from 'next/dynamic'
 import { useGlobalPublicStore } from '@/context/global-public-context'
+import dynamic from 'next/dynamic'
 
-// Avoid rendering the logo and theme selector on the server
-const DifyLogo = dynamic(() => import('@/app/components/base/logo/dify-logo'), {
-  ssr: false,
-  loading: () => <div className='h-7 w-16 bg-transparent' />,
-})
 const ThemeSelector = dynamic(() => import('@/app/components/base/theme-selector'), {
   ssr: false,
   loading: () => <div className='size-8 bg-transparent' />,
@@ -31,7 +26,11 @@ const Header = () => {
           className='block h-7 w-auto object-contain'
           alt='logo'
         />
-        : <DifyLogo size='large' />}
+        : <img
+          src='/logo/logo1.png'
+          className='block h-7 w-auto object-contain'
+          alt='AgentFlow logo'
+        />}
       <div className='flex items-center gap-1'>
         <LocaleSigninSelect
           value={locale}

@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useState } from 'react'
 import type {
   Model,
   ModelProvider,
@@ -24,6 +25,8 @@ const ModelIcon: FC<ModelIconProps> = ({
   isDeprecated = false,
 }) => {
   const language = useLanguage()
+  const [imgError, setImgError] = useState(false)
+
   if (provider?.provider && ['openai', 'langgenius/openai/openai'].includes(provider.provider) && modelName?.startsWith('o'))
     return <div className='flex items-center justify-center'><OpenaiYellow className={cn('h-5 w-5', className)} /></div>
   if (provider?.provider && ['openai', 'langgenius/openai/openai'].includes(provider.provider) && modelName?.includes('gpt-4.1'))
@@ -33,10 +36,17 @@ const ModelIcon: FC<ModelIconProps> = ({
   if (provider?.provider && ['openai', 'langgenius/openai/openai'].includes(provider.provider) && modelName?.startsWith('gpt-4'))
     return <div className='flex items-center justify-center'><OpenaiViolet className={cn('h-5 w-5', className)} /></div>
 
-  if (provider?.icon_small) {
+  const iconUrl = provider?.icon_small ? renderI18nObject(provider.icon_small, language) : ''
+
+  if (iconUrl && !imgError) {
     return (
       <div className={cn('flex h-5 w-5 items-center justify-center', isDeprecated && 'opacity-50', className)}>
-        <img alt='model-icon' src={renderI18nObject(provider.icon_small, language)} className={iconClassName} />
+        <img
+          alt='model-icon'
+          src={iconUrl}
+          className={cn('h-5 w-5 object-contain', iconClassName)}
+          onError={() => setImgError(true)}
+        />
       </div>
     )
   }

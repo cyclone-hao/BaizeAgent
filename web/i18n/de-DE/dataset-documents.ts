@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Dokumente',
-    desc: 'Alle Dateien des Wissens werden hier angezeigt, und das gesamte Wissen kann mit Dify-Zitaten verknüpft oder über das Chat-Plugin indiziert werden.',
+    desc: 'Alle Dateien des Wissens werden hier angezeigt, und das gesamte Wissen kann mit AgentFlow-Zitaten verknüpft oder über das Chat-Plugin indiziert werden.',
     addFile: 'Datei hinzufügen',
     addPages: 'Seiten hinzufügen',
     table: {

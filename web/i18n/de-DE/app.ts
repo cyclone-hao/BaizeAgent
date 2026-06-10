@@ -158,7 +158,7 @@ const translation = {
     },
     aliyun: {
       title: 'Cloud-Monitor',
-      description: 'Die vollständig verwaltete und wartungsfreie Observability-Plattform von Alibaba Cloud ermöglicht eine sofortige Überwachung, Verfolgung und Bewertung von Dify-Anwendungen.',
+      description: 'Die vollständig verwaltete und wartungsfreie Observability-Plattform von Alibaba Cloud ermöglicht eine sofortige Überwachung, Verfolgung und Bewertung von AgentFlow-Anwendungen.',
     },
   },
   answerIcon: {

@@ -45,7 +45,7 @@ const translation = {
   notice: {
     expired: {
       summary: {
-        line1: '您仍然可以訪問和使用 Dify。',
+        line1: '您仍然可以訪問和使用 AgentFlow。',
         line2: '然而，您已不再有資格獲得新的教育折扣優惠券。',
       },
       title: '您的教育狀態已過期',

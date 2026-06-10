@@ -38,4 +38,4 @@ export type MetadataItemWithEdit = MetadataItemWithValue & {
   updateType?: UpdateType
 }
 
-export const isShowManageMetadataLocalStorageKey = 'dify-isShowManageMetadata'
+export const isShowManageMetadataLocalStorageKey = 'agentflow-isShowManageMetadata'

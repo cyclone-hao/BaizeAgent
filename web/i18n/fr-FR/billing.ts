@@ -121,7 +121,7 @@ const translation = {
         4: 'SSO',
         1: 'Autorisation de licence commerciale',
         2: 'Fonctionnalités exclusives à l’entreprise',
-        5: 'SLA négociés par les partenaires Dify',
+        5: 'SLA négociés par les partenaires AgentFlow',
         8: 'Assistance technique professionnelle',
         7: 'Mises à jour et maintenance par AgentFlow officiellement',
         0: 'Solutions de déploiement évolutives de niveau entreprise',
@@ -135,7 +135,7 @@ const translation = {
       features: {
         1: 'Espace de travail unique',
         0: 'Toutes les fonctionnalités de base publiées dans le dépôt public',
-        2: 'Conforme à la licence Open Source Dify',
+        2: 'Conforme à la licence Open Source AgentFlow',
       },
       name: 'Communauté',
       btnText: 'Commencez avec la communauté',

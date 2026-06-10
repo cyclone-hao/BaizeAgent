@@ -1,7 +1,7 @@
 const translation = {
   title: 'Orodja',
   createCustomTool: 'Ustvari prilagojeno orodje',
-  customToolTip: 'Izvedite več o prilagojenih orodjih Dify',
+  customToolTip: 'Izvedite več o prilagojenih orodjih AgentFlow',
   type: {
     all: 'Vsa',
     builtIn: 'Vgrajena',

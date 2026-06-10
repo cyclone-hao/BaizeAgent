@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Dostosuj markę aplikacji internetowej',
-    removeBrand: 'Usuń zasilane przez Dify',
+    removeBrand: 'Usuń zasilane przez AgentFlow',
     changeLogo: 'Zmień obraz marki zasilany przez Brand',
     changeLogoTip: 'Format SVG lub PNG o minimalnym rozmiarze 40x40px',
   },

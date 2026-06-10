@@ -68,7 +68,7 @@ const translation = {
           copyRightPlaceholder: 'ป้อนชื่อผู้เขียนหรือองค์กร',
           privacyPolicy: 'นโยบายความเป็นส่วนตัว',
           privacyPolicyPlaceholder: 'ป้อนลิงก์นโยบายความเป็นส่วนตัว',
-          privacyPolicyTip: 'ช่วยให้ผู้เยี่ยมชมเข้าใจข้อมูลที่แอปพลิเคชันรวบรวม โปรดดูนโยบาย<privacyPolicyLink>ความเป็นส่วนตัว</privacyPolicyLink>ของ Dify',
+          privacyPolicyTip: 'ช่วยให้ผู้เยี่ยมชมเข้าใจข้อมูลที่แอปพลิเคชันรวบรวม โปรดดูนโยบาย<privacyPolicyLink>ความเป็นส่วนตัว</privacyPolicyLink>ของ AgentFlow',
           customDisclaimer: 'ข้อจํากัดความรับผิดชอบที่กําหนดเอง',
           customDisclaimerPlaceholder: 'ป้อนข้อความข้อจํากัดความรับผิดชอบที่กําหนดเอง',
           customDisclaimerTip: 'ข้อความปฏิเสธความรับผิดชอบที่กําหนดเองจะแสดงที่ฝั่งไคลเอ็นต์ โดยให้ข้อมูลเพิ่มเติมเกี่ยวกับแอปพลิเคชัน',
