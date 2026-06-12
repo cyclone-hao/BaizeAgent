@@ -9,3 +9,173 @@ html[data-theme="dark"] .githubIcon {
 .googleIcon {
   background: center/contain url('./assets/google.svg') no-repeat;
 }
+
+/* ===== Animations ===== */
+
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(25px, -20px) scale(1.04); }
+  66% { transform: translate(-18px, 12px) scale(0.96); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, 18px) scale(1.03); }
+  66% { transform: translate(12px, -20px) scale(0.97); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes particle-float-1 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  25% { transform: translate(12px, -18px); opacity: 0.6; }
+  50% { transform: translate(-8px, -30px); opacity: 0.3; }
+  75% { transform: translate(15px, -12px); opacity: 0.5; }
+}
+
+@keyframes particle-float-2 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+  25% { transform: translate(-15px, -10px); opacity: 0.5; }
+  50% { transform: translate(10px, -25px); opacity: 0.2; }
+  75% { transform: translate(-8px, -18px); opacity: 0.4; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0; }
+  100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+/* ===== Animation Classes ===== */
+
+.orb-1 { animation: float-slow 22s ease-in-out infinite; }
+.orb-2 { animation: float-medium 28s ease-in-out infinite; }
+.orb-3 { animation: float-gentle 6s ease-in-out infinite; }
+
+/* Staggered entrance */
+.anim-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.anim-delay-1 { animation-delay: 0.1s; }
+.anim-delay-2 { animation-delay: 0.2s; }
+.anim-delay-3 { animation-delay: 0.35s; }
+.anim-delay-4 { animation-delay: 0.5s; }
+.anim-delay-5 { animation-delay: 0.65s; }
+.anim-delay-6 { animation-delay: 0.8s; }
+
+/* Particles */
+.particle-1 { animation: particle-float-1 8s ease-in-out infinite; }
+.particle-2 { animation: particle-float-2 10s ease-in-out infinite; }
+.particle-3 { animation: particle-float-1 12s ease-in-out infinite reverse; }
+.particle-4 { animation: particle-float-2 9s ease-in-out infinite reverse; }
+
+/* Heading shimmer */
+.heading-shimmer {
+  background: linear-gradient(
+    90deg,
+    #101828 0%,
+    #101828 40%,
+    #6938ef 50%,
+    #101828 60%,
+    #101828 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* Feature card effects */
+.feature-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -8px rgba(105, 56, 239, 0.1), 0 4px 16px rgba(16, 24, 40, 0.06);
+  border-color: rgba(105, 56, 239, 0.2);
+}
+
+.feature-card:hover .feature-icon {
+  background: #ece5ff;
+  transform: scale(1.05);
+}
+
+.feature-icon {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Login button */
+.btn-login {
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4), 0 0 0 0 rgba(16, 185, 129, 0);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5), 0 0 0 4px rgba(16, 185, 129, 0.12);
+  transform: translateY(-2px);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Modal */
+.modal-backdrop {
+  animation: fade-in 0.2s ease-out;
+}
+
+.modal-content {
+  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-glass {
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  box-shadow: 0 24px 64px -16px rgba(16, 24, 40, 0.14), 0 8px 24px -8px rgba(16, 24, 40, 0.08);
+}
+
+/* Decorative line animation */
+.deco-line {
+  background: linear-gradient(90deg, transparent, #6938ef, transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  overflow-y: auto;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;                /* Chrome/Safari */
+}

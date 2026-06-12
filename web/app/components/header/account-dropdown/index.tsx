@@ -13,7 +13,7 @@ import {
   RiTShirt2Line,
 } from '@remixicon/react'
 import Link from 'next/link'
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Portal, Transition } from '@headlessui/react'
 import Indicator from '../indicator'
 import AccountAbout from '../account-about'
 import Support from './support'
@@ -81,13 +81,15 @@ export default function AppSelector() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <MenuItems
-                  className="
-                    absolute right-0 mt-1.5 w-60 max-w-80
-                    origin-top-right divide-y divide-divider-subtle rounded-xl bg-components-panel-bg-blur shadow-lg
-                    backdrop-blur-sm focus:outline-none
-                  "
-                >
+                <Portal>
+                  <MenuItems
+                    className="
+                      fixed z-50 w-60 max-w-80
+                      origin-top-right divide-y divide-divider-subtle rounded-xl bg-components-panel-bg-blur shadow-lg
+                      backdrop-blur-sm focus:outline-none
+                    "
+                    anchor={{ to: 'bottom end', gap: 6 }}
+                  >
                   <div className="px-1 py-1">
                     <MenuItem disabled>
                       <div className='flex flex-nowrap items-center py-2 pl-3 pr-2'>
@@ -184,7 +186,8 @@ export default function AppSelector() {
                       </div>
                     </div>
                   </MenuItem>
-                </MenuItems>
+                  </MenuItems>
+                </Portal>
               </Transition>
             </>
           )

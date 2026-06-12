@@ -6,16 +6,15 @@ import { RiContractLine, RiDoorLockLine, RiErrorWarningFill } from '@remixicon/r
 import Loading from '../components/base/loading'
 import MailAndCodeAuth from './components/mail-and-code-auth'
 import MailAndPasswordAuth from './components/mail-and-password-auth'
+import PhoneLogin from './components/phone-login'
 import SocialAuth from './components/social-auth'
 import SSOAuth from './components/sso-auth'
 import cn from '@/utils/classnames'
 import { invitationCheck } from '@/service/common'
 import { LicenseStatus } from '@/types/feature'
 import Toast from '@/app/components/base/toast'
-import { IS_CE_EDITION } from '@/config'
 import { useGlobalPublicStore } from '@/context/global-public-context'
 import { resolvePostLoginRedirect } from './utils/post-login-redirect'
-import Split from './split'
 
 const NormalForm = () => {
   const { t } = useTranslation()
@@ -28,6 +27,7 @@ const NormalForm = () => {
   const [isLoading, setIsLoading] = useState(true)
   const { systemFeatures } = useGlobalPublicStore()
   const [authType, updateAuthType] = useState<'code' | 'password'>('password')
+  const [loginMethod, setLoginMethod] = useState<'email' | 'phone'>('email')
   const [showORLine, setShowORLine] = useState(false)
   const [allMethodsAreDisabled, setAllMethodsAreDisabled] = useState(false)
   const [workspaceName, setWorkSpaceName] = useState('')
@@ -128,18 +128,15 @@ const NormalForm = () => {
 
   return (
     <>
-      <div className="mx-auto mt-8 w-full">
-        {isInviteLink
-          ? <div className="mx-auto w-full">
-            <h2 className="title-4xl-semi-bold text-text-primary">{t('login.join')}{workspaceName}</h2>
-            {!systemFeatures.branding.enabled && <p className='body-md-regular mt-2 text-text-tertiary'>{t('login.joinTipStart')}{workspaceName}{t('login.joinTipEnd')}</p>}
+      <div className="mx-auto w-full">
+        {isInviteLink && (
+          <div className="mb-6">
+            <p className="text-[15px] font-medium text-[#101828]">{t('login.join')}{workspaceName}</p>
+            {!systemFeatures.branding.enabled && <p className="mt-1 text-[13px] text-[#667085]">{t('login.joinTipStart')}{workspaceName}{t('login.joinTipEnd')}</p>}
           </div>
-          : <div className="mx-auto w-full">
-            <h2 className="title-4xl-semi-bold text-text-primary">{t('login.pageTitle')}</h2>
-            {!systemFeatures.branding.enabled && <p className='body-md-regular mt-2 text-text-tertiary'>{t('login.welcome')}</p>}
-          </div>}
+        )}
         <div className="relative">
-          <div className="mt-6 flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             {systemFeatures.enable_social_oauth_login && <SocialAuth />}
             {systemFeatures.sso_enforced_for_signin && <div className='w-full'>
               <SSOAuth protocol={systemFeatures.sso_enforced_for_signin_protocol} />
@@ -153,33 +150,50 @@ const NormalForm = () => {
               <div className="h-px flex-1 bg-gradient-to-l from-background-gradient-mask-transparent to-divider-regular"></div>
             </div>
           </div>}
-          {
-            (systemFeatures.enable_email_code_login || systemFeatures.enable_email_password_login) && <>
+
+          {/* 邮箱/手机号 Tab 切换 */}
+          <div className="mb-4 mt-4 flex gap-1 rounded-lg bg-[#f4f3fb] p-1">
+            <button
+              type="button"
+              onClick={() => setLoginMethod('email')}
+              className={`flex-1 rounded-md py-2 text-[13px] font-medium transition-all ${
+                loginMethod === 'email'
+                  ? 'bg-white text-[#6938ef] shadow-sm'
+                  : 'text-[#667085] hover:text-[#344054]'
+              }`}
+            >邮箱登录</button>
+            <button
+              type="button"
+              onClick={() => setLoginMethod('phone')}
+              className={`flex-1 rounded-md py-2 text-[13px] font-medium transition-all ${
+                loginMethod === 'phone'
+                  ? 'bg-white text-[#6938ef] shadow-sm'
+                  : 'text-[#667085] hover:text-[#344054]'
+              }`}
+            >手机号登录</button>
+          </div>
+
+          {loginMethod === 'email' && (
+            (systemFeatures.enable_email_code_login || systemFeatures.enable_email_password_login) ? <>
               {systemFeatures.enable_email_code_login && authType === 'code' && <>
                 <MailAndCodeAuth isInvite={isInviteLink} />
                 {systemFeatures.enable_email_password_login && <div className='cursor-pointer py-1 text-center' onClick={() => { updateAuthType('password') }}>
-                  <span className='system-xs-medium text-components-button-secondary-accent-text'>{t('login.usePassword')}</span>
+                  <span className='text-[13px] font-medium text-[#6938ef] hover:text-[#5b2ed6]'>{t('login.usePassword')}</span>
                 </div>}
               </>}
               {systemFeatures.enable_email_password_login && authType === 'password' && <>
                 <MailAndPasswordAuth isInvite={isInviteLink} isEmailSetup={systemFeatures.is_email_setup} allowRegistration={systemFeatures.is_allow_register} />
                 {systemFeatures.enable_email_code_login && <div className='cursor-pointer py-1 text-center' onClick={() => { updateAuthType('code') }}>
-                  <span className='system-xs-medium text-components-button-secondary-accent-text'>{t('login.useVerificationCode')}</span>
+                  <span className='text-[13px] font-medium text-[#6938ef] hover:text-[#5b2ed6]'>{t('login.useVerificationCode')}</span>
                 </div>}
               </>}
-              <Split className='mb-5 mt-4' />
-            </>
-          }
-
-          {systemFeatures.is_allow_register && authType === 'password' && (
-            <div className='mb-3 text-[13px] font-medium leading-4 text-text-secondary'>
-              <span>{t('login.signup.noAccount')}</span>
-              <Link
-                className='text-text-accent'
-                href='/signup'
-              >{t('login.signup.signUp')}</Link>
-            </div>
+            </> : null
           )}
+
+          {loginMethod === 'phone' && (
+            <PhoneLogin isInvite={isInviteLink} />
+          )}
+
           {allMethodsAreDisabled && <>
             <div className="rounded-lg bg-gradient-to-r from-workflow-workflow-progress-bg-1 to-workflow-workflow-progress-bg-2 p-4">
               <div className='shadows-shadow-lg mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-components-card-bg shadow'>
@@ -188,25 +202,22 @@ const NormalForm = () => {
               <p className='system-sm-medium text-text-primary'>{t('login.noLoginMethod')}</p>
               <p className='system-xs-regular mt-1 text-text-tertiary'>{t('login.noLoginMethodTip')}</p>
             </div>
-            <div className="relative my-2 py-2">
-              <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                <div className='h-px w-full bg-gradient-to-r from-background-gradient-mask-transparent via-divider-regular to-background-gradient-mask-transparent'></div>
-              </div>
-            </div>
           </>}
-          {!systemFeatures.branding.enabled && <>
-            <div className="system-xs-regular mt-2 block w-full text-text-tertiary">
-              {t('login.tosDesc')}
-            </div>
-            {IS_CE_EDITION && <div className="w-hull system-xs-regular mt-2 block text-text-tertiary">
-              {t('login.goToInit')}
-              &nbsp;
-              <Link
-                className='system-xs-medium text-text-secondary hover:underline'
-                href='/install'
-              >{t('login.setAdminAccount')}</Link>
-            </div>}
-          </>}
+
+          {/* Footer links */}
+          <div className="mt-5 flex items-center justify-center gap-4 text-[13px]">
+            <span className="text-[#667085]">
+              没有账户？
+              <Link className="ml-1 font-medium text-[#6938ef] hover:text-[#5b2ed6]" href='/signup'>
+                立即注册
+              </Link>
+            </span>
+            {systemFeatures.is_email_setup && (
+              <Link className="font-medium text-[#6938ef] hover:text-[#5b2ed6]" href={`/reset-password?${searchParams.toString()}`}>
+                忘记密码
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </>

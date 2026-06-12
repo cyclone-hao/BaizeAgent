@@ -8,8 +8,6 @@ import {
   RiHammerLine,
   RiHome4Fill,
   RiHome4Line,
-  RiPlanetFill,
-  RiPlanetLine,
   RiRobot2Fill,
   RiRobot2Line,
 } from '@remixicon/react'
@@ -89,17 +87,9 @@ const GlobalSidebar = () => {
         />
         <SidebarNavItem
           expand={expand}
-          icon={<RiPlanetLine className="h-5 w-5" />}
-          activeIcon={<RiPlanetFill className="h-5 w-5" />}
-          text="Skills市场"
-          href="/explore/apps"
-          activeSegment="explore"
-        />
-        <SidebarNavItem
-          expand={expand}
           icon={<RiRobot2Line className="h-5 w-5" />}
           activeIcon={<RiRobot2Fill className="h-5 w-5" />}
-          text="工作室"
+          text="智能体编排"
           href="/apps"
           activeSegment={['apps', 'app']}
         />
@@ -107,25 +97,25 @@ const GlobalSidebar = () => {
           expand={expand}
           icon={<RiBook2Line className="h-5 w-5" />}
           activeIcon={<RiBook2Fill className="h-5 w-5" />}
-          text="知识库"
+          text="Graph知识库"
           href="/datasets"
           activeSegment="datasets"
         />
         <SidebarNavItem
           expand={expand}
-          icon={<RiHammerLine className="h-5 w-5" />}
-          activeIcon={<RiHammerFill className="h-5 w-5" />}
-          text="工具"
-          href="/tools"
-          activeSegment="tools"
+          icon={<Group className="h-5 w-5" />}
+          activeIcon={<Group className="h-5 w-5" />}
+          text="Skills市场"
+          href="/plugins"
+          activeSegment="plugins"
         />
         <SidebarNavItem
           expand={expand}
-          icon={<Group className="h-5 w-5" />}
-          activeIcon={<Group className="h-5 w-5" />}
-          text="插件"
-          href="/plugins"
-          activeSegment="plugins"
+          icon={<RiHammerLine className="h-5 w-5" />}
+          activeIcon={<RiHammerFill className="h-5 w-5" />}
+          text="MCP工具"
+          href="/tools"
+          activeSegment="tools"
         />
       </nav>
 

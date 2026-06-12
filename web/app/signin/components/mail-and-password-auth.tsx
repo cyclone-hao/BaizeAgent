@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -95,11 +94,11 @@ export default function MailAndPasswordAuth({ isInvite, isEmailSetup, allowRegis
   }
 
   return <form onSubmit={noop}>
-    <div className='mb-3'>
-      <label htmlFor="email" className="system-md-semibold my-2 text-text-secondary">
+    <div className='mb-5'>
+      <label htmlFor="email" className="text-[14px] font-medium text-[#344054]">
         {t('login.email')}
       </label>
-      <div className="mt-1">
+      <div className="mt-1.5">
         <Input
           value={email}
           onChange={e => setEmail(e.target.value)}
@@ -113,19 +112,11 @@ export default function MailAndPasswordAuth({ isInvite, isEmailSetup, allowRegis
       </div>
     </div>
 
-    <div className='mb-3'>
-      <label htmlFor="password" className="my-2 flex items-center justify-between">
-        <span className='system-md-semibold text-text-secondary'>{t('login.password')}</span>
-        <Link
-          href={`/reset-password?${searchParams.toString()}`}
-          className={`system-xs-regular ${isEmailSetup ? 'text-components-button-secondary-accent-text' : 'pointer-events-none text-components-button-secondary-accent-text-disabled'}`}
-          tabIndex={isEmailSetup ? 0 : -1}
-          aria-disabled={!isEmailSetup}
-        >
-          {t('login.forget')}
-        </Link>
+    <div className='mb-5'>
+      <label htmlFor="password">
+        <span className='text-[14px] font-medium text-[#344054]'>{t('login.password')}</span>
       </label>
-      <div className="relative mt-1">
+      <div className="relative mt-1.5">
         <Input
           id="password"
           value={password}
@@ -139,7 +130,7 @@ export default function MailAndPasswordAuth({ isInvite, isEmailSetup, allowRegis
           placeholder={t('login.passwordPlaceholder') || ''}
           tabIndex={2}
         />
-        <div className="absolute inset-y-0 right-0 flex items-center">
+        <div className="absolute inset-y-0 right-0 flex items-center pr-1">
           <Button
             type="button"
             variant='ghost'
@@ -151,13 +142,13 @@ export default function MailAndPasswordAuth({ isInvite, isEmailSetup, allowRegis
       </div>
     </div>
 
-    <div className='mb-2'>
+    <div className='mb-1'>
       <Button
         tabIndex={2}
         variant='primary'
         onClick={handleEmailPasswordLogin}
         disabled={isLoading || !email || !password}
-        className="w-full"
+        className="!h-[44px] w-full !text-[15px] !font-semibold"
       >{t('login.signBtn')}</Button>
     </div>
   </form>

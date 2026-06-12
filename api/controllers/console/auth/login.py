@@ -231,9 +231,45 @@ class RefreshTokenApi(Resource):
             return {"result": "fail", "data": str(e)}, 401
 
 
+class PhoneLoginApi(Resource):
+    """Resource for phone number login (no SMS, phone treated as username)."""
+
+    @setup_required
+    @email_password_login_enabled
+    def post(self):
+        """Authenticate user with phone number and password."""
+        parser = reqparse.RequestParser()
+        parser.add_argument("phone", type=str, required=True, location="json")
+        parser.add_argument("password", type=str, required=True, location="json")
+        parser.add_argument("remember_me", type=bool, required=False, default=False, location="json")
+        args = parser.parse_args()
+
+        phone = args["phone"].strip()
+        if not phone:
+            return {"result": "fail", "data": "请输入手机号"}, 400
+
+        try:
+            account = AccountService.authenticate_phone(phone, args["password"])
+        except services.errors.account.AccountLoginError:
+            raise AccountBannedError()
+        except services.errors.account.AccountPasswordError:
+            raise AuthenticationFailedError()
+
+        tenants = TenantService.get_join_tenants(account)
+        if len(tenants) == 0:
+            return {
+                "result": "fail",
+                "data": "workspace not found, please contact system admin",
+            }
+
+        token_pair = AccountService.login(account=account, ip_address=extract_remote_ip(request))
+        return {"result": "success", "data": token_pair.model_dump()}
+
+
 api.add_resource(LoginApi, "/login")
 api.add_resource(LogoutApi, "/logout")
 api.add_resource(EmailCodeLoginSendEmailApi, "/email-code-login")
 api.add_resource(EmailCodeLoginApi, "/email-code-login/validity")
 api.add_resource(ResetPasswordSendEmailApi, "/reset-password")
 api.add_resource(RefreshTokenApi, "/refresh-token")
+api.add_resource(PhoneLoginApi, "/phone-login")

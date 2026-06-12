@@ -1,0 +1,220 @@
+# AgentFlow 二次开发更新日志
+
+## 2026-06-12 — 全局侧边栏菜单重排与重命名
+
+### P0 — 用户直接可见
+
+#### 侧边栏菜单顺序调整与名称更新
+- `app/components/global-sidebar/index.tsx` — 菜单项重新排序：首页 → 智能体编排 → Graph知识库 → Skills市场 → MCP工具
+- 原"工作室"重命名为"智能体编排"（路由 /apps 不变）
+- 原"知识库"重命名为"Graph知识库"（路由 /datasets 不变）
+- 原"插件"重命名为"Skills市场"（路由 /plugins 不变）
+- 原"工具"重命名为"MCP工具"（路由 /tools 不变）
+- 移除原"Skills市场"菜单项（指向 /explore/apps），清理未使用的 RiPlanetLine/RiPlanetFill 图标导入
+
+## 2026-06-12 — 登录页新增手机号登录 + 注册页新增手机号注册（按用户名处理，暂不接短信）
+
+### P0 — 用户直接可见
+
+#### 登录弹窗新增「邮箱登录 / 手机号登录」Tab 切换
+- `app/signin/normal-form.tsx` — 新增 `loginMethod` 状态（'email' | 'phone'），在 OR 分割线下方添加 Tab 切换栏（紫色高亮），条件渲染邮箱表单或手机号表单
+- `app/signin/components/phone-login.tsx` — 新建手机号登录组件：手机号输入（`/^1[3-9]\d{9}$/` 格式校验）+ 密码输入 + 登录按钮，调用 `/console/api/phone-login`
+- `app/signup/page.tsx` — 注册页新增「邮箱注册 / 手机号注册」Tab，手机号注册流程：输入手机号 → 设置密码（2步，无验证码），调用 `/console/api/phone-register`
+
+### P1 — 外部链接与接口
+
+#### 后端新增手机号登录/注册 API
+- `api/controllers/console/auth/login.py` — 新增 `PhoneLoginApi` 类，`POST /console/api/phone-login`，接受 `{ phone, password }`，调用 `AccountService.authenticate_phone()`
+- `api/controllers/console/auth/phone_register.py` — 新建手机号注册接口 `POST /console/api/phone-register`，接受 `{ phone, password, password_confirm }`，无需短信验证码，直接创建账户
+- `api/controllers/console/__init__.py` — 注册 `phone_register` 模块
+- `api/services/account_service.py` — 新增 `AccountService.authenticate_phone(phone, password)` 静态方法，按 phone 字段查找账户并校验密码
+- `api/models/account.py` — Account 模型新增 `phone: Mapped[str | None] = mapped_column(String(32), nullable=True)`，添加 `account_phone_idx` 索引
+- `api/migrations/versions/a1b2c3d4e5f6_add_phone_to_accounts.py` — 新建 Alembic 迁移文件，向 accounts 表添加 phone 列 + 索引
+
+### 设计说明
+- 手机号注册暂不接入短信验证码，手机号作为普通用户名处理
+- 手机号注册账户的 email 字段使用 `{phone}@phone.local` 占位格式
+- 后续接入短信验证码时，需修改 phone_register.py 增加 SMS 发送和校验流程
+
+## 2026-06-09 — Dify 品牌全面替换为 AgentFlow
+
+### Bug Fix
+- `i18n/en-US/billing.ts:101` — 修复 i18n 批量替换时引入的 smart quote（'）语法错误，"they're" → "they are"
+- 全量修复 66 个 i18n 文件中的 curly quotes（U+2018/U+2019 → U+0027，U+201C/U+201D → U+0022），涉及所有语言目录
+- 修复 155 个 i18n 文件中 1480 行因 curly quote → 普通引号后导致的未转义撇号问题（如 don't → don\'t）
+- **i18n 重做方案**：git revert i18n 目录到 HEAD，使用安全的 Python 脚本仅替换字符串值中的 Dify→AgentFlow（267 处），不触碰引号/格式
+- 修复 git HEAD 中已存在的 `''` 双引号结尾问题（206 文件 346 行），恢复正确的 `'` + `,` 结构
+- 修复 unterminated string 问题（16 文件中 `key: '` → `key: ''`）
+- 修复缺失逗号问题（escaped-quote 结尾和常规结尾共 2 处）
+
+### P0 — 用户直接可见
+
+#### Logo 统一
+- `app/components/base/logo/dify-logo.tsx` — DifyLogo 组件改为使用 logo1.png（替代原 SVG），所有 10+ 处引用自动生效
+- `app/signin/_header.tsx` — 登录页头部 logo 从 DifyLogo SVG 替换为 logo1.png
+- `app/signin/branding-panel.tsx` — 登录页左侧品牌面板使用 logo1.png
+- `app/components/global-sidebar/index.tsx` — 全局侧边栏左上角 logo 使用 logo1.png + "AgentFlow" 紫色文字（text-primary-600, text-xs）
+- `app/account/(commonLayout)/header.tsx` — alt 文本 "Dify logo" → "AgentFlow logo"
+
+#### 页面标题
+- `hooks/use-document-title.ts` — 默认标题后缀 Dify → AgentFlow（此前已完成）
+- `hooks/use-document-title.spec.ts` — 测试用例期望值 Dify → AgentFlow
+- `app/components/datasets/list/datasets.tsx` — document.title 硬编码 Dify → AgentFlow
+- `public/_offline.html` — <title> Dify - Offline → AgentFlow - Offline
+
+#### i18n 文案（21 个语言目录，~300+ 处）
+- 批量替换规则：
+  - Dify → AgentFlow
+  - Dify Cloud → AgentFlow Cloud
+  - Dify Marketplace / Dify 市场 → AgentFlow Marketplace / AgentFlow 插件市场
+  - Powered by Dify → Powered by AgentFlow
+  - Dify 知识库 → AgentFlow 知识库
+  - Verified by Dify → Verified by AgentFlow
+  - Dify Chatbot → AgentFlow Chatbot
+  - Dify API → AgentFlow API
+  - Dify Open Source License → AgentFlow Open Source License
+  - 等其他变体
+- 涉及语言：en-US, zh-Hans, de-DE, es-ES, fa-IR, fr-FR, hi-IN, id-ID, it-IT, ja-JP, ko-KR, pl-PL, pt-BR, ro-RO, ru-RU, sl-SI, th-TH, tr-TR, uk-UA, vi-VN, zh-Hant
+
+#### 硬编码文案
+- `app/components/custom/custom-web-app-brand/index.tsx` — placeholder "Talk to Dify" → "Talk to AgentFlow"
+- `app/components/app/overview/customize/index.tsx` — "<Web API Key From Dify>" → "<Web API Key From AgentFlow>"
+- `app/components/workflow/utils/gen-node-meta-data.ts` — 默认 author 'Dify' → 'AgentFlow'
+
+### P1 — 外部链接与接口
+
+#### 外部链接清理
+- `app/components/apps/footer.tsx` — 移除 GitHub/Discord 社区链接
+- `app/components/header/github-star/index.tsx` — 禁用 GitHub Star 组件（返回 null）
+- `app/components/billing/config.ts` — 清除 typeform/github URL
+- `app/components/billing/pricing/index.tsx` — 清除 dify.ai/pricing URL
+- `context/i18n.ts` — docs.dify.ai 基准 URL 清空
+- `app/components/app/overview/apikey-info-panel/index.tsx` — 移除 cloud.dify.ai 链接
+- `app/signin/one-more-step.tsx` — 邮箱 request-invitation@langgenius.ai → support@agentflow.ai
+- `app/components/header/account-dropdown/support.tsx` — 清除 GitHub/Discord 链接
+- `app/components/goto-anything/actions/commands/feedback.tsx` — 清除 GitHub discussions 链接
+- 12+ 文件中 docs.dify.ai 文档链接全部替换为 '#'
+- `app/components/tools/mcp/mock.ts` — cloud.dify.dev URL 替换为 '#'
+
+#### 嵌入式聊天 iframe 通信标识
+- `app/components/app/overview/embedded/index.tsx` — difyChatbotConfig → agentflowChatbotConfig, dify-chatbot-bubble-* → agentflow-chatbot-bubble-*, Chrome 插件链接清除
+- `app/components/base/chat/embedded-chatbot/utils.ts` — isDify() → isAgentFlow(), dify.ai → agentflow.ai
+- `app/components/base/chat/embedded-chatbot/chat-wrapper.tsx` — isDify → isAgentFlow 引用更新
+- `app/components/base/chat/embedded-chatbot/header/index.tsx` — postMessage 类型 dify-chatbot-* → agentflow-chatbot-*
+- `app/components/base/chat/embedded-chatbot/index.tsx` — isDify → isAgentFlow 引用更新
+
+### P2 — 内部标识符
+
+- `package.json` — name "dify-web" → "agentflow-web"
+- `app/components/datasets/metadata/types.ts` — localStorage key "dify-isShowManageMetadata" → "agentflow-isShowManageMetadata"
+- `config/index.ts` — 文件扩展名 ".difypkg,.difybndl" → ".afpkg,.afbndl"
+- `app/components/datasets/create/website/base/mock-crawl-result.ts` — mock 数据标题 Dify → AgentFlow
+
+### 故意保留（后端协议兼容）
+- `X-Dify-Version` HTTP header — 插件市场 API 协议字段
+- `minimum_dify_version` — 插件类型定义中的后端字段
+- `dify_model_identity === '__dify__file__'` — 后端文件协议标识
+- `langgenius/*` 模型提供者 ID — 后端插件系统标识
+- `saas-dify-blue-*` CSS token — 内部变量名，用户不可见
+- `DifyLogo` 组件名/文件名 — 代码级引用名，用户不可见
+
+## 2026-06-09 — 浏览器标签页图标替换
+
+### P0 — 用户直接可见
+
+#### Favicon 图标
+- `public/favicon.ico` — 替换为 smalllogo2.png
+- `public/favicon.png` — 替换为 smalllogo2.png
+- `public/icon-192x192.png` — 替换为 smalllogo2.png（用于浏览器标签页图标）
+- `public/apple-touch-icon.png` — 替换为 smalllogo2.png（用于 Apple 设备书签图标）
+
+## 2026-06-09 — 首页底部版权信息替换
+
+### P0 — 用户直接可见
+
+#### 首页底部信息
+- `app/components/apps/footer.tsx` — 移除"参与社区"和"与团队成员、贡献者和开发者在不同频道中交流"内容
+- 添加版权信息：© 2026 中国广电 - 中广数智科技（北京）有限责任公司
+- 移除 i18n 依赖，改为硬编码中文版权信息
+
+## 2026-06-12 — 创建/完善 CLAUDE.md 项目指导文件
+
+### P2 — 内部标识符
+- `CLAUDE.md` — 创建完整的项目指导文件，包含：
+  - 二次开发项目上下文（AgentFlow 品牌、SELF_HOSTED 部署环境）
+  - 强制更新日志规则（每次改动必须记录到 web/update.log）
+  - 前后端开发命令（含单测运行方式）
+  - 后端架构概览（Flask + SQLAlchemy + Celery，控制器分层）
+  - 用户模型说明（Account vs EndUser 两类用户体系）
+  - 前端架构概览（Next.js 15 + SWR + Zustand + i18n）
+  - 保留的 Dify 标识符清单（后端协议兼容）
+  - 二次开发注意事项（嵌入聊天域名检测、市场URL、首页AI助手配置等）
+- `CLAUDE.md` — 补充单测运行命令、部署环境信息、自定义首页说明、二次开发注意事项
+
+## 2026-06-12 — 系统调研：模型价格管理、用户体系、系统配置、插件系统、探索应用
+
+### 调研结论
+
+#### 1. 模型价格管理权限分析
+- 模型价格管理是 Owner/Admin 专属功能，普通用户不可操作
+- 终端用户（EndUser）完全无法接触价格信息，超额时只收到 ProviderQuotaExceededError
+- Cloud版通过外部 BILLING_API_URL 处理计费，SELF_HOSTED版计费功能不生效
+- 三种配额单位：TOKENS、CREDITS、TIMES，按 Provider 维度扣减
+
+#### 2. 用户体系梳理
+- Account（控制台用户）：工作空间成员，5种角色(owner/admin/editor/normal/dataset_operator)
+- EndUser（终端用户）：使用AI应用的人，无角色体系，按 app+tenant 维度追踪
+- 关系模型：Account ↔ TenantAccountJoin ↔ Tenant（多对多）
+- 一个用户可加入多个工作空间，每个工作空间角色独立
+
+#### 3. 系统配置全景（5层架构）
+- 第1层：系统级（.env → DifyConfig，30+子配置组）
+- 第2层：功能开关（FeatureService → /features 接口，租户级+系统级）
+- 第3层：工作空间配置（成员/模型供应商/插件/工具/品牌）
+- 第4层：应用配置（模型参数/Prompt/知识库/工具/WebApp外观）
+- 第5层：用户个人配置（头像/语言/主题/时区）
+- 关键门控：EDITION、ENTERPRISE_ENABLED、BILLING_ENABLED、MARKETPLACE_ENABLED
+
+#### 4. 插件系统分析（重构难点）
+- 三件套微服务架构：Dify API + Plugin Daemon(:5002) + Marketplace(marketplace.dify.ai)
+- Plugin Daemon 是外部二进制，无法修改内部逻辑
+- 插件类型：Model、Tool、Extension、AgentStrategy、Datasource
+- 安装来源：Marketplace、GitHub、本地.afpkg、远程调试
+- 插件通过 Backwards Invocation 回调 Dify 能力（LLM/工具/工作流节点）
+- 建议策略：短期关闭Marketplace改本地安装，中期建私有仓库，长期fork Daemon
+
+#### 5. 探索应用分析（可完全重构）
+- 三种数据源模式：remote(tmpl.dify.ai)、db(数据库)、builtin(硬编码JSON)
+- db模式最适合二次开发：设置 HOSTED_FETCH_APP_TEMPLATES_MODE=db
+- 探索应用本质是 DSL 克隆：获取原应用YAML导出 → import创建副本
+- Admin API(/admin/insert-explore-apps)仅Cloud版可用
+- 自定义分类只需改 i18n + Category 组件
+
+### 重构路线图
+- Phase 1：探索应用→AgentFlow应用中心(db模式+自定义模板+改分类)、关闭Marketplace、清理残留标识
+- Phase 2：重做插件管理页面、自建插件仓库、打包预装插件、工作流模板中文化
+- Phase 3：Fork Plugin Daemon、自建插件生态、广电特色功能模块
+
+### 产出文件
+- `CLAUDE.md` — 项目指导文件（已完善）
+- `web/RESEARCH.md` — 详细调研笔记（本次新建）
+
+## 2026-06-12 — 登录页（/signin）白底着陆页 + 弹窗登录（参照中国广电云风格）
+
+### P0 — 用户直接可见
+
+#### 登录页全新白底企业风格着陆页 + 弹窗模式
+- `app/signin/layout.tsx` — 全新布局：浅灰背景（#fafbfc）+ 左上角 logo + 紫色 "AgentFlow" + 右上角紫色「登录」按钮 + 居中着陆内容 + 点击弹出白色登录弹窗
+- `app/signin/branding-panel.tsx` — 着陆页居中内容：大标题「构建 AI 智能体 / 从此 effortlessly」（紫色高亮）+ 4 张功能特性卡片（紫色图标 + 白底圆角卡片）
+- `app/signin/normal-form.tsx` — 移除重复标题（"登录 AgentFlow"）和欢迎语，弹窗已有 "欢迎登录"；保留初始化引导链接
+- `app/signin/components/mail-and-password-auth.tsx` — 表单间距加大、标签固定色值（#344054）、忘记密码链接改紫色（#6938ef）、登录按钮增高至 44px
+- `app/signin/page.module.css` — 浅紫色装饰光斑 + 弹窗入场动画 + 白色弹窗阴影 + 紫色登录按钮 hover 发光
+
+#### 设计特点
+- 浅灰白底（#fafbfc），干净明亮的企业级风格
+- 左上角：logo1.png + 紫色 "AgentFlow" 品牌名（#6938ef）
+- 右上角：紫色实心「登录」按钮，hover 带紫色光晕
+- 居中着陆内容：大标题 + 紫色高亮 + 4 张白底功能卡片（紫色 SVG 图标）
+- 弹窗：白色圆角卡片 + 柔和阴影 + "欢迎登录" + 完整表单
+- 淡紫色装饰光斑 + 轻微浮动动画
+- 移动端自适应

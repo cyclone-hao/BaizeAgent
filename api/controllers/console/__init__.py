@@ -99,6 +99,7 @@ from .auth import (
     login,
     oauth,
     oauth_server,
+    phone_register,
 )
 
 # Import billing controllers
@@ -273,6 +274,7 @@ __all__ = [
     "oauth_server",
     "ops_trace",
     "parameter",
+    "phone_register",
     "ping",
     "plugin",
     "rag_pipeline",

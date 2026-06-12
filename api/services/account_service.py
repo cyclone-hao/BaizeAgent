@@ -202,6 +202,27 @@ class AccountService:
         return account
 
     @staticmethod
+    def authenticate_phone(phone: str, password: str) -> Account:
+        """authenticate account with phone number and password (no SMS, phone treated as username)"""
+        account = db.session.query(Account).filter_by(phone=phone).first()
+        if not account:
+            raise AccountPasswordError("Invalid phone or password.")
+
+        if account.status == AccountStatus.BANNED.value:
+            raise AccountLoginError("Account is banned.")
+
+        if account.password is None or not compare_password(password, account.password, account.password_salt):
+            raise AccountPasswordError("Invalid phone or password.")
+
+        if account.status == AccountStatus.PENDING.value:
+            account.status = AccountStatus.ACTIVE.value
+            account.initialized_at = naive_utc_now()
+
+        db.session.commit()
+
+        return account
+
+    @staticmethod
     def update_account_password(account, password, new_password):
         """update account password"""
         if account.password and not compare_password(password, account.password, account.password_salt):

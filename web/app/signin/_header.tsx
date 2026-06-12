@@ -19,7 +19,7 @@ const Header = () => {
   const systemFeatures = useGlobalPublicStore(s => s.systemFeatures)
 
   return (
-    <div className='flex w-full items-center justify-between p-6'>
+    <div className='flex w-full items-center justify-between px-6 py-5'>
       {systemFeatures.branding.enabled && systemFeatures.branding.login_page_logo
         ? <img
           src={systemFeatures.branding.login_page_logo}
@@ -27,9 +27,9 @@ const Header = () => {
           alt='logo'
         />
         : <img
-          src='/logo/logo1.png'
-          className='block h-7 w-auto object-contain'
-          alt='AgentFlow logo'
+          src='/logo/logo-monochrome-white.svg'
+          className='block h-7 w-auto object-contain opacity-80'
+          alt='AgentFlow'
         />}
       <div className='flex items-center gap-1'>
         <LocaleSigninSelect
