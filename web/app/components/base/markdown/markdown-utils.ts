@@ -42,6 +42,16 @@ export const preprocessThinkTag = (content: string) => {
 }
 
 /**
+ * Preprocess citation references like [1], [2] into clickable anchor tags.
+ * Uses negative lookahead (?!\() to avoid matching markdown link syntax [text](url).
+ */
+export const preprocessCitations = (content: string) => {
+  if (typeof content !== 'string')
+    return content
+  return content.replace(/\[(\d+)\](?!\()/g, '<a href="#source-$1" class="citation-ref" data-ref="$1">[$1]</a>')
+}
+
+/**
  * Transforms a URI for use in react-markdown, ensuring security and compatibility.
  * This function is designed to work with react-markdown v9+ which has stricter
  * default URL handling.

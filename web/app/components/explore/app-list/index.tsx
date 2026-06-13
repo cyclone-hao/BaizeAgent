@@ -141,7 +141,7 @@ const Apps = ({
 
   return (
     <div className={cn(
-      'flex h-full flex-col border-l-[0.5px] border-divider-regular',
+      'flex h-full flex-col',
     )}>
 
       <div className='shrink-0 px-12 pt-6'>

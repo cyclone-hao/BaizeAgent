@@ -469,7 +469,7 @@ const ProviderConfigModal: FC<Props> = ({
                     </div>
                     <div className='my-8 flex h-8 items-center justify-between'>
                       <a
-                        className='flex items-center space-x-1 text-xs font-normal leading-[18px] text-[#155EEF]'
+                        className='flex items-center space-x-1 text-xs font-normal leading-[18px] text-[#8b5cf6]'
                         target='_blank'
                         href={docURL[type]}
                       >

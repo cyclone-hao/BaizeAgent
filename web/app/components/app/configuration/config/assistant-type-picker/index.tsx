@@ -94,11 +94,11 @@ const AssistantTypePicker: FC<Props> = ({
         <div className='flex items-center justify-between'>
           <div className='flex items-center '>
             <div className='mr-3 rounded-lg bg-gray-200 p-1 group-hover:bg-white'>
-              <Settings04 className='h-4 w-4 text-gray-600 group-hover:text-[#155EEF]' />
+              <Settings04 className='h-4 w-4 text-gray-600 group-hover:text-[#8b5cf6]' />
             </div>
-            <div className='text-sm font-medium leading-5 text-gray-900 group-hover:text-[#155EEF]'>{t('appDebug.agent.setting.name')}</div>
+            <div className='text-sm font-medium leading-5 text-gray-900 group-hover:text-[#8b5cf6]'>{t('appDebug.agent.setting.name')}</div>
           </div>
-          <ArrowUpRight className='h-4 w-4 text-gray-500 group-hover:text-[#155EEF]' />
+          <ArrowUpRight className='h-4 w-4 text-gray-500 group-hover:text-[#8b5cf6]' />
         </div>
         <div className='ml-9 text-xs font-normal leading-[18px] text-gray-500'>{t('appDebug.agent.setting.description')}</div>
       </div>

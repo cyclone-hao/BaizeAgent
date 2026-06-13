@@ -19,6 +19,12 @@ html[data-changing-theme] * {
   transition: none !important;
 }
 
+@layer base {
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -588,63 +594,63 @@ button:focus-within {
 
 /* border radius start */
 .radius-2xs {
-  border-radius: 2px;
-}
-
-.radius-xs {
   border-radius: 4px;
 }
 
-.radius-sm {
+.radius-xs {
   border-radius: 6px;
 }
 
-.radius-md {
+.radius-sm {
   border-radius: 8px;
 }
 
-.radius-lg {
-  border-radius: 10px;
-}
-
-.radius-xl {
+.radius-md {
   border-radius: 12px;
 }
 
-.radius-2xl {
+.radius-lg {
+  border-radius: 14px;
+}
+
+.radius-xl {
   border-radius: 16px;
 }
 
-.radius-3xl {
+.radius-2xl {
   border-radius: 20px;
 }
 
+.radius-3xl {
+  border-radius: 24px;
+}
+
 .radius-4xl {
-  border-radius: 24px;
-}
-
-.radius-5xl {
-  border-radius: 24px;
-}
-
-.radius-6xl {
   border-radius: 28px;
 }
 
-.radius-7xl {
+.radius-5xl {
   border-radius: 32px;
 }
 
-.radius-8xl {
+.radius-6xl {
+  border-radius: 36px;
+}
+
+.radius-7xl {
   border-radius: 40px;
 }
 
-.radius-9xl {
+.radius-8xl {
   border-radius: 48px;
 }
 
+.radius-9xl {
+  border-radius: 56px;
+}
+
 .radius-full {
-  border-radius: 64px;
+  border-radius: 9999px;
 }
 
 /* border radius end */

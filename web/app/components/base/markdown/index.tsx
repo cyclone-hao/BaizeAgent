@@ -7,7 +7,7 @@ import RemarkGfm from 'remark-gfm'
 import RehypeRaw from 'rehype-raw'
 import { flow } from 'lodash-es'
 import cn from '@/utils/classnames'
-import { customUrlTransform, preprocessLaTeX, preprocessThinkTag } from './markdown-utils'
+import { customUrlTransform, preprocessCitations, preprocessLaTeX, preprocessThinkTag } from './markdown-utils'
 import {
   AudioBlock,
   CodeBlock,
@@ -39,6 +39,7 @@ export const Markdown = (props: MarkdownProps) => {
   const { customComponents = {} } = props
   const latexContent = flow([
     preprocessThinkTag,
+    preprocessCitations,
     preprocessLaTeX,
   ])(props.content)
 
@@ -79,7 +80,41 @@ export const Markdown = (props: MarkdownProps) => {
           img: Img,
           video: VideoBlock,
           audio: AudioBlock,
-          a: Link,
+          a: ({ node, children, ...aProps }: any) => {
+            // Citation reference: render as clickable badge
+            if (aProps.className === 'citation-ref') {
+              return (
+                <a
+                  href={aProps.href}
+                  className="citation-ref"
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault()
+                    const targetId = aProps.href?.toString().substring(1)
+                    if (targetId) {
+                      const el = document.getElementById(targetId)
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                    }
+                  }}
+                  style={{
+                    fontSize: '0.75em',
+                    fontWeight: 600,
+                    padding: '0 4px',
+                    borderRadius: '4px',
+                    backgroundColor: 'rgb(238 242 255)',
+                    color: 'rgb(79 70 229)',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    verticalAlign: 'super',
+                    lineHeight: 1,
+                  }}
+                >
+                  {children}
+                </a>
+              )
+            }
+            // Regular link: use default Link component
+            return <Link node={node} {...aProps}>{children}</Link>
+          },
           p: Paragraph,
           button: MarkdownButton,
           form: MarkdownForm,

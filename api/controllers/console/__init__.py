@@ -63,6 +63,7 @@ from . import (
     setup,
     spec,
     version,
+    web_search,
 )
 
 # Import app controllers
@@ -291,6 +292,7 @@ __all__ = [
     "tags",
     "tool_providers",
     "version",
+    "web_search",
     "website",
     "workflow",
     "workflow_app_log",

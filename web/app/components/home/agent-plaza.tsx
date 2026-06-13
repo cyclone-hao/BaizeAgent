@@ -1,7 +1,9 @@
 'use client'
 
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
+import Link from 'next/link'
+import { RiArrowRightSLine, RiCompass3Line } from '@remixicon/react'
 import Category from '@/app/components/explore/category'
 import AppCard from '@/app/components/explore/app-card'
 import { fetchAppDetail, fetchAppList } from '@/service/explore'
@@ -18,8 +20,30 @@ import exploreI18n from '@/i18n/en-US/explore'
 
 const allCategoriesEn = exploreI18n.apps.allCategories
 
+// 根据屏幕宽度返回 2 行对应的卡片数量
+// 2xl(1536+): 4 cols → 8, xl(1280+): 3 cols → 6, 其他: 2 cols → 4
+function useDisplayLimit(): number {
+  const [limit, setLimit] = useState(8)
+  useEffect(() => {
+    const calc = () => {
+      const w = window.innerWidth
+      if (w >= 1536)
+        setLimit(8)
+      else if (w >= 1280)
+        setLimit(6)
+      else
+        setLimit(4)
+    }
+    calc()
+    window.addEventListener('resize', calc)
+    return () => window.removeEventListener('resize', calc)
+  }, [])
+  return limit
+}
+
 const AgentPlaza = () => {
   const { isCurrentWorkspaceEditor } = useAppContext()
+  const displayLimit = useDisplayLimit()
 
   const [currCategory, setCurrCategory] = useTabSearchParams({
     defaultTab: allCategoriesEn,
@@ -49,6 +73,9 @@ const AgentPlaza = () => {
       return []
     return allList.filter(item => currCategory === allCategoriesEn || item.category === currCategory)
   }, [currCategory, allList])
+
+  const displayList = filteredList.slice(0, displayLimit)
+  const hasMore = filteredList.length > displayLimit
 
   const [currApp, setCurrApp] = useState<App | null>(null)
   const [isShowCreateModal, setIsShowCreateModal] = useState(false)
@@ -102,12 +129,26 @@ const AgentPlaza = () => {
   return (
     <div>
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-base font-semibold text-text-secondary">智能体广场</h2>
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-primary-50 to-primary-100">
+            <RiCompass3Line className="h-3.5 w-3.5 text-primary-500" />
+          </div>
+          <h2 className="text-base font-semibold text-text-secondary">智能体广场</h2>
+        </div>
+        {hasMore && (
+          <Link
+            href="/explore/apps"
+            className="flex items-center gap-0.5 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
+          >
+            查看更多
+            <RiArrowRightSLine className="h-4 w-4" />
+          </Link>
+        )}
       </div>
 
       {/* Category Tabs */}
-      <div className="mb-4">
+      <div className="mb-3">
         <Category
           list={categories}
           value={currCategory}
@@ -117,15 +158,15 @@ const AgentPlaza = () => {
       </div>
 
       {/* App Grid */}
-      {filteredList.length === 0
+      {displayList.length === 0
         ? (
           <div className="rounded-xl border border-dashed border-divider-regular bg-state-base-hover px-4 py-12 text-center text-sm text-text-quaternary">
             暂无匹配的智能体
           </div>
         )
         : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-            {filteredList.map(app => (
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {displayList.map(app => (
               <AppCard
                 key={app.app_id}
                 isExplore

@@ -712,6 +712,17 @@ class ToolConfig(BaseSettings):
     )
 
 
+class WebSearchConfig(BaseSettings):
+    """
+    Configuration for web search functionality (Tavily API)
+    """
+
+    WEB_SEARCH_API_KEY: str | None = Field(
+        description="API key for the web search service (Tavily)",
+        default=None,
+    )
+
+
 class TemplateMode(StrEnum):
     # unsafe mode allows flexible operations in templates, but may cause security vulnerabilities
     UNSAFE = "unsafe"
@@ -1093,6 +1104,7 @@ class FeatureConfig(
     SecurityConfig,
     ToolConfig,
     UpdateConfig,
+    WebSearchConfig,
     WorkflowConfig,
     WorkflowNodeExecutionConfig,
     WorkspaceConfig,

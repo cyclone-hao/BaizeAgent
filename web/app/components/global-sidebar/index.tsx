@@ -56,7 +56,7 @@ const GlobalSidebar = () => {
   return (
     <div
       className={cn(
-        'flex h-full shrink-0 flex-col border-r border-divider-burn bg-background-default-subtle transition-all duration-200',
+        'flex h-full shrink-0 flex-col bg-background-default-subtle transition-all duration-200',
         expand ? 'w-[216px]' : 'w-[60px]',
       )}
     >

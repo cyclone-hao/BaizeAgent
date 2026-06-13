@@ -54,7 +54,7 @@ const APIKeyInfoPanel: FC = () => {
       </Button>
       {!isCloud && (
         <div
-          className='mt-2 flex h-[26px] items-center space-x-1 p-1 text-xs font-medium text-[#155EEF]'
+          className='mt-2 flex h-[26px] items-center space-x-1 p-1 text-xs font-medium text-[#8b5cf6]'
         >
           <div>{t('appOverview.apiKeyInfo.tryCloud')}</div>
         </div>

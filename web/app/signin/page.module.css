@@ -132,20 +132,20 @@ html[data-theme="dark"] .githubIcon {
 
 /* Login button */
 .btn-login {
-  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4), 0 0 0 0 rgba(16, 185, 129, 0);
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #6d28d9 100%);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4), 0 0 0 0 rgba(139, 92, 246, 0);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-login:hover {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
-  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5), 0 0 0 4px rgba(16, 185, 129, 0.12);
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.5), 0 0 0 4px rgba(139, 92, 246, 0.12);
   transform: translateY(-2px);
 }
 
 .btn-login:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
 }
 
 /* Modal */

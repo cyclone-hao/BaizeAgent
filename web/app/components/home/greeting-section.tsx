@@ -25,8 +25,8 @@ const GreetingSection = ({ userName }: GreetingSectionProps) => {
   const greeting = useMemo(() => getGreeting(), [])
 
   return (
-    <div className="mb-8">
-      <h1 className="mb-1 text-2xl font-semibold text-text-secondary">
+    <div className="mb-5">
+      <h1 className="mb-0.5 text-2xl font-semibold text-text-secondary">
         {greeting}，{userName || '用户'}
       </h1>
       <p className="text-sm text-text-tertiary">

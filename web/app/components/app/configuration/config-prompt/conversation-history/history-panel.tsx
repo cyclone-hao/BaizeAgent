@@ -46,7 +46,7 @@ const HistoryPanel: FC<Props> = ({
             <a href={docLink('/learn-more/extended-reading/what-is-llmops',
               { 'zh-Hans': '/learn-more/extended-reading/prompt-engineering/README' })}
             target='_blank' rel='noopener noreferrer'
-            className='text-[#155EEF]'>{t('appDebug.feature.conversationHistory.learnMore')}
+            className='text-[#8b5cf6]'>{t('appDebug.feature.conversationHistory.learnMore')}
             </a>
           </div>
         </div>

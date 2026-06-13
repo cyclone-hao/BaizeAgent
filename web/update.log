@@ -1,5 +1,300 @@
 # AgentFlow 二次开发更新日志
 
+## 2026-06-13 — AI 助手知识库选择器样式优化
+
+### P0 — 用户直接可见
+- **知识库按钮移至输入区**：从卡片顶部独立栏移到输入区「深度思考」「联网搜索」后面，统一为 toggle 按钮样式
+- **选中态更醒目**：选中知识库后按钮变为绿色高亮 + 数字徽标，已选知识库以绿色标签内联展示，可逐个移除
+- **响应中禁用**：AI 回复时知识库按钮自动置灰，防止中途更改
+
+### 改动文件
+- `web/app/components/home/chat-assistant/index.tsx` — 移除顶部知识库栏，DatasetSelector 放入 toggles 行
+- `web/app/components/home/chat-assistant/dataset-selector.tsx` — 重写为 toggle 按钮样式，绿色主题，内联标签
+
+## 2026-06-13 — 侧边栏黑边修复
+
+### P0 — 用户直接可见
+- **侧边栏/内容区黑边彻底移除**：点击智能体广场下方分类按钮（推荐、AI Coding 等）时，左侧与上面出现黑边
+  - 原因：多处 `border-divider-burn` 边框叠加（暗色模式 `rgb(24 24 27 / 0.95)` 近黑色），加上 explore 页 app-list 左边框 `border-divider-regular` 与侧边栏右边框双重叠加
+  - 修复：全局侧边栏、explore 侧边栏、app 侧边栏均移除右边框；explore app-list 移除左边框
+
+### 改动文件
+- `web/app/components/global-sidebar/index.tsx` — 移除 `border-r border-divider-burn`
+- `web/app/components/explore/sidebar/index.tsx` — 移除 `border-r border-divider-burn`
+- `web/app/components/explore/app-list/index.tsx` — 移除 `border-l-[0.5px] border-divider-regular`
+- `web/app/components/app-sidebar/index.tsx` — 移除 `border-r border-divider-burn`
+
+## 2026-06-13 — 全站紫色柔和风格改造
+
+### P0 — 用户直接可见
+
+**基础层（Phase 0）：**
+- **圆角放大**：Tailwind `borderRadius` 全面升级（sm:6px → lg:14px → 2xl:24px），自动级联到全站 800+ 处组件
+- **阴影柔和化**：`boxShadow` 添加紫色调 `rgba(139,92,246,X)` 层，替代纯灰色阴影
+- **自定义 `.radius-*` 类**：全部增加 4-8px（如 `radius-md`: 8px→12px，`radius-lg`: 10px→14px）
+- **CSS 变量阴影**：light/dark 主题的 `--color-shadow-shadow-*` 从灰色改为紫色调
+
+**背景与表面（Phase 1）：**
+- **页面背景微紫**：`background-body` 从 `#f2f4f7` → `#f3f1f8`（light），`#1d1d20` → `#1c1b22`（dark）
+- **卡片/面板微紫**：`card-bg` → `#fcfaff`，`panel-border` 使用 `rgb(139 92 246 / 0.10)`
+- **渐变背景**：聊天背景、气泡背景等全部加入紫色调
+
+**清除 Dify 蓝色残留（Phase 4）：**
+- **48 个文件**批量替换 `#155EEF` → `#8b5cf6`（TSX、CSS Module、SVG、embed.js）
+
+**组件样式（Phase 2+3）：**
+- **按钮圆角**：small `rounded-lg`、medium `rounded-xl`、large `rounded-2xl`；primary 按钮添加紫色发光阴影
+- **输入框圆角**：regular `radius-lg`、large `radius-xl`
+- **毛玻璃效果**：Modal、Dialog 使用 `bg-components-panel-bg-blur backdrop-blur-xl`
+- **侧边栏毛玻璃**：`bg-background-default-subtle/80 backdrop-blur-xl`
+
+**关键页面（Phase 5+6）：**
+- **登录按钮**：绿色渐变 → 紫色渐变（`#7c3aed` → `#8b5cf6` → `#6d28d9`），hover 紫色发光
+- **全局过渡动画**：添加 `cubic-bezier(0.4, 0, 0.2, 1)` 统一 easing 曲线
+
+### 改动文件
+- `web/tailwind-common-config.ts` — borderRadius + boxShadow 全面升级
+- `web/app/styles/globals.css` — `.radius-*` 类 + 全局 easing
+- `web/themes/light.css` — 背景、表面、阴影 CSS 变量
+- `web/themes/dark.css` — 暗色模式对应变量
+- `web/themes/manual-light.css` — 渐变背景全面紫色调
+- `web/themes/manual-dark.css` — 暗色渐变
+- `web/app/components/base/button/index.css` — 按钮圆角 + 发光
+- `web/app/components/base/input/index.tsx` — 输入框圆角
+- `web/app/components/base/modal/index.tsx` — 毛玻璃
+- `web/app/components/base/dialog/index.tsx` — 毛玻璃
+- `web/app/components/global-sidebar/index.tsx` — 侧边栏毛玻璃
+- `web/app/signin/page.module.css` — 登录按钮紫色渐变
+- **48 个文件**：`#155EEF` → `#8b5cf6` 批量替换
+
+## 2026-06-13 — 历史对话翻页
+
+### P0 — 用户直接可见
+- **历史列表分页**：每页显示 5 条，底部显示页码（如 1/3）和前后翻页按钮
+- 翻页按钮在首尾页自动禁用，防止越界
+
+### 改动文件
+- `web/app/components/home/chat-assistant/index.tsx`
+  - 新增 `RiArrowLeftSLine`、`RiArrowRightSLine` 图标导入
+  - 新增 `historyPage` 状态、`HISTORY_PAGE_SIZE = 5` 常量
+  - 列表从 `history.map` 改为 `pagedHistory.map`（当前页切片）
+  - 底部添加分页控件（上一页 / 页码 / 下一页）
+
+## 2026-06-13 — 首页布局收紧 & 智能体广场美化
+
+### P0 — 用户直接可见
+- **布局收紧**：问候语与 AI 助手间距从 32px 减至 20px，页面顶部内边距从 32px 减至 24px
+- **智能体广场限制 2 行**：根据屏幕宽度动态限制显示数量（md: 4 个, xl: 6 个, 2xl: 8 个）
+- **"查看更多"链接**：超出限制时显示跳转至 /explore/apps 的链接
+- **智能体广场标题美化**：添加渐变色图标徽章 + 标题组合
+- **卡片网格间距**：gap 从 16px 减至 12px，更紧凑
+
+### 改动文件
+- `web/app/components/home/index.tsx`
+  - 页面顶部 `py-8` → `py-6`
+  - ChatAssistant 外层包裹 `mb-5`
+- `web/app/components/home/greeting-section.tsx`
+  - `mb-8` → `mb-5`，`mb-1` → `mb-0.5`
+- `web/app/components/home/agent-plaza.tsx`
+  - 引入 `useBreakpoint`（ahooks）动态计算显示数量
+  - 引入 `Link`（next/link）和 `RiCompass3Line`/`RiArrowRightSLine` 图标
+  - Header 添加图标徽章，右侧添加"查看更多"链接
+  - 网格 gap `4` → `3`，`mb-4` → `mb-3`
+  - 使用 `displayList = filteredList.slice(0, displayLimit)` 限制显示
+
+## 2026-06-13 — 历史对话 Bug 修复 & 侧边栏等高
+
+### P0 — 用户直接可见
+- **历史对话等高布局**：侧边栏与 AI 助手卡片高度一致，使用 `items-stretch` + `h-full` + `flex-1` 布局
+- **历史列表自适应高度**：移除固定 `max-h-[440px]`，改为 `flex-1 overflow-y-auto`，历史多时内部滚动
+
+### Bug Fix
+- **历史对话出现多条重复记录**：
+  - `saveCurrentToHistory` 在 `conversationIdRef` 为空时也会保存，产生幽灵条目
+  - 添加空 conversationId 守卫，跳过无效保存
+  - 改进去重逻辑：优先检查最后一条是否同一对话（最常见场景），其次全表查找
+  - 自动清理旧的空 conversationId 条目
+
+### 改动文件
+- `web/app/components/home/chat-assistant/index.tsx`
+  - 外层 flex 添加 `items-stretch` 使两列等高
+  - 侧边栏移除 `sticky top-6`，改为 `h-full flex-col`
+  - 历史列表 `max-h-[440px]` 改为 `flex-1 overflow-y-auto`
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts`
+  - `saveCurrentToHistory` 添加空 conversationId 守卫
+  - 重写去重逻辑：先检查最后一条 → 全表查找 → 新条目
+  - 自动过滤空 conversationId 的历史幽灵数据
+
+## 2026-06-13 — 对话历史功能
+
+### P0 — 用户直接可见
+
+#### 对话历史自动保存与浏览
+- `app/components/home/chat-assistant/config.ts` — 新增 `HISTORY_STORAGE_KEY` 和 `HISTORY_MAX_ITEMS` 常量
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 历史管理核心逻辑：
+  - 新增 `HistoryEntry` 类型（id, conversationId, title, messages, createdAt）
+  - 新增 `chatListRef` 解决异步回调中的闭包问题
+  - `saveCurrentToHistory()` — AI 回复完成后自动保存，支持同一对话更新（通过 conversationId 匹配去重）
+  - `loadConversation(entry)` — 从历史记录加载对话，恢复 chatList 和 conversationId
+  - `deleteHistoryItem(id)` — 删除单条历史记录
+  - `handleRestart` 改造：新建对话前先保存当前对话到历史
+  - 最多保存 50 条记录，超出自动清理最早的
+- `app/components/home/chat-assistant/index.tsx` — 布局重构为左侧历史栏 + 右侧对话卡：
+  - 左侧边栏（220px 宽）：卡片式历史面板，带 header 徽标计数、活跃对话高亮（ring）、渐变空状态、轮数统计
+  - Header 升级：渐变色图标徽章 + 副标题、"+ 新对话"按钮带边框样式
+  - Welcome 页重设计：渐变大图标、建议卡片增加 emoji 图标底座 + hover 阴影
+  - 消息气泡优化：AI 头像渐变背景、消息卡片 shadow-xs、加载动画改用 primary-400
+  - 用户消息气泡：渐变背景 + 更舒适的行高
+  - 输入区域：subtle 背景色 + 按钮增大至 36px + toggle 选中态增加阴影
+  - 错误状态：居中卡片 + 图标底座 + 按钮阴影
+- `app/components/home/index.tsx` — 移除 `RecentlyUsed` 组件，容器宽度 `max-w-4xl` → `max-w-5xl` 适配侧边栏
+
+## 2026-06-13 — 智能搜索功能（联网搜索 + 引用渲染）
+
+### P0 — 用户直接可见
+
+#### 联网搜索功能
+- `app/components/home/chat-assistant/index.tsx` — 新增"联网搜索"toggle 按钮（蓝色高亮，与深度思考并排），AI 消息下方渲染搜索来源面板
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 核心逻辑改造：
+  - 新增 `webSearch` 状态和 `sources` 字段到 ChatItem 类型
+  - `sendMessage` 改为 async：搜索开启时先调用搜索 API 获取结果，再将结果注入 system prompt
+  - `buildModelConfig` 新增 `searchResults` 参数，通过 `buildSearchContext` 将搜索结果格式化注入提示词
+  - 搜索 API 失败时 graceful degradation（跳过搜索，正常对话）
+- `app/components/home/chat-assistant/sources-panel.tsx` — 新建来源面板组件：编号徽章 + 标题链接卡片，点击跳转原始网页
+- `app/components/home/chat-assistant/config.ts` — 推理模型识别和参数映射（前次提交）
+
+#### 内联引用标注渲染
+- `app/components/base/markdown/markdown-utils.ts` — 新增 `preprocessCitations`：将 `[1]` `[2]` 等数字引用转为可点击锚点标签（负向前瞻避免匹配 markdown 链接）
+- `app/components/base/markdown/index.tsx` — 预处理链新增 `preprocessCitations`，`a` 组件映射增加 `citation-ref` 类名检测，渲染为紫色引用徽章样式
+
+### P1 — 外部接口
+
+#### 后端搜索 API 端点
+- `api/controllers/console/web_search.py` — 新建 `POST /console/api/web-search` 端点，调用 Tavily API 进行网络搜索
+- `api/configs/feature/__init__.py` — 新增 `WebSearchConfig` 配置类（`WEB_SEARCH_API_KEY` 环境变量）
+- `api/controllers/console/__init__.py` — 注册 `web_search` 路由
+
+### P2 — 内部标识符
+
+#### 前端搜索服务
+- `service/web-search.ts` — 新建搜索 API 封装：`fetchWebSearch(query, numResults)` → `POST /web-search`
+
+## 2026-06-13 — 深度思考功能实现（推理模型原生支持）
+
+### P0 — 用户直接可见
+
+#### 深度思考按钮对接推理模型原生能力
+- `app/components/home/chat-assistant/config.ts` — 新增推理模型识别与参数映射：
+  - `isReasoningModel()` — 根据模型名称关键词判断是否为推理模型（覆盖 DeepSeek-R1 / QwQ / Kimi-K2 / GLM-4.5）
+  - `getReasoningParams()` — 返回各厂商专属推理参数（`thinking`/`enable_thinking`），注入 `completion_params`
+  - 移除 `DEEP_THINKING_SUFFIX` CoT 提示词方案，改为原生推理模式
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — `buildModelConfig` 逻辑重构：
+  - 选中深度思考 + 推理模型 → 传入厂商推理参数，模型输出 `</think>` 标签，前端 ThinkBlock 渲染可折叠思考过程
+  - 选中深度思考 + 普通模型 → 正常输出，无特殊处理
+  - 未选中深度思考 → 不传推理参数，正常输出
+  - 依赖的 Markdown 渲染链路已就绪：`preprocessThinkTag` → `<details>` → `ThinkBlock` 组件
+
+#### 未选深度思考时隐藏推理模型的思考过程
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 新增 `stripThinkTags` 函数：
+  - 推理模型（如 DeepSeek-R1）无论是否传 thinking 参数，默认都会输出 `</think>` 标签
+  - 当深度思考未选中时，在流式接收阶段实时剥离 `</think>` 标签内容（含未闭合的标签）
+  - 同时处理 `onData` 逐字流和 `onMessageReplace` 整条替换两种场景
+
+## 2026-06-13 — ChatAssistant Bug 修复与代码质量优化
+
+### Bug Fix
+
+#### 流式输出文本重复（关键修复）
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 重写 SSE 流式处理逻辑：
+  - 根因：`setChatList` updater 函数中直接修改对象属性（`last.content += chunk`），React 严格模式下 updater 被调用两次导致内容翻倍
+  - 修复：使用外部 `accumulatedContent` 变量累积流式文本，通过 `prev.map()` 不可变地更新状态
+  - 参照 Dify 官方 `useChat` hook 的模式（先累积再触发重渲染）
+
+#### 对话时整个页面滚动
+- `app/components/home/chat-assistant/index.tsx` — 修复自动滚动逻辑：
+  - 根因：`scrollIntoView()` 会触发整个页面滚动，包括首页外层滚动容器
+  - 修复：改为 `scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight`，仅滚动聊天区域容器
+
+#### 对话无上下文记忆（关键修复）
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 添加 `parent_message_id` 消息线程关联：
+  - 根因：Dify 后端的 `extract_thread_messages` 通过 `parent_message_id` 追踪消息线程链。当后续消息不携带 `parent_message_id` 时，后端认为它是新线程起点，仅返回当前空消息，历史被过滤为空
+  - 修复：新增 `lastMessageIdRef` 追踪 SSE 响应中的 `messageId`，后续请求携带 `parent_message_id` 参数，确保消息线程正确链接
+  - 重启对话时清除 `lastMessageIdRef`
+
+#### 知识库选择器分页数据替换问题
+- `app/components/home/chat-assistant/dataset-selector.tsx` — 将 useSWR 单页获取改为手动分页累积模式：
+  - 新增 `allDatasets` 状态数组，翻页时追加新页数据而非替换
+  - 新增 `loadPage()` 函数管理分页请求和加载状态
+  - 新增搜索防抖（300ms），避免频繁 API 调用
+  - 修复 `useRef` 初始值缺失问题（React 19 要求）
+
+#### 基础应用 ID 缓存失效
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 添加缓存验证和错误恢复：
+  - 从 localStorage 加载缓存的 app ID 后，调用 `GET apps/{id}` 验证应用是否仍存在
+  - 若应用已被删除，自动清除缓存并重新创建
+  - 新增 `appError` 状态和 `retryInit()` 重试函数
+
+#### 流式输出时滚动动画堆积
+- `app/components/home/chat-assistant/index.tsx` — SSE 流式输出时使用 `behavior: 'instant'` 替代 `behavior: 'smooth'`，避免大量 smooth scroll 动画排队
+
+#### 应用创建失败时无用户反馈
+- `app/components/home/chat-assistant/index.tsx` — 新增错误状态 UI：
+  - 初始化失败时显示 ⚠️ 图标 + 错误信息 + 重试按钮
+  - 输入区域根据错误状态显示对应 placeholder 和禁用状态
+
+### P2 — 内部标识符
+
+#### ESLint/TypeScript 错误修复
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 修复 `createApp` 返回类型问题（Fetcher → Promise 转换）、移除未使用的 `DataSet`/`ModelItem` 导入、修复空函数和箭头函数参数格式
+- `app/components/home/chat-assistant/model-selector.tsx` — 将 `ModelRow` 组件定义移至 `ModelSelector` 之前（修复 no-use-before-define）、修复单行多语句
+- `app/components/home/chat-assistant/config.ts` — 修复操作符换行位置
+- `app/components/home/chat-assistant/dataset-selector.tsx` — 修复单行多语句、添加防抖计时器清理
+
+## 2026-06-12 — 首页 AI 对话助手重构（模型选择 + 知识库 RAG）
+
+### P0 — 用户直接可见
+
+#### 首页 AI 助手全新重构为自由对话助手
+- `app/components/home/chat-assistant/config.ts` — 新建配置文件：系统提示词、默认参数、建议问题、localStorage key 常量
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 新建核心 Hook：
+  - 自动创建基础 chat 应用（首次使用时通过 `POST /console/api/apps` 创建，ID 持久化到 localStorage）
+  - 从 ProviderContext 获取所有可用 LLM 模型列表（按 Provider 分组，过滤 active 状态）
+  - 通过 Debug API（`POST /console/api/apps/<app_id>/chat-messages`）发送动态 `model_config`，实现模型热切换
+  - SSE 流式响应处理（onData 逐字追加、onCompleted 结束、onError 错误处理）
+  - 对话状态管理（chatList、isResponding、conversationId、taskId）
+  - 知识库 RAG 集成：选中的知识库 ID 通过 `dataset_configs` 传入 model_config，后端自动检索并注入上下文
+  - 深度思考模式：追加逐步推理指令到 system prompt
+  - 支持停止响应和新建对话
+- `app/components/home/chat-assistant/model-selector.tsx` — 新建模型选择器组件：
+  - 按 Provider 分组展示所有可用 LLM 模型
+  - 支持关键词搜索过滤
+  - 显示模型特性标签（视觉、工具调用）
+  - 选中项持久化到 localStorage
+- `app/components/home/chat-assistant/dataset-selector.tsx` — 新建知识库选择器组件：
+  - 从 `GET /datasets` API 获取知识库列表
+  - 支持多选知识库，已选知识库显示为可删除的标签
+  - 搜索过滤 + 分页加载更多
+  - 显示知识库文档数量和可用状态
+  - 选中项持久化到 localStorage
+- `app/components/home/chat-assistant/index.tsx` — 新建主 UI 组件：
+  - Header：AI 图标 + 标题 + 模型选择器 + 新对话按钮
+  - 知识库选择栏：顶部横排展示已选知识库
+  - 欢迎状态：居中问候语 + 4 个建议问题卡片（2×2 网格，点击即发送）
+  - 对话状态：AI 气泡（左对齐白底 + Markdown 渲染）+ 用户气泡（右对齐紫色）
+  - 输入区域：深度思考 toggle + 知识库关联提示 + 自动增高 Textarea + 发送/停止按钮
+  - 消息区 max-h-[500px] 可滚动，自动滚动到底部
+- `app/components/home/index.tsx` — 替换旧 `<AiAssistant />` 为 `<ChatAssistant />`
+
+### 技术设计
+- **Debug API + 动态 model_config**：利用 Console Debug API 的 model_config 覆盖机制，无需新增后端 API，前端传入动态 model_config 即可调用任意已配置模型
+- **自动创建基础应用**：首次加载时自动创建 chat 类型应用作为对话载体，应用保存配置被 model_config 完全覆盖
+- **知识库 RAG**：通过 `dataset_configs` 将选中的知识库 ID 传入 Debug API，后端自动完成向量检索 + 上下文注入 + LLM 问答
+
+### 保留文件（未删除，备将来使用）
+- `app/components/home/ai-assistant.tsx` — 旧版 AI 助手
+- `app/components/home/home-chat/` — 旧版 chat hook
+- `app/components/home/app-selector.tsx` — 旧版应用选择器
+
 ## 2026-06-12 — 全局侧边栏菜单重排与重命名
 
 ### P0 — 用户直接可见

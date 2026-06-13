@@ -121,34 +121,34 @@ html[data-theme="dark"] {
   --color-components-toggle-bg-unchecked-disabled: rgb(255 255 255 / 0.08);
   --color-components-toggle-knob-hover: #fefefe;
 
-  --color-components-card-bg: #222225;
-  --color-components-card-border: rgb(255 255 255 / 0.03);
-  --color-components-card-bg-alt: #27272b;
-  --color-components-card-bg-transparent: rgb(34 34 37 / 0);
-  --color-components-card-bg-alt-transparent: rgb(39 39 43 / 0);
+  --color-components-card-bg: #242228;
+  --color-components-card-border: rgb(139 92 246 / 0.10);
+  --color-components-card-bg-alt: #282630;
+  --color-components-card-bg-transparent: rgb(36 34 40 / 0);
+  --color-components-card-bg-alt-transparent: rgb(40 38 48 / 0);
 
   --color-components-menu-item-text: rgb(200 206 218 / 0.6);
   --color-components-menu-item-text-active: rgb(255 255 255 / 0.95);
   --color-components-menu-item-text-hover: rgb(200 206 218 / 0.8);
   --color-components-menu-item-text-active-accent: rgb(255 255 255 / 0.95);
-  --color-components-menu-item-bg-active: rgb(200 206 218 / 0.14);
-  --color-components-menu-item-bg-hover: rgb(200 206 218 / 0.08);
+  --color-components-menu-item-bg-active: rgb(139 92 246 / 0.14);
+  --color-components-menu-item-bg-hover: rgb(139 92 246 / 0.08);
 
-  --color-components-panel-bg: #222225;
-  --color-components-panel-bg-blur: rgb(44 44 48 / 0.95);
-  --color-components-panel-border: rgb(200 206 218 / 0.14);
-  --color-components-panel-border-subtle: rgb(200 206 218 / 0.08);
-  --color-components-panel-gradient-2: #222225;
-  --color-components-panel-gradient-1: #27272b;
-  --color-components-panel-bg-alt: #222225;
-  --color-components-panel-on-panel-item-bg: #27272b;
-  --color-components-panel-on-panel-item-bg-hover: #3a3a40;
-  --color-components-panel-on-panel-item-bg-alt: #3a3a40;
-  --color-components-panel-on-panel-item-bg-transparent: rgb(44 44 48 / 0.95);
-  --color-components-panel-on-panel-item-bg-hover-transparent: rgb(58 58 64 / 0);
+  --color-components-panel-bg: #242228;
+  --color-components-panel-bg-blur: rgb(40 38 48 / 0.85);
+  --color-components-panel-border: rgb(139 92 246 / 0.12);
+  --color-components-panel-border-subtle: rgb(139 92 246 / 0.08);
+  --color-components-panel-gradient-2: #242228;
+  --color-components-panel-gradient-1: #282630;
+  --color-components-panel-bg-alt: #242228;
+  --color-components-panel-on-panel-item-bg: #282630;
+  --color-components-panel-on-panel-item-bg-hover: #3a3840;
+  --color-components-panel-on-panel-item-bg-alt: #3a3840;
+  --color-components-panel-on-panel-item-bg-transparent: rgb(40 38 48 / 0.90);
+  --color-components-panel-on-panel-item-bg-hover-transparent: rgb(58 56 64 / 0);
   --color-components-panel-on-panel-item-bg-destructive-hover-transparent: rgb(255 251 250 / 0);
 
-  --color-components-panel-bg-transparent: rgb(34 34 37 / 0);
+  --color-components-panel-bg-transparent: rgb(36 34 40 / 0);
 
   --color-components-main-nav-nav-button-text: rgb(200 206 218 / 0.6);
   --color-components-main-nav-nav-button-text-active: #f4f4f5;
@@ -380,18 +380,18 @@ html[data-theme="dark"] {
   --color-text-inverted: #ffffff;
   --color-text-inverted-dimmed: rgb(255 255 255 / 0.8);
 
-  --color-background-body: #1d1d20;
-  --color-background-default-subtle: #222225;
-  --color-background-neutral-subtle: #1d1d20;
-  --color-background-sidenav-bg: rgb(39 39 42 / 0.92);
-  --color-background-default: #222225;
-  --color-background-soft: rgb(24 24 27 / 0.25);
-  --color-background-gradient-bg-fill-chat-bg-1: #222225;
-  --color-background-gradient-bg-fill-chat-bg-2: #1d1d20;
-  --color-background-gradient-bg-fill-chat-bubble-bg-1: rgb(200 206 218 / 0.08);
-  --color-background-gradient-bg-fill-chat-bubble-bg-2: rgb(200 206 218 / 0.02);
-  --color-background-gradient-bg-fill-debug-bg-1: rgb(200 206 218 / 0.08);
-  --color-background-gradient-bg-fill-debug-bg-2: rgb(24 24 27 / 0.04);
+  --color-background-body: #1c1b22;
+  --color-background-default-subtle: #211f28;
+  --color-background-neutral-subtle: #1c1b22;
+  --color-background-sidenav-bg: rgb(36 33 42 / 0.92);
+  --color-background-default: #211f28;
+  --color-background-soft: rgb(36 33 42 / 0.25);
+  --color-background-gradient-bg-fill-chat-bg-1: #211f28;
+  --color-background-gradient-bg-fill-chat-bg-2: #1c1b22;
+  --color-background-gradient-bg-fill-chat-bubble-bg-1: rgb(139 92 246 / 0.08);
+  --color-background-gradient-bg-fill-chat-bubble-bg-2: rgb(139 92 246 / 0.02);
+  --color-background-gradient-bg-fill-debug-bg-1: rgb(139 92 246 / 0.08);
+  --color-background-gradient-bg-fill-debug-bg-2: rgb(36 33 42 / 0.04);
 
   --color-background-gradient-mask-gray: rgb(24 24 27 / 0.08);
   --color-background-gradient-mask-transparent: rgb(0 0 0 / 0);
@@ -419,16 +419,16 @@ html[data-theme="dark"] {
   --color-background-body-transparent: rgb(29 29 32 / 0);
   --color-background-section-burn-inverted: #27272b;
 
-  --color-shadow-shadow-1: rgb(0 0 0 / 0.05);
-  --color-shadow-shadow-3: rgb(0 0 0 / 0.1);
-  --color-shadow-shadow-4: rgb(0 0 0 / 0.12);
-  --color-shadow-shadow-5: rgb(0 0 0 / 0.16);
-  --color-shadow-shadow-6: rgb(0 0 0 / 0.2);
-  --color-shadow-shadow-7: rgb(0 0 0 / 0.24);
-  --color-shadow-shadow-8: rgb(0 0 0 / 0.28);
-  --color-shadow-shadow-9: rgb(0 0 0 / 0.36);
-  --color-shadow-shadow-2: rgb(0 0 0 / 0.08);
-  --color-shadow-shadow-10: rgb(0 0 0 / 0.4);
+  --color-shadow-shadow-1: rgb(139 92 246 / 0.05);
+  --color-shadow-shadow-3: rgb(139 92 246 / 0.10);
+  --color-shadow-shadow-4: rgb(139 92 246 / 0.12);
+  --color-shadow-shadow-5: rgb(139 92 246 / 0.16);
+  --color-shadow-shadow-6: rgb(139 92 246 / 0.20);
+  --color-shadow-shadow-7: rgb(139 92 246 / 0.24);
+  --color-shadow-shadow-8: rgb(139 92 246 / 0.28);
+  --color-shadow-shadow-9: rgb(139 92 246 / 0.36);
+  --color-shadow-shadow-2: rgb(139 92 246 / 0.08);
+  --color-shadow-shadow-10: rgb(139 92 246 / 0.40);
 
   --color-workflow-block-border: rgb(255 255 255 / 0.08);
   --color-workflow-block-parma-bg: rgb(255 255 255 / 0.05);
