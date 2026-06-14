@@ -105,7 +105,7 @@ const GlobalSidebar = () => {
           expand={expand}
           icon={<Group className="h-5 w-5" />}
           activeIcon={<Group className="h-5 w-5" />}
-          text="Skills市场"
+          text="Skills插件管理"
           href="/plugins"
           activeSegment="plugins"
         />

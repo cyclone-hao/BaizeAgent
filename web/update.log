@@ -1,5 +1,75 @@
 # AgentFlow 二次开发更新日志
 
+## 2026-06-14 — 添加智能体体验优化
+
+### P0 — 用户直接可见
+- 添加智能体后不再弹出 DSL 版本差异警告，统一显示"应用已创建"成功提示
+- 添加智能体后直接跳转到编排页面（`/workflow`），包括 `agent-chat` 模式
+
+### 修改文件
+- `web/hooks/use-import-dsl.ts` — `COMPLETED_WITH_WARNINGS` 状态统一使用成功通知，不再显示 DSL 版本警告
+- `web/utils/app-redirection.ts` — `agent-chat` 模式加入编排页面跳转条件
+
+## 2026-06-14 — 智能体广场全中文化
+
+### P0 — 用户直接可见
+- 首页"智能体广场"全部推荐应用翻译为中文（名称 + 描述 + 分类）
+- 分类 Tab "Recommended" 改为 "推荐"，`Agent` 改为 `智能体`
+- 后端回退逻辑优先使用用户当前语言，不再强制显示英文应用
+- 用户 `interface_language` 已更新为 `zh-Hans`
+- 修复"全部"Tab 筛选逻辑：不再硬编码英文值，改用 i18n 动态翻译
+
+### 修改文件
+- `api/constants/recommended_apps.json` — 填充 `zh-Hans` 区段 22 个推荐应用（中文名称、描述、分类），新增 `app_details_zh`
+- `api/services/recommended_app_service.py` — 回退逻辑改为先尝试用户语言，再回退 `en-US`
+- `api/services/recommend_app/buildin/buildin_retrieval.py` — 应用详情优先使用 `app_details_zh`
+- `web/i18n/zh-Hans/explore.ts` — `Agent` 分类翻译改为 `智能体`
+- `web/app/components/home/agent-plaza.tsx` — 移除英文硬编码导入，改用 `useTranslation()` 动态获取"全部"分类文本；筛选逻辑使用翻译后的值
+
+## 2026-06-14 — 首页对话历史从数据库加载
+
+### P0 — 用户直接可见
+- 历史对话不再存储在浏览器 localStorage，改为从 PostgreSQL 数据库加载
+- 清除浏览器缓存或换设备后历史对话不会丢失
+- 新增加载状态：历史列表加载中旋转动画、单条对话加载中半透明效果
+- 点击"新对话"按钮自动刷新历史列表
+
+### 修改文件
+- `web/service/debug.ts` — 新增 `fetchChatConversations`（获取会话列表）、`deleteChatConversation`（删除会话）API 函数，引入 `del` 方法
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — 重写历史管理逻辑：
+  - 移除 localStorage 读写（`loadHistory`、`saveHistoryList`、`saveCurrentToHistory`）
+  - 新增 `fetchHistory` 从数据库加载会话列表（`GET /chat-conversations`）
+  - `loadConversation` 改为从 API 加载消息（`GET /chat-messages`）
+  - `deleteHistoryItem` 改为调用删除 API（`DELETE /chat-conversations/:id`）
+  - `sendMessage` 完成后自动刷新历史列表
+  - `HistoryEntry` 类型改为匹配 API 响应格式（含 `messageCount`、`updatedAt`）
+  - 新增 `historyLoading`、`loadingHistoryId`、`refreshHistory` 状态/方法
+- `web/app/components/home/chat-assistant/index.tsx` — 适配异步加载：
+  - 新增历史列表加载中的旋转动画
+  - 单条对话加载中显示半透明 + 禁止重复点击
+  - 对话轮数改用 `entry.messageCount`（服务端统计）
+  - "新对话"按钮点击后调用 `refreshHistory()`
+- `web/app/components/home/chat-assistant/config.ts` — 移除 `HISTORY_STORAGE_KEY`、`HISTORY_MAX_ITEMS` 常量
+
+## 2026-06-14 — Skills插件管理改造
+
+### P0 — 用户直接可见
+- **侧边栏重命名**：「Skills市场」→「Skills插件管理」
+- **移除 Marketplace 内嵌浏览**：插件页面不再嵌入 Marketplace 标签页（Discover），只显示已安装插件列表
+- **密码门控访问插件市场**：新增「插件市场」按钮，输入密码后可跳转 marketplace.dify.ai 外部页面下载 .difypkg 插件包
+- **简化安装入口**：移除 GitHub 安装选项和 Marketplace 安装选项，安装按钮直接打开本地文件选择器（.difypkg）
+- **页面标题**：头部从 TabSlider 切换改为「已安装插件」标题
+
+### 改动文件
+- `web/app/components/global-sidebar/index.tsx` — 侧边栏文字 Skills市场 → Skills插件管理
+- `web/app/components/plugins/plugin-page/marketplace-gate.tsx` — 新建密码门控弹窗组件
+- `web/app/components/plugins/plugin-page/index.tsx` — 移除 TabSlider/Marketplace 标签，添加标题和密码门控按钮
+- `web/app/components/plugins/plugin-page/install-plugin-dropdown.tsx` — 下拉菜单简化为直接安装按钮
+- `web/app/components/plugins/plugin-page/context.tsx` — 移除 activeTab/options 等标签状态
+- `web/app/(commonLayout)/plugins/page.tsx` — 移除 Marketplace 组件引用
+- `web/i18n/zh-Hans/plugin.ts` — 添加 marketplaceGate + installedPlugins 翻译
+- `web/i18n/en-US/plugin.ts` — 添加 marketplaceGate + installedPlugins 翻译
+
 ## 2026-06-13 — AI 助手知识库选择器样式优化
 
 ### P0 — 用户直接可见

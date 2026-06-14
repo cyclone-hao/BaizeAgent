@@ -1,4 +1,4 @@
-import { get, post, ssePost } from './base'
+import { del, get, post, ssePost } from './base'
 import type { IOnCompleted, IOnData, IOnError, IOnFile, IOnMessageEnd, IOnMessageReplace, IOnThought } from './base'
 import type { ChatPromptConfig, CompletionPromptConfig } from '@/models/debug'
 import type { ModelModeType } from '@/types/app'
@@ -78,6 +78,28 @@ export const fetchConversationMessages = (appId: string, conversation_id: string
   }, {
     getAbortController,
   })
+}
+
+/** 获取应用的会话列表（console API） */
+export const fetchChatConversations = (appId: string, params?: {
+  page?: number
+  limit?: number
+  keyword?: string
+  sort_by?: string
+}) => {
+  return get(`apps/${appId}/chat-conversations`, {
+    params: {
+      page: params?.page || 1,
+      limit: params?.limit || 50,
+      sort_by: params?.sort_by || '-updated_at',
+      ...(params?.keyword ? { keyword: params.keyword } : {}),
+    },
+  })
+}
+
+/** 删除会话（console API） */
+export const deleteChatConversation = (appId: string, conversationId: string) => {
+  return del(`apps/${appId}/chat-conversations/${conversationId}`)
 }
 
 export const generateBasicAppFirstTimeRule = (body: Record<string, any>) => {

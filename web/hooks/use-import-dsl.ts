@@ -78,9 +78,8 @@ export const useImportDSL = () => {
           return
 
         notify({
-          type: status === DSLImportStatus.COMPLETED ? 'success' : 'warning',
-          message: t(status === DSLImportStatus.COMPLETED ? 'app.newApp.appCreated' : 'app.newApp.caution'),
-          children: status === DSLImportStatus.COMPLETED_WITH_WARNINGS && t('app.newApp.appCreateDSLWarning'),
+          type: 'success',
+          message: t('app.newApp.appCreated'),
         })
         onSuccess?.()
         localStorage.setItem(NEED_REFRESH_APP_LIST_KEY, '1')

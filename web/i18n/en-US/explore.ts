@@ -38,6 +38,8 @@ const translation = {
     HR: 'HR',
     Workflow: 'Workflow',
     Entertainment: 'Entertainment',
+    'Knowledge Retrieval': 'Knowledge Retrieval',
+    Research: 'Research',
   },
 }
 

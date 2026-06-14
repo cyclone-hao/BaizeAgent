@@ -39,8 +39,11 @@ const ChatAssistant = () => {
     handleStop,
     handleRestart,
     history,
+    historyLoading,
+    loadingHistoryId,
     loadConversation,
     deleteHistoryItem,
+    refreshHistory,
   } = useChatAssistant()
 
   const hasMessages = chatList.length > 0
@@ -105,7 +108,16 @@ const ChatAssistant = () => {
 
           {/* History List */}
           <div className="no-scrollbar flex-1 overflow-y-auto p-2">
-            {history.length === 0
+            {historyLoading
+              ? (
+                <div className="flex flex-col items-center px-2 py-8">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center">
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary-200 border-t-primary-500" />
+                  </div>
+                  <p className="text-xs text-text-quaternary">加载中...</p>
+                </div>
+              )
+              : history.length === 0
               ? (
                 <div className="flex flex-col items-center px-2 py-8">
                   <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-state-base-hover">
@@ -119,6 +131,7 @@ const ChatAssistant = () => {
                 <div className="space-y-0.5">
                   {pagedHistory.map((entry) => {
                     const isActive = currentConversationId.current === entry.conversationId
+                    const isLoading = loadingHistoryId === entry.conversationId
                     return (
                       <div
                         key={entry.id}
@@ -127,10 +140,13 @@ const ChatAssistant = () => {
                           isActive
                             ? 'bg-primary-50/80 ring-1 ring-primary-200'
                             : 'hover:bg-state-base-hover',
+                          isLoading && 'opacity-60',
                         )}
                         onClick={() => {
-                          loadConversation(entry)
-                          currentConversationId.current = entry.conversationId
+                          if (!isLoading) {
+                            loadConversation(entry)
+                            currentConversationId.current = entry.conversationId
+                          }
                         }}
                       >
                         <div className="min-w-0 flex-1">
@@ -144,7 +160,7 @@ const ChatAssistant = () => {
                           <div className="mt-1 text-[11px] text-text-quaternary">
                             {new Date(entry.createdAt).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                             <span className="mx-1">·</span>
-                            {Math.floor(entry.messages.length / 2)} 轮
+                            {entry.messageCount} 轮
                           </div>
                         </div>
                         <button
@@ -217,6 +233,7 @@ const ChatAssistant = () => {
                 onClick={() => {
                   handleRestart()
                   currentConversationId.current = ''
+                  refreshHistory()
                 }}
               >
                 + 新对话

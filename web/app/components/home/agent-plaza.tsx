@@ -16,9 +16,7 @@ import { DSLImportMode } from '@/models/app'
 import { useImportDSL } from '@/hooks/use-import-dsl'
 import DSLConfirmModal from '@/app/components/app/create-from-dsl-modal/dsl-confirm-modal'
 import { useAppContext } from '@/context/app-context'
-import exploreI18n from '@/i18n/en-US/explore'
-
-const allCategoriesEn = exploreI18n.apps.allCategories
+import { useTranslation } from 'react-i18next'
 
 // 根据屏幕宽度返回 2 行对应的卡片数量
 // 2xl(1536+): 4 cols → 8, xl(1280+): 3 cols → 6, 其他: 2 cols → 4
@@ -43,10 +41,14 @@ function useDisplayLimit(): number {
 
 const AgentPlaza = () => {
   const { isCurrentWorkspaceEditor } = useAppContext()
+  const { t } = useTranslation()
   const displayLimit = useDisplayLimit()
 
+  // 使用翻译后的"全部"文本作为标识（中文为"推荐"，英文为"Recommended"）
+  const allCategoriesText = t('explore.apps.allCategories')
+
   const [currCategory, setCurrCategory] = useTabSearchParams({
-    defaultTab: allCategoriesEn,
+    defaultTab: allCategoriesText,
     disableSearchParams: false,
   })
 
@@ -71,7 +73,7 @@ const AgentPlaza = () => {
   const filteredList = useMemo(() => {
     if (!allList || allList.length === 0)
       return []
-    return allList.filter(item => currCategory === allCategoriesEn || item.category === currCategory)
+    return allList.filter(item => currCategory === allCategoriesText || item.category === currCategory)
   }, [currCategory, allList])
 
   const displayList = filteredList.slice(0, displayLimit)
@@ -153,7 +155,7 @@ const AgentPlaza = () => {
           list={categories}
           value={currCategory}
           onChange={setCurrCategory}
-          allCategoriesEn={allCategoriesEn}
+          allCategoriesEn={allCategoriesText}
         />
       </div>
 

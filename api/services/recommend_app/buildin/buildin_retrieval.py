@@ -60,4 +60,8 @@ class BuildInRecommendAppRetrieval(RecommendAppRetrievalBase):
         :return:
         """
         builtin_data: dict[str, dict[str, dict]] = cls._get_builtin_data()
+        # 优先使用中文 app_details（如果有）
+        zh_details = builtin_data.get("app_details_zh", {})
+        if app_id in zh_details:
+            return zh_details[app_id]
         return builtin_data.get("app_details", {}).get(app_id)

@@ -30,7 +30,7 @@ const translation = {
     nameRequired: '应用程序名称不能为空',
   },
   category: {
-    Agent: 'Agent',
+    Agent: '智能体',
     Assistant: '助手',
     Writing: '写作',
     Translate: '翻译',
@@ -38,6 +38,8 @@ const translation = {
     HR: '人力资源',
     Workflow: '工作流',
     Entertainment: '娱乐',
+    'Knowledge Retrieval': '知识检索',
+    Research: '研究',
   },
 }
 

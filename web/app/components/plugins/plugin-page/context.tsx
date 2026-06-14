@@ -2,7 +2,6 @@
 
 import type { ReactNode } from 'react'
 import {
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -11,20 +10,14 @@ import {
   useContextSelector,
 } from 'use-context-selector'
 import type { FilterState } from './filter-management'
-import { useTabSearchParams } from '@/hooks/use-tab-searchparams'
 import { noop } from 'lodash-es'
-import { PLUGIN_PAGE_TABS_MAP, usePluginPageTabs } from '../hooks'
-import { useGlobalPublicStore } from '@/context/global-public-context'
 
 export type PluginPageContextValue = {
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
   currentPluginID: string | undefined
   setCurrentPluginID: (pluginID?: string) => void
   filters: FilterState
   setFilters: (filter: FilterState) => void
-  activeTab: string
-  setActiveTab: (tab: string) => void
-  options: Array<{ value: string, text: string }>
 }
 
 export const PluginPageContext = createContext<PluginPageContextValue>({
@@ -37,9 +30,6 @@ export const PluginPageContext = createContext<PluginPageContextValue>({
     searchQuery: '',
   },
   setFilters: noop,
-  activeTab: '',
-  setActiveTab: noop,
-  options: [],
 })
 
 type PluginPageContextProviderProps = {
@@ -61,15 +51,6 @@ export const PluginPageContextProvider = ({
   })
   const [currentPluginID, setCurrentPluginID] = useState<string | undefined>()
 
-  const { enable_marketplace } = useGlobalPublicStore(s => s.systemFeatures)
-  const tabs = usePluginPageTabs()
-  const options = useMemo(() => {
-    return enable_marketplace ? tabs : tabs.filter(tab => tab.value !== PLUGIN_PAGE_TABS_MAP.marketplace)
-  }, [tabs, enable_marketplace])
-  const [activeTab, setActiveTab] = useTabSearchParams({
-    defaultTab: options[0].value,
-  })
-
   return (
     <PluginPageContext.Provider
       value={{
@@ -78,9 +59,6 @@ export const PluginPageContextProvider = ({
         setCurrentPluginID,
         filters,
         setFilters,
-        activeTab,
-        setActiveTab,
-        options,
       }}
     >
       {children}

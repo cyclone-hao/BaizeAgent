@@ -7,7 +7,13 @@ import {
 } from '@/app/components/header/account-setting/model-provider-page/declarations'
 import type { Model as ModelGroup } from '@/app/components/header/account-setting/model-provider-page/declarations'
 import { createApp } from '@/service/apps'
-import { sendChatMessage, stopChatMessageResponding } from '@/service/debug'
+import {
+  deleteChatConversation,
+  fetchChatConversations,
+  fetchConversationMessages,
+  sendChatMessage,
+  stopChatMessageResponding,
+} from '@/service/debug'
 import { get } from '@/service/base'
 import { fetchWebSearch } from '@/service/web-search'
 import type { WebSearchResult } from '@/service/web-search'
@@ -17,8 +23,6 @@ import {
   DATASET_STORAGE_KEY,
   DEFAULT_COMPLETION_PARAMS,
   DEFAULT_SYSTEM_PROMPT,
-  HISTORY_MAX_ITEMS,
-  HISTORY_STORAGE_KEY,
   MODEL_STORAGE_KEY,
   getReasoningParams,
   isReasoningModel,
@@ -53,12 +57,14 @@ export type DatasetSelection = {
   name: string
 }
 
+/** 历史对话条目 — 来自数据库 API */
 export type HistoryEntry = {
   id: string
   conversationId: string
   title: string
-  messages: ChatItem[]
+  messageCount: number
   createdAt: number
+  updatedAt: number
 }
 
 // ── Helpers ────────────────────────────────────────
@@ -119,23 +125,6 @@ function saveDatasetSelection(sel: DatasetSelection[]) {
     localStorage.removeItem(DATASET_STORAGE_KEY)
 }
 
-function loadHistory(): HistoryEntry[] {
-  if (typeof window === 'undefined')
-    return []
-  try {
-    const raw = localStorage.getItem(HISTORY_STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
-  }
-  catch { return [] }
-}
-
-function saveHistoryList(entries: HistoryEntry[]) {
-  if (entries.length)
-    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(entries))
-  else
-    localStorage.removeItem(HISTORY_STORAGE_KEY)
-}
-
 // ── Hook ───────────────────────────────────────────
 
 export function useChatAssistant() {
@@ -154,10 +143,8 @@ export function useChatAssistant() {
     setAppError(null)
 
     try {
-      // Step 1: Check localStorage cache
       const cached = localStorage.getItem(BASE_APP_STORAGE_KEY)
       if (cached) {
-        // Step 2: Validate cached app ID still exists
         try {
           await get<AppDetailResponse>(`apps/${cached}`)
           setBaseAppId(cached)
@@ -165,12 +152,10 @@ export function useChatAssistant() {
           return
         }
         catch {
-          // Cached app was deleted, clear and recreate
           localStorage.removeItem(BASE_APP_STORAGE_KEY)
         }
       }
 
-      // Step 3: Create new base app
       const app = await Promise.resolve(createApp({
         name: '首页对话助手',
         mode: 'chat',
@@ -215,7 +200,6 @@ export function useChatAssistant() {
     saveModelSelection(sel)
   }, [])
 
-  // Auto-select first model if none selected
   useEffect(() => {
     if (!selectedModel && availableModels.length > 0) {
       const first = availableModels[0]
@@ -247,81 +231,95 @@ export function useChatAssistant() {
   const lastMessageIdRef = useRef('')
   const abortControllerRef = useRef<AbortController | null>(null)
 
-  // ── History ──
-  const [history, setHistory] = useState<HistoryEntry[]>(() => loadHistory())
+  // ── History (from database) ──
+  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [historyLoading, setHistoryLoading] = useState(false)
+  const [loadingHistoryId, setLoadingHistoryId] = useState<string | null>(null)
 
-  const saveCurrentToHistory = useCallback(() => {
-    const currentList = chatListRef.current
-    if (!currentList.length)
+  /** 从数据库加载会话列表 */
+  const fetchHistory = useCallback(async () => {
+    if (!baseAppId)
       return
-    const conversationId = conversationIdRef.current
-    // 没有 conversationId 说明对话尚未建立，跳过保存
-    if (!conversationId)
-      return
-    // 至少需要一轮问答（一条用户消息 + 一条 AI 回复）
-    const userMessages = currentList.filter(m => !m.isAnswer)
-    if (!userMessages.length)
-      return
-    const aiMessages = currentList.filter(m => m.isAnswer && m.content)
-    if (!aiMessages.length)
-      return
-
-    const title = userMessages[0].content.slice(0, 30) || '对话'
-    const entry: HistoryEntry = {
-      id: `hist_${Date.now()}`,
-      conversationId,
-      title,
-      messages: currentList,
-      createdAt: Date.now(),
+    setHistoryLoading(true)
+    try {
+      const res = await fetchChatConversations(baseAppId, {
+        page: 1,
+        limit: 50,
+        sort_by: '-updated_at',
+      }) as any
+      const items = (res?.data || []).map((c: any) => ({
+        id: c.id,
+        conversationId: c.id,
+        title: c.name || '对话',
+        messageCount: c.dialogue_count || 0,
+        // API 返回的时间戳可能是秒级或 ISO 字符串
+        createdAt: (typeof c.created_at === 'number' ? c.created_at : new Date(c.created_at).getTime()) * (typeof c.created_at === 'number' ? 1000 : 1),
+        updatedAt: (typeof c.updated_at === 'number' ? c.updated_at : new Date(c.updated_at).getTime()) * (typeof c.updated_at === 'number' ? 1000 : 1),
+      }))
+      setHistory(items)
     }
+    catch (err) {
+      console.error('Failed to fetch conversation history:', err)
+    }
+    finally {
+      setHistoryLoading(false)
+    }
+  }, [baseAppId])
 
-    setHistory((prev) => {
-      // 清理历史遗留的空 conversationId 条目（旧 bug 产生的幽灵数据）
-      const cleaned = prev.filter(e => e.conversationId)
+  // 应用就绪后自动加载历史
+  useEffect(() => {
+    if (appReady && baseAppId)
+      fetchHistory()
+  }, [appReady, baseAppId, fetchHistory])
 
-      // 如果最后一条是同一对话，直接原地更新（最常见场景）
-      if (cleaned.length > 0 && cleaned[cleaned.length - 1].conversationId === conversationId) {
-        const updated = [...cleaned]
-        updated[updated.length - 1] = { ...entry, id: cleaned[cleaned.length - 1].id }
-        const final = updated.length > HISTORY_MAX_ITEMS ? updated.slice(0, HISTORY_MAX_ITEMS) : updated
-        saveHistoryList(final)
-        return final
+  /** 点击历史条目，从数据库加载该会话的消息 */
+  const loadConversation = useCallback(async (entry: HistoryEntry) => {
+    if (!baseAppId)
+      return
+    setLoadingHistoryId(entry.conversationId)
+    try {
+      const res = await fetchConversationMessages(baseAppId, entry.conversationId) as any
+      const messages = res?.data || []
+      const items: ChatItem[] = []
+      for (const msg of messages) {
+        items.push({
+          id: `question-${msg.id}`,
+          content: msg.query || '',
+          isAnswer: false,
+        })
+        items.push({
+          id: msg.id,
+          content: msg.answer || '',
+          isAnswer: true,
+        })
       }
+      setChatList(items)
+      conversationIdRef.current = entry.conversationId
+      lastMessageIdRef.current = messages.length > 0 ? messages[messages.length - 1].id : ''
+      taskIdRef.current = ''
+      abortControllerRef.current = null
+      setIsResponding(false)
+    }
+    catch (err) {
+      console.error('Failed to load conversation messages:', err)
+    }
+    finally {
+      setLoadingHistoryId(null)
+    }
+  }, [baseAppId])
 
-      // 查找是否已有同一对话的旧条目（非最后一条的情况）
-      const existingIdx = cleaned.findIndex(e => e.conversationId === conversationId)
-      if (existingIdx >= 0) {
-        const updated = cleaned.filter((_, i) => i !== existingIdx)
-        updated.unshift({ ...entry, id: cleaned[existingIdx].id })
-        const final = updated.length > HISTORY_MAX_ITEMS ? updated.slice(0, HISTORY_MAX_ITEMS) : updated
-        saveHistoryList(final)
-        return final
-      }
-
-      // 新对话，添加到最前
-      const updated = [entry, ...cleaned]
-      const final = updated.length > HISTORY_MAX_ITEMS ? updated.slice(0, HISTORY_MAX_ITEMS) : updated
-      saveHistoryList(final)
-      return final
-    })
-  }, [])
-
-  const loadConversation = useCallback((entry: HistoryEntry) => {
-    setChatList(entry.messages)
-    conversationIdRef.current = entry.conversationId
-    lastMessageIdRef.current = ''
-    taskIdRef.current = ''
-    abortControllerRef.current = null
-    setIsResponding(false)
-  }, [])
-
-  const deleteHistoryItem = useCallback((id: string) => {
-    setHistory((prev) => {
-      const updated = prev.filter(e => e.id !== id)
-      saveHistoryList(updated)
-      return updated
-    })
-  }, [])
+  /** 删除会话（调用数据库 API） */
+  const deleteHistoryItem = useCallback(async (id: string) => {
+    if (!baseAppId)
+      return
+    try {
+      await deleteChatConversation(baseAppId, id)
+      setHistory(prev => prev.filter(e => e.id !== id))
+    }
+    catch (err) {
+      console.error('Failed to delete conversation:', err)
+    }
+  }, [baseAppId])
 
   // ── Build search context for prompt injection ──
   const buildSearchContext = useCallback((results: WebSearchResult[]) => {
@@ -346,7 +344,6 @@ export function useChatAssistant() {
     useDeepThinking: boolean,
     searchResults: WebSearchResult[] = [],
   ) => {
-    // 构建 completion_params，若选中深度思考且为推理模型，追加厂商专属推理参数
     const completionParams: Record<string, unknown> = { ...DEFAULT_COMPLETION_PARAMS }
     if (useDeepThinking && isReasoningModel(model.model)) {
       const reasoningParams = getReasoningParams(model.model)
@@ -354,7 +351,6 @@ export function useChatAssistant() {
         Object.assign(completionParams, reasoningParams)
     }
 
-    // 构建 system prompt，注入搜索结果上下文
     const prePrompt = DEFAULT_SYSTEM_PROMPT + buildSearchContext(searchResults)
 
     const config: Record<string, any> = {
@@ -394,12 +390,11 @@ export function useChatAssistant() {
     return config
   }, [buildSearchContext])
 
-  // ── Strip </think> tags when deep thinking is off ──
-  // 推理模型默认输出 </think>，未选中深度思考时需要剥离
+  // ── Strip think tags ──
   const stripThinkTags = useCallback((content: string) => {
     return content
-      .replace(/<think>[\s\S]*?<\/think>/g, '') // 完整的 </think> 块
-      .replace(/<think>[\s\S]*$/, '') // 流式传输中未闭合的 <think> 块
+      .replace(/<think>[\s\S]*?<\/think>/g, '')
+      .replace(/<think>[\s\S]*$/, '')
       .trim()
   }, [])
 
@@ -408,7 +403,6 @@ export function useChatAssistant() {
     if (!baseAppId || !selectedModel || isResponding)
       return
 
-    // 如果启用联网搜索，先调用搜索 API 获取结果
     let searchResults: WebSearchResult[] = []
     if (webSearch) {
       try {
@@ -417,21 +411,16 @@ export function useChatAssistant() {
       }
       catch (err) {
         console.error('Web search failed:', err)
-        // 搜索失败不阻塞对话，继续普通模式
       }
     }
 
-    // Add user message and AI placeholder
     const userMsg: ChatItem = { id: genId(), content: query, isAnswer: false }
     const aiMsgId = genId()
     const aiMsg: ChatItem = { id: aiMsgId, content: '', isAnswer: true, sources: searchResults.length > 0 ? searchResults : undefined }
     setChatList(prev => [...prev, userMsg, aiMsg])
     setIsResponding(true)
 
-    // Accumulate streamed content outside React state to avoid
-    // double-invocation issues in React strict mode / concurrent features
     let accumulatedContent = ''
-
     const modelConfig = buildModelConfig(selectedModel, selectedDatasets, deepThinking, searchResults)
 
     sendChatMessage(baseAppId, {
@@ -442,14 +431,12 @@ export function useChatAssistant() {
       parent_message_id: lastMessageIdRef.current || undefined,
     }, {
       onData: (messageChunk, isFirstMessage, moreInfo) => {
-        // Capture conversation_id for subsequent messages in the same conversation
         if (moreInfo.conversationId && (!conversationIdRef.current || isFirstMessage))
           conversationIdRef.current = moreInfo.conversationId
 
         if (moreInfo.taskId)
           taskIdRef.current = moreInfo.taskId
 
-        // Track message ID for parent_message_id threading
         if (moreInfo.messageId)
           lastMessageIdRef.current = moreInfo.messageId
 
@@ -463,9 +450,7 @@ export function useChatAssistant() {
           return
         }
 
-        // Append chunk to accumulator and update state immutably
         accumulatedContent += messageChunk
-        // 当深度思考未开启时，剥离 </think> 标签内容再显示
         const currentContent = deepThinking ? accumulatedContent : stripThinkTags(accumulatedContent)
         setChatList(prev => prev.map((item, idx) =>
           idx === prev.length - 1 && item.isAnswer
@@ -476,8 +461,8 @@ export function useChatAssistant() {
       onCompleted: () => {
         setIsResponding(false)
         abortControllerRef.current = null
-        // AI 回复完成后自动保存到历史（延迟执行以确保 chatList 已更新）
-        setTimeout(() => saveCurrentToHistory(), 100)
+        // 回复完成后刷新历史列表（新会话会出现在数据库中）
+        setTimeout(() => fetchHistory(), 300)
       },
       onThought: () => { /* noop */ },
       onFile: () => { /* noop */ },
@@ -508,7 +493,7 @@ export function useChatAssistant() {
         }
       },
     })
-  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, isResponding, buildModelConfig, stripThinkTags])
+  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, isResponding, buildModelConfig, stripThinkTags, fetchHistory])
 
   // ── Stop ──
   const handleStop = useCallback(() => {
@@ -520,9 +505,8 @@ export function useChatAssistant() {
     abortControllerRef.current = null
   }, [baseAppId])
 
-  // ── Restart (save current to history, then clear) ──
+  // ── Restart ──
   const handleRestart = useCallback(() => {
-    saveCurrentToHistory()
     conversationIdRef.current = ''
     taskIdRef.current = ''
     lastMessageIdRef.current = ''
@@ -530,27 +514,20 @@ export function useChatAssistant() {
     setIsResponding(false)
     abortControllerRef.current?.abort()
     abortControllerRef.current = null
-  }, [saveCurrentToHistory])
+  }, [])
 
   return {
-    // App
     appReady,
     appError,
     retryInit: () => {
       setAppError(null)
       setAppReady(false)
     },
-
-    // Models
     availableModels,
     selectedModel,
     setSelectedModel,
-
-    // Datasets
     selectedDatasets,
     setSelectedDatasets,
-
-    // Chat
     chatList,
     isResponding,
     deepThinking,
@@ -560,10 +537,11 @@ export function useChatAssistant() {
     sendMessage,
     handleStop,
     handleRestart,
-
-    // History
     history,
+    historyLoading,
+    loadingHistoryId,
     loadConversation,
     deleteHistoryItem,
+    refreshHistory: fetchHistory,
   }
 }

@@ -276,6 +276,14 @@ const translation = {
   },
   requestAPlugin: 'Request a plugin',
   publishPlugins: 'Publish plugins',
+  marketplaceGate: {
+    button: 'Plugin Marketplace',
+    title: 'Access Plugin Marketplace',
+    passwordPlaceholder: 'Enter access password',
+    wrongPassword: 'Wrong password',
+    confirm: 'Confirm',
+  },
+  installedPlugins: 'Installed Plugins',
   difyVersionNotCompatible: 'The current AgentFlow version is not compatible with this plugin, please upgrade to the minimum version required: {{minimalAgentFlowVersion}}',
   auth: {
     default: 'Default',

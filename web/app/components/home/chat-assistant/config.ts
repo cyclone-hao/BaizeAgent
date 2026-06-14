@@ -11,12 +11,6 @@ export const MODEL_STORAGE_KEY = 'home-chat-selected-model'
 /** localStorage key: 持久化选中的知识库 */
 export const DATASET_STORAGE_KEY = 'home-chat-selected-datasets'
 
-/** localStorage key: 对话历史记录 */
-export const HISTORY_STORAGE_KEY = 'home-chat-history'
-
-/** 历史记录最大保存数量 */
-export const HISTORY_MAX_ITEMS = 50
-
 /** 默认系统提示词 */
 export const DEFAULT_SYSTEM_PROMPT
   = '你是一个智能助手，请用简洁清晰的方式回答用户的问题。如果提供了参考资料，请优先基于参考资料回答。'

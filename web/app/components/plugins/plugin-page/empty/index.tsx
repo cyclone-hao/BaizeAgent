@@ -1,9 +1,6 @@
 'use client'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { MagicBox } from '@/app/components/base/icons/src/vender/solid/mediaAndDevices'
+import React, { useMemo, useRef, useState } from 'react'
 import { FileZip } from '@/app/components/base/icons/src/vender/solid/files'
-import { Github } from '@/app/components/base/icons/src/vender/solid/general'
-import InstallFromGitHub from '@/app/components/plugins/install-plugin/install-from-github'
 import InstallFromLocalPackage from '@/app/components/plugins/install-plugin/install-from-local-package'
 import { usePluginPageContext } from '../context'
 import { Group } from '@/app/components/base/icons/src/vender/other'
@@ -12,29 +9,17 @@ import { useInstalledPluginList } from '@/service/use-plugins'
 import { useTranslation } from 'react-i18next'
 import { SUPPORT_INSTALL_LOCAL_FILE_EXTENSIONS } from '@/config'
 import { noop } from 'lodash-es'
-import { useGlobalPublicStore } from '@/context/global-public-context'
 import Button from '@/app/components/base/button'
-
-type InstallMethod = {
-  icon: React.FC<{ className?: string }>
-  text: string
-  action: string
-}
 
 const Empty = () => {
   const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [selectedAction, setSelectedAction] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const { enable_marketplace, plugin_installation_permission } = useGlobalPublicStore(s => s.systemFeatures)
-  const setActiveTab = usePluginPageContext(v => v.setActiveTab)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (file) {
+    if (file)
       setSelectedFile(file)
-      setSelectedAction('local')
-    }
   }
   const filters = usePluginPageContext(v => v.filters)
   const { data: pluginList } = useInstalledPluginList()
@@ -45,22 +30,6 @@ const Empty = () => {
     if (filters.categories.length > 0 || filters.tags.length > 0 || filters.searchQuery)
       return t('plugin.list.notFound')
   }, [pluginList?.plugins.length, t, filters.categories.length, filters.tags.length, filters.searchQuery])
-
-  const [installMethods, setInstallMethods] = useState<InstallMethod[]>([])
-  useEffect(() => {
-    const methods = []
-    if (enable_marketplace)
-      methods.push({ icon: MagicBox, text: t('plugin.source.marketplace'), action: 'marketplace' })
-
-    if (plugin_installation_permission.restrict_to_marketplace_only) {
-      setInstallMethods(methods)
-    }
-    else {
-      methods.push({ icon: Github, text: t('plugin.source.github'), action: 'github' })
-      methods.push({ icon: FileZip, text: t('plugin.source.local'), action: 'local' })
-      setInstallMethods(methods)
-    }
-  }, [plugin_installation_permission, enable_marketplace, t])
 
   return (
     <div className='relative z-0 w-full grow'>
@@ -93,39 +62,22 @@ const Empty = () => {
               onChange={handleFileChange}
               accept={SUPPORT_INSTALL_LOCAL_FILE_EXTENSIONS}
             />
-            <div className='flex w-full flex-col gap-y-1'>
-              {installMethods.map(({ icon: Icon, text, action }) => (
-                <Button
-                  key={action}
-                  className='justify-start gap-x-0.5 px-3'
-                  onClick={() => {
-                    if (action === 'local')
-                      fileInputRef.current?.click()
-                    else if (action === 'marketplace')
-                      setActiveTab('discover')
-                    else
-                      setSelectedAction(action)
-                  }}
-                >
-                  <Icon className='size-4' />
-                  <span className='px-0.5'>{text}</span>
-                </Button>
-              ))}
-            </div>
+            <Button
+              className='justify-start gap-x-0.5 px-3'
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <FileZip className='size-4' />
+              <span className='px-0.5'>{t('plugin.source.local')}</span>
+            </Button>
           </div>
         </div>
-        {selectedAction === 'github' && <InstallFromGitHub
-          onSuccess={noop}
-          onClose={() => setSelectedAction(null)}
-        />}
-        {selectedAction === 'local' && selectedFile
-          && (<InstallFromLocalPackage
+        {selectedFile && (
+          <InstallFromLocalPackage
             file={selectedFile}
-            onClose={() => setSelectedAction(null)}
+            onClose={() => setSelectedFile(null)}
             onSuccess={noop}
           />
-          )
-        }
+        )}
       </div>
     </div>
   )

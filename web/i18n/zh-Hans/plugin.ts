@@ -276,6 +276,14 @@ const translation = {
   },
   requestAPlugin: '申请插件',
   publishPlugins: '发布插件',
+  marketplaceGate: {
+    button: '插件市场',
+    title: '访问插件市场',
+    passwordPlaceholder: '请输入访问密码',
+    wrongPassword: '密码错误',
+    confirm: '确认',
+  },
+  installedPlugins: '已安装插件',
   difyVersionNotCompatible: '当前 AgentFlow 版本不兼容该插件，其最低版本要求为 {{minimalAgentFlowVersion}}',
   auth: {
     default: '默认',

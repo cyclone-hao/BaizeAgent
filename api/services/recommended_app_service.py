@@ -16,6 +16,13 @@ class RecommendedAppService:
         if not result.get("recommended_apps"):
             result = (
                 RecommendAppRetrievalFactory.get_buildin_recommend_app_retrieval().fetch_recommended_apps_from_builtin(
+                    language
+                )
+            )
+        # 如果当前语言仍无数据，回退到 en-US
+        if not result.get("recommended_apps"):
+            result = (
+                RecommendAppRetrievalFactory.get_buildin_recommend_app_retrieval().fetch_recommended_apps_from_builtin(
                     "en-US"
                 )
             )
