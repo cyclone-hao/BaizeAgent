@@ -6,11 +6,9 @@ import { useContext } from 'use-context-selector'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import Link from 'next/link'
 import Toast from '../../base/toast'
-import Item from './app-nav-item'
 import cn from '@/utils/classnames'
 import ExploreContext from '@/context/explore-context'
 import Confirm from '@/app/components/base/confirm'
-import Divider from '@/app/components/base/divider'
 import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
 import { useGetInstalledApps, useUninstallApp, useUpdateAppPinStatus } from '@/service/use-explore'
 
@@ -26,13 +24,13 @@ const DiscoveryIcon = () => (
   </svg>
 )
 
-const SelectedChatIcon = () => (
+const _SelectedChatIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M8.00016 1.3335C4.31826 1.3335 1.3335 4.31826 1.3335 8.00016C1.3335 8.88571 1.50651 9.7325 1.8212 10.5074C1.84962 10.5773 1.86597 10.6178 1.87718 10.6476L1.88058 10.6568L1.88016 10.66C1.87683 10.6846 1.87131 10.7181 1.86064 10.7821L1.46212 13.1732C1.44424 13.2803 1.42423 13.4001 1.41638 13.5041C1.40782 13.6176 1.40484 13.7981 1.48665 13.9888C1.58779 14.2246 1.77569 14.4125 2.0115 14.5137C2.20224 14.5955 2.38274 14.5925 2.49619 14.5839C2.60025 14.5761 2.72006 14.5561 2.82715 14.5382L5.2182 14.1397C5.28222 14.129 5.31576 14.1235 5.34036 14.1202L5.34353 14.1197L5.35274 14.1231C5.38258 14.1344 5.42298 14.1507 5.49297 14.1791C6.26783 14.4938 7.11462 14.6668 8.00016 14.6668C11.6821 14.6668 14.6668 11.6821 14.6668 8.00016C14.6668 4.31826 11.6821 1.3335 8.00016 1.3335ZM4.00016 8.00016C4.00016 7.44788 4.44788 7.00016 5.00016 7.00016C5.55245 7.00016 6.00016 7.44788 6.00016 8.00016C6.00016 8.55245 5.55245 9.00016 5.00016 9.00016C4.44788 9.00016 4.00016 8.55245 4.00016 8.00016ZM7.00016 8.00016C7.00016 7.44788 7.44788 7.00016 8.00016 7.00016C8.55245 7.00016 9.00016 7.44788 9.00016 8.00016C9.00016 8.55245 8.55245 9.00016 8.00016 9.00016C7.44788 9.00016 7.00016 8.55245 7.00016 8.00016ZM11.0002 7.00016C10.4479 7.00016 10.0002 7.44788 10.0002 8.00016C10.0002 8.55245 10.4479 9.00016 11.0002 9.00016C11.5524 9.00016 12.0002 8.55245 12.0002 8.00016C12.0002 7.44788 11.5524 7.00016 11.0002 7.00016Z" fill="#8b5cf6" />
   </svg>
 )
 
-const ChatIcon = () => (
+const _ChatIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5 8H5.00667M8 8H8.00667M11 8H11.0067M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 8.7981 2.15582 9.5598 2.43871 10.2563C2.49285 10.3897 2.51992 10.4563 2.532 10.5102C2.54381 10.5629 2.54813 10.6019 2.54814 10.6559C2.54814 10.7111 2.53812 10.7713 2.51807 10.8916L2.12275 13.2635C2.08135 13.5119 2.06065 13.6361 2.09917 13.7259C2.13289 13.8045 2.19552 13.8671 2.27412 13.9008C2.36393 13.9393 2.48812 13.9186 2.73651 13.8772L5.10843 13.4819C5.22872 13.4619 5.28887 13.4519 5.34409 13.4519C5.3981 13.4519 5.43711 13.4562 5.48981 13.468C5.54369 13.4801 5.61035 13.5072 5.74366 13.5613C6.4402 13.8442 7.2019 14 8 14ZM5.33333 8C5.33333 8.1841 5.1841 8.33333 5 8.33333C4.81591 8.33333 4.66667 8.1841 4.66667 8C4.66667 7.81591 4.81591 7.66667 5 7.66667C5.1841 7.66667 5.33333 7.81591 5.33333 8ZM8.33333 8C8.33333 8.1841 8.1841 8.33333 8 8.33333C7.81591 8.33333 7.66667 8.1841 7.66667 8C7.66667 7.81591 7.81591 7.66667 8 7.66667C8.1841 7.66667 8.33333 7.81591 8.33333 8ZM11.3333 8C11.3333 8.1841 11.1841 8.33333 11 8.33333C10.8159 8.33333 10.6667 8.1841 10.6667 8C10.6667 7.81591 10.8159 7.66667 11 7.66667C11.1841 7.66667 11.3333 7.81591 11.3333 8Z" stroke="#344054" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
@@ -58,7 +56,7 @@ const SideBar: FC<IExploreSideBarProps> = ({
   const isMobile = media === MediaType.mobile
 
   const [showConfirm, setShowConfirm] = useState(false)
-  const [currId, setCurrId] = useState('')
+  const [currId, _setCurrId] = useState('')
   const handleDelete = async () => {
     const id = currId
     await uninstallApp(id)
@@ -69,7 +67,7 @@ const SideBar: FC<IExploreSideBarProps> = ({
     })
   }
 
-  const handleUpdatePinStatus = async (id: string, isPinned: boolean) => {
+  const _handleUpdatePinStatus = async (id: string, isPinned: boolean) => {
     await updatePinStatus({ appId: id, isPinned })
     Toast.notify({
       type: 'success',
@@ -93,7 +91,7 @@ const SideBar: FC<IExploreSideBarProps> = ({
     fetchInstalledAppList()
   }, [controlUpdateInstalledApps, fetchInstalledAppList])
 
-  const pinnedAppsCount = installedApps.filter(({ is_pinned }) => is_pinned).length
+  const _pinnedAppsCount = installedApps.filter(({ is_pinned }) => is_pinned).length
   return (
     <div className='w-fit shrink-0 cursor-pointer px-4 pt-6 sm:w-[216px]'>
       <div className={cn(isDiscoverySelected ? 'text-text-accent' : 'text-text-tertiary')}>
@@ -107,39 +105,6 @@ const SideBar: FC<IExploreSideBarProps> = ({
           {!isMobile && <div className='text-sm'>{t('explore.sidebar.discovery')}</div>}
         </Link>
       </div>
-      {installedApps.length > 0 && (
-        <div className='mt-10'>
-          <p className='break-all pl-2 text-xs font-medium uppercase text-text-tertiary mobile:px-0'>{t('explore.sidebar.workspace')}</p>
-          <div className='mt-3 space-y-1 overflow-y-auto overflow-x-hidden'
-            style={{
-              height: 'calc(100vh - 250px)',
-            }}
-          >
-            {installedApps.map(({ id, is_pinned, uninstallable, app: { name, icon_type, icon, icon_url, icon_background } }, index) => (
-              <React.Fragment key={id}>
-                <Item
-                  isMobile={isMobile}
-                  name={name}
-                  icon_type={icon_type}
-                  icon={icon}
-                  icon_background={icon_background}
-                  icon_url={icon_url}
-                  id={id}
-                  isSelected={lastSegment?.toLowerCase() === id}
-                  isPinned={is_pinned}
-                  togglePin={() => handleUpdatePinStatus(id, !is_pinned)}
-                  uninstallable={uninstallable}
-                  onDelete={(id) => {
-                    setCurrId(id)
-                    setShowConfirm(true)
-                  }}
-                />
-                {index === pinnedAppsCount - 1 && index !== installedApps.length - 1 && <Divider />}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      )}
       {showConfirm && (
         <Confirm
           title={t('explore.sidebar.delete.title')}

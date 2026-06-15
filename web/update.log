@@ -1,5 +1,144 @@
 # AgentFlow 二次开发更新日志
 
+## 2026-06-15 — 首页 AI 助手添加 PDF/Word 文档分析功能
+
+### P0 — 用户直接可见
+- **文档上传按钮**：输入框工具栏新增"📎 文档"按钮，所有模型均可使用（不限于多模态模型）
+- **支持格式**：PDF、DOCX、DOC、TXT、MD、CSV、JSON、LOG、XML、YAML
+- **前端文本提取**：使用 pdfjs-dist（PDF）和 mammoth（DOCX）在浏览器端提取文档文本，不上传到服务器
+- **注入系统提示词**：提取的文档文本作为上下文注入到 pre_prompt，模型基于文档内容回答
+- **文档状态显示**：上传后显示文件名、解析状态（解析中/完成/错误）、字符数，可单独移除
+- **消息气泡显示**：发送时在用户消息气泡中显示 📄 文档名称标签
+- **图片上传**：保持原有行为，仅视觉模型可用（通过 Dify 文件上传管线）
+- **图片型 PDF 支持**：自动检测扫描件/图片型 PDF，渲染前 3 页为 JPEG 图片，通过视觉模型分析；非视觉模型提示切换
+- **pdfjs worker**：将 `pdf.worker.min.mjs` 复制到 `public/` 目录供浏览器端 PDF 解析使用
+
+### 修改文件
+- `web/app/components/home/chat-assistant/document-extractor.ts` — **新增** 文档文本提取工具（PDF/DOCX/纯文本），含图片型 PDF 检测和页面渲染
+- `web/app/components/home/chat-assistant/document-upload-button.tsx` — **新增** 文档上传按钮组件（含文件选择、状态显示、图片上传、移除功能）
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — sendMessage 增加 documentTexts 参数，buildModelConfig 增加 documentContext 参数注入到 pre_prompt
+- `web/app/components/home/chat-assistant/index.tsx` — 集成 DocumentUploadButton，handleSend 传递提取的文档文本和图片型 PDF 的已上传图片 file_ids
+- `web/public/pdf.worker.min.mjs` — **新增** pdfjs-dist Web Worker 文件（从 node_modules 复制）
+- `web/package.json` — 新增依赖 pdfjs-dist、mammoth
+
+### 技术方案
+- PDF 提取：pdfjs-dist v6 动态导入 + fake worker 模式（不依赖外部 worker 文件）
+- DOCX 提取：mammoth.extractRawText 动态导入
+- 文本截断：单文档最多提取 30,000 字符，超出截断并提示
+- 与现有图片上传（Dify 文件管线）互不干扰，可同时使用
+
+## 2026-06-15 — 首页去掉智能体广场 + 布局调整
+
+### P0 — 用户直接可见
+- 首页移除"智能体广场"板块，页面更聚焦于 AI 对话助手
+- AI 助手区域改为 `flex-1` 填满剩余垂直空间，对话区更大更舒适
+- 历史对话面板与对话区左右布局保持不变
+
+### 修改文件
+- `web/app/components/home/index.tsx` — 移除 AgentPlaza 组件，ChatAssistant 改为 flex-1 布局
+
+## 2026-06-15 — 修复全局版权栏导致页面内容不可见
+
+### Bug Fix
+- 在 `layout.tsx` 中为全局版权栏添加包裹 div 时，缺少 `flex flex-col` 类，导致子页面（/apps、/tools 等）的 flex 布局链断裂，内容区域高度为 0（DOM 存在但不可见）
+- 修复：包裹 div 添加 `flex flex-col` 类，恢复 flex 子项的 `grow`/`h-0` 行为
+
+### 修改文件
+- `web/app/(commonLayout)/layout.tsx` — 修复包裹 div 的 className
+
+## 2026-06-15 — 应用卡片优化 + 分页 + 全局版权信息
+
+### P0 — 用户直接可见
+- **应用卡片放大精致化**：图标从 large→xl、圆角 rounded-lg→rounded-2xl、增加底部分隔线（安装次数+添加按钮）、分类/类型标签展示在卡片头部、hover 上浮动画
+- **分页显示**：每页 10 个应用，底部前后翻页按钮 + 页码（如 1/3），切换分类/搜索自动回到第 1 页
+- **全局版权信息**：每个侧边栏页面底部统一显示 "© 2026 中国广电 - 中广数智科技（北京）有限责任公司"
+- 应用列表网格从 4 列改为 3 列（大屏），卡片更大更易读
+- 标题渐变色从蓝色改为紫色系
+
+### 修改文件
+- `web/app/components/explore/app-card/index.tsx` — 全面重构：更大图标、标签、底栏、hover 动效
+- `web/app/components/explore/app-list/style.module.css` — 网格列数调整、渐变色改紫色
+- `web/app/components/explore/app-list/index.tsx` — 添加分页逻辑（PAGE_SIZE=10）、页码控件、使用 pagedList 渲染
+- `web/app/(commonLayout)/layout.tsx` — 底部添加全局版权栏
+- `web/app/(commonLayout)/explore/apps/loading.tsx` — 骨架屏匹配新卡片布局
+- `web/i18n/zh-Hans/explore.ts` — 文案更新
+- `web/i18n/en-US/explore.ts` — 文案更新
+
+## 2026-06-15 — 智能体应用广场描述文案微调
+
+### P0 — 用户直接可见
+- 描述文案更新为："经过中国广电认证的办公效率、VibeCoding编程、经营分析、智能化运维等各类智能体应用模版，一键复制，可视化配置，轻松使用！"
+
+### 修改文件
+- `web/i18n/zh-Hans/explore.ts` — apps.description 文案更新
+- `web/i18n/en-US/explore.ts` — apps.description 英文同步
+
+## 2026-06-15 — 智能体应用广场去除左侧栏 + 标题文案更新
+
+### P0 — 用户直接可见
+- 去除智能体应用广场左侧"发现"导航栏，内容区域占满全宽
+- 页面标题从"探索应用"改为"智能体应用广场"
+
+### 修改文件
+- `web/app/components/explore/index.tsx` — 移除 Sidebar 组件引用和渲染
+- `web/i18n/zh-Hans/explore.ts` — apps.title 改为"智能体应用广场"
+- `web/i18n/en-US/explore.ts` — apps.title 改为"Agent App Plaza"
+
+## 2026-06-15 — 智能体应用广场去除工作区 + 描述文案更新
+
+### P0 — 用户直接可见
+- 智能体应用广场左侧不再显示"工作区"已安装应用列表，页面更简洁
+- 页面描述改为："经过中国广电认证的办公、效率、编程、经营分析、运维等各类智能体应用模版，一键复制使用！"
+
+### 修改文件
+- `web/app/components/explore/sidebar/index.tsx` — 移除工作区已安装应用列表（installedApps 渲染段）
+- `web/i18n/zh-Hans/explore.ts` — apps.description 更新为中国广电认证描述
+- `web/i18n/en-US/explore.ts` — apps.description 英文同步更新
+
+## 2026-06-15 — 智能体应用广场添加应用详情弹窗
+
+### P0 — 用户直接可见
+- 点击探索应用卡片弹出详情弹窗，显示应用图标、名称、类型标签、完整描述、安装次数、分类和版权信息
+- 弹窗内可直接点击「添加到工作区」按钮创建应用
+- 卡片悬浮时的「添加到工作区」按钮仍然可用，直接打开创建应用弹窗（不弹详情）
+- 支持 ESC 键和关闭按钮关闭详情弹窗
+
+### 修改文件
+- `web/app/components/explore/app-detail-modal/index.tsx` — 新建详情弹窗组件
+- `web/app/components/explore/app-card/index.tsx` — 新增 `onViewDetail` prop，卡片 onClick 打开详情，「添加到工作区」按钮 stopPropagation 防止冒泡
+- `web/app/components/explore/app-list/index.tsx` — 新增 `detailApp`/`showDetailModal` 状态，渲染 `AppDetailModal`，「添加到工作区」联动已有创建流程
+- `web/i18n/zh-Hans/explore.ts` — 添加 `appDetail` 翻译 keys
+- `web/i18n/en-US/explore.ts` — 添加 `appDetail` 翻译 keys
+
+## 2026-06-15 — 侧边栏新增「智能体应用广场」菜单项
+
+### P0 — 用户直接可见
+- 侧边栏新增「智能体应用广场」菜单项，位于「智能体编排」下方
+- 使用罗盘图标（RiCompass3Line / RiCompass3Fill）
+- 指向原 `/explore/apps` 路由
+
+### 修改文件
+- `web/app/components/global-sidebar/index.tsx` — 新增「智能体应用广场」SidebarNavItem，导入 RiCompass3Line/RiCompass3Fill 图标
+
+## 2026-06-15 — 侧边栏页面路由级骨架屏（loading.tsx）
+
+### P0 — 用户直接可见
+- 为 6 个侧边栏页面添加 `loading.tsx` 骨架屏，切换页面时立即显示加载动画，不再出现旧页面冻结
+- 首页：问候语 + 历史侧栏 + 聊天区 + 智能体广场卡片占位
+- 智能体编排：搜索栏 + 标签页 + 应用卡片网格占位
+- Graph知识库：搜索栏 + 标签页 + 知识库卡片网格占位
+- Skills插件管理：标题 + 插件列表占位
+- MCP工具：搜索栏 + 工具卡片网格占位
+- Skills市场（explore）：分类侧栏 + 搜索栏 + 应用卡片网格占位
+
+### 修改文件
+- `web/app/(commonLayout)/home/loading.tsx` — 新建，首页骨架屏
+- `web/app/(commonLayout)/apps/loading.tsx` — 新建，智能体编排骨架屏
+- `web/app/(commonLayout)/datasets/loading.tsx` — 新建，知识库骨架屏
+- `web/app/(commonLayout)/plugins/loading.tsx` — 新建，插件管理骨架屏
+- `web/app/(commonLayout)/tools/loading.tsx` — 新建，工具骨架屏
+- `web/app/(commonLayout)/explore/apps/loading.tsx` — 新建，Skills市场骨架屏
+
 ## 2026-06-14 — 添加智能体体验优化
 
 ### P0 — 用户直接可见

@@ -6,45 +6,103 @@ import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainLine, RiChat3Line, RiDelete
 import { Markdown } from '@/app/components/base/markdown'
 import Button from '@/app/components/base/button'
 import { useToastContext } from '@/app/components/base/toast'
+import { FileContextProvider, useFileStore } from '@/app/components/base/file-uploader/store'
+import { useFile } from '@/app/components/base/file-uploader/hooks'
+import { getProcessedFiles } from '@/app/components/base/file-uploader/utils'
+import FileUploaderInChatInput from '@/app/components/base/file-uploader/file-uploader-in-chat-input'
+import { FileListInChatInput } from '@/app/components/base/file-uploader/file-uploader-in-chat-input/file-list'
 import cn from '@/utils/classnames'
 import { useChatAssistant } from './use-chat-assistant'
+import type { ChatItem, DatasetSelection, FlatModel, HistoryEntry, ModelSelection } from './use-chat-assistant'
 import ModelSelector from './model-selector'
 import DatasetSelector from './dataset-selector'
 import SourcesPanel from './sources-panel'
 import { SUGGESTED_QUESTIONS } from './config'
+import type { FileUpload } from '@/app/components/base/features/types'
+import DocumentUploadButton from './document-upload-button'
+import type { DocumentFile } from './document-upload-button'
 
-const ChatAssistant = () => {
+// ── Inner component (inside FileContextProvider) ──
+
+const ChatAssistantInner = ({
+  fileUploadConfig,
+  supportsFileUpload,
+  appReady,
+  appError,
+  retryInit,
+  availableModels,
+  selectedModel,
+  setSelectedModel,
+  selectedDatasets,
+  setSelectedDatasets,
+  chatList,
+  isResponding,
+  deepThinking,
+  setDeepThinking,
+  webSearch,
+  setWebSearch,
+  sendMessage,
+  handleStop,
+  handleRestart,
+  history,
+  historyLoading,
+  loadingHistoryId,
+  loadConversation,
+  deleteHistoryItem,
+  refreshHistory,
+}: {
+  fileUploadConfig: FileUpload
+  supportsFileUpload: boolean
+  appReady: boolean
+  appError: string | null
+  retryInit: () => void
+  availableModels: FlatModel[]
+  selectedModel: ModelSelection | null
+  setSelectedModel: (sel: ModelSelection | null) => void
+  selectedDatasets: DatasetSelection[]
+  setSelectedDatasets: (sel: DatasetSelection[]) => void
+  chatList: ChatItem[]
+  isResponding: boolean
+  deepThinking: boolean
+  setDeepThinking: (v: boolean) => void
+  webSearch: boolean
+  setWebSearch: (v: boolean) => void
+  sendMessage: (query: string, files?: any[], documentTexts?: { filename: string; text: string }[]) => Promise<void>
+  handleStop: () => void
+  handleRestart: () => void
+  history: HistoryEntry[]
+  historyLoading: boolean
+  loadingHistoryId: string | null
+  loadConversation: (entry: HistoryEntry) => Promise<void>
+  deleteHistoryItem: (id: string) => Promise<void>
+  refreshHistory: () => void
+}) => {
   const { notify } = useToastContext()
   const [query, setQuery] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const isComposingRef = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+  // Document files (extracted text, managed locally)
+  const [documentFiles, setDocumentFiles] = useState<DocumentFile[]>([])
+
+  // File upload hooks (only active when supportsFileUpload)
   const {
-    appReady,
-    appError,
-    retryInit,
-    availableModels,
-    selectedModel,
-    setSelectedModel,
-    selectedDatasets,
-    setSelectedDatasets,
-    chatList,
-    isResponding,
-    deepThinking,
-    setDeepThinking,
-    webSearch,
-    setWebSearch,
-    sendMessage,
-    handleStop,
-    handleRestart,
-    history,
-    historyLoading,
-    loadingHistoryId,
-    loadConversation,
-    deleteHistoryItem,
-    refreshHistory,
-  } = useChatAssistant()
+    handleClipboardPasteFile,
+    handleDragFileEnter,
+    handleDragFileOver,
+    handleDragFileLeave,
+    handleDropFile,
+    isDragActive,
+  } = useFile(fileUploadConfig)
+
+  const fileStore = useFileStore()
+
+  // Clear files when switching to non-vision model
+  useEffect(() => {
+    if (!supportsFileUpload)
+      fileStore.getState().setFiles([])
+  }, [supportsFileUpload, fileStore])
 
   const hasMessages = chatList.length > 0
   const currentConversationId = useRef('')
@@ -59,7 +117,45 @@ const ChatAssistant = () => {
     const msg = (text || query).trim()
     if (isResponding || !appReady)
       return
-    if (!msg) {
+
+    // Check for attached image files (vision model)
+    let processedFiles: any[] | undefined
+    if (supportsFileUpload) {
+      const storeFiles = fileStore.getState().files
+      // Check for files still uploading
+      if (storeFiles.some(f => f.progress > 0 && f.progress < 100)) {
+        notify({ type: 'warning', message: '文件正在上传中，请稍候' })
+        return
+      }
+      processedFiles = getProcessedFiles(storeFiles)
+      if (processedFiles.length === 0)
+        processedFiles = undefined
+    }
+
+    // Check for document files with extracted text (any model)
+    if (documentFiles.some(d => d.status === 'extracting' || d.status === 'uploading')) {
+      notify({ type: 'warning', message: '文档正在处理中，请稍候' })
+      return
+    }
+    const docTexts = documentFiles
+      .filter(d => d.status === 'done' && d.result && !d.uploadedFileIds?.length)
+      .map(d => ({ filename: d.filename, text: d.result!.text }))
+
+    // Collect image-based PDF page images (already uploaded to server)
+    const pdfImageFiles = documentFiles
+      .filter(d => d.status === 'done' && d.uploadedFileIds?.length)
+      .flatMap(d => d.uploadedFileIds!.map(id => ({
+        type: 'image',
+        transfer_method: 'local_file',
+        url: '',
+        upload_file_id: id,
+      })))
+
+    // Merge manually uploaded images + PDF page images
+    const allFiles = [...(processedFiles || []), ...pdfImageFiles]
+
+    // Require either text, image files, or document files
+    if (!msg && !allFiles.length && !docTexts.length) {
       notify({ type: 'info', message: '请输入消息内容' })
       return
     }
@@ -67,13 +163,27 @@ const ChatAssistant = () => {
       notify({ type: 'warning', message: '请先选择一个模型' })
       return
     }
-    sendMessage(msg)
+
+    // When files are attached but no text, use a default prompt
+    const hasAttachments = allFiles.length + docTexts.length > 0
+    const finalQuery = msg || (hasAttachments ? '请分析附件中的文件内容' : '')
+
+    sendMessage(finalQuery, allFiles.length ? allFiles : undefined, docTexts.length ? docTexts : undefined)
+
+    // Clear image files after send
+    if (supportsFileUpload)
+      fileStore.getState().setFiles([])
+
+    // Clear document files after send
+    if (documentFiles.length)
+      setDocumentFiles([])
+
     if (!text) {
       setQuery('')
       if (textareaRef.current)
         textareaRef.current.style.height = 'auto'
     }
-  }, [query, isResponding, appReady, selectedModel, sendMessage, notify])
+  }, [query, isResponding, appReady, selectedModel, sendMessage, notify, supportsFileUpload, fileStore, documentFiles])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -118,66 +228,66 @@ const ChatAssistant = () => {
                 </div>
               )
               : history.length === 0
-              ? (
-                <div className="flex flex-col items-center px-2 py-8">
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-state-base-hover">
-                    <RiChat3Line className="h-5 w-5 text-text-quaternary" />
+                ? (
+                  <div className="flex flex-col items-center px-2 py-8">
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-state-base-hover">
+                      <RiChat3Line className="h-5 w-5 text-text-quaternary" />
+                    </div>
+                    <p className="text-xs text-text-quaternary">暂无对话记录</p>
+                    <p className="mt-1 text-[11px] text-text-quaternary">开始对话后将自动保存</p>
                   </div>
-                  <p className="text-xs text-text-quaternary">暂无对话记录</p>
-                  <p className="mt-1 text-[11px] text-text-quaternary">开始对话后将自动保存</p>
-                </div>
-              )
-              : (
-                <div className="space-y-0.5">
-                  {pagedHistory.map((entry) => {
-                    const isActive = currentConversationId.current === entry.conversationId
-                    const isLoading = loadingHistoryId === entry.conversationId
-                    return (
-                      <div
-                        key={entry.id}
-                        className={cn(
-                          'group flex cursor-pointer items-start gap-2 rounded-lg px-3 py-2.5 transition-all duration-150',
-                          isActive
-                            ? 'bg-primary-50/80 ring-1 ring-primary-200'
-                            : 'hover:bg-state-base-hover',
-                          isLoading && 'opacity-60',
-                        )}
-                        onClick={() => {
-                          if (!isLoading) {
-                            loadConversation(entry)
-                            currentConversationId.current = entry.conversationId
-                          }
-                        }}
-                      >
-                        <div className="min-w-0 flex-1">
-                          <div className={cn(
-                            'truncate text-[13px] leading-snug',
-                            isActive ? 'font-medium text-primary-700' : 'text-text-secondary',
+                )
+                : (
+                  <div className="space-y-0.5">
+                    {pagedHistory.map((entry) => {
+                      const isActive = currentConversationId.current === entry.conversationId
+                      const isLoading = loadingHistoryId === entry.conversationId
+                      return (
+                        <div
+                          key={entry.id}
+                          className={cn(
+                            'group flex cursor-pointer items-start gap-2 rounded-lg px-3 py-2.5 transition-all duration-150',
+                            isActive
+                              ? 'bg-primary-50/80 ring-1 ring-primary-200'
+                              : 'hover:bg-state-base-hover',
+                            isLoading && 'opacity-60',
                           )}
-                          >
-                            {entry.title}
-                          </div>
-                          <div className="mt-1 text-[11px] text-text-quaternary">
-                            {new Date(entry.createdAt).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                            <span className="mx-1">·</span>
-                            {entry.messageCount} 轮
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          className="-mr-0.5 mt-0.5 shrink-0 rounded p-1 text-text-quaternary opacity-0 transition-all hover:bg-state-accent-active hover:text-text-destructive group-hover:opacity-100"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            deleteHistoryItem(entry.id)
+                          onClick={() => {
+                            if (!isLoading) {
+                              loadConversation(entry)
+                              currentConversationId.current = entry.conversationId
+                            }
                           }}
                         >
-                          <RiDeleteBinLine className="h-3 w-3" />
-                        </button>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
+                          <div className="min-w-0 flex-1">
+                            <div className={cn(
+                              'truncate text-[13px] leading-snug',
+                              isActive ? 'font-medium text-primary-700' : 'text-text-secondary',
+                            )}
+                            >
+                              {entry.title}
+                            </div>
+                            <div className="mt-1 text-[11px] text-text-quaternary">
+                              {new Date(entry.createdAt).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                              <span className="mx-1">·</span>
+                              {entry.messageCount} 轮
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            className="-mr-0.5 mt-0.5 shrink-0 rounded p-1 text-text-quaternary opacity-0 transition-all hover:bg-state-accent-active hover:text-text-destructive group-hover:opacity-100"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              deleteHistoryItem(entry.id)
+                            }}
+                          >
+                            <RiDeleteBinLine className="h-3 w-3" />
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
           </div>
 
           {/* Pagination */}
@@ -233,6 +343,7 @@ const ChatAssistant = () => {
                 onClick={() => {
                   handleRestart()
                   currentConversationId.current = ''
+                  setDocumentFiles([])
                   refreshHistory()
                 }}
               >
@@ -243,7 +354,16 @@ const ChatAssistant = () => {
         </div>
 
         {/* Main Card */}
-        <div className="overflow-hidden rounded-xl border border-components-panel-border bg-components-panel-on-panel-item-bg shadow-sm">
+        <div className="relative overflow-hidden rounded-xl border border-components-panel-border bg-components-panel-on-panel-item-bg shadow-sm">
+
+          {/* Drag overlay */}
+          {supportsFileUpload && isDragActive && (
+            <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center rounded-xl border-2 border-dashed border-primary-400 bg-primary-50/80">
+              <div className="rounded-lg bg-white px-6 py-3 text-sm font-medium text-primary-600 shadow-md">
+                📎 松开以上传文件
+              </div>
+            </div>
+          )}
 
           {/* Error State */}
           {appError && (
@@ -275,7 +395,9 @@ const ChatAssistant = () => {
                     <RiSparkling2Fill className="h-7 w-7 text-primary-500" />
                   </div>
                   <h3 className="mb-1.5 text-lg font-semibold text-text-secondary">你好！我是 AI 助手</h3>
-                  <p className="text-sm text-text-tertiary">选择模型和知识库，或直接开始对话</p>
+                  <p className="text-sm text-text-tertiary">
+                    {supportsFileUpload ? '选择模型和知识库，或直接开始对话，支持上传图片和文档分析' : '选择模型和知识库，或直接开始对话，支持上传文档分析'}
+                  </p>
                 </div>
                 <div className="mx-auto grid max-w-lg grid-cols-2 gap-2.5">
                   {SUGGESTED_QUESTIONS.map(q => (
@@ -296,7 +418,7 @@ const ChatAssistant = () => {
             )
             : (
               // Conversation
-              <div ref={scrollContainerRef} className="max-h-[500px] overflow-y-auto px-4 py-4">
+              <div ref={scrollContainerRef} className="max-h-[650px] overflow-y-auto px-4 py-4">
                 {chatList.map((item, index) => {
                   if (item.isAnswer) {
                     const isLast = index === chatList.length - 1
@@ -333,7 +455,29 @@ const ChatAssistant = () => {
                   return (
                     <div key={item.id} className="mb-4 flex justify-end">
                       <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-gradient-to-br from-primary-600 to-primary-600 px-4 py-3 text-sm leading-relaxed text-white shadow-xs">
-                        <div className="whitespace-pre-wrap break-words">{item.content}</div>
+                        {/* Show attached image files */}
+                        {item.files && item.files.length > 0 && (
+                          <div className="mb-1.5 flex flex-wrap gap-1">
+                            {item.files.map((f, i) => (
+                              <span key={i} className="inline-flex items-center gap-1 rounded bg-white/20 px-1.5 py-0.5 text-[11px]">
+                                🖼️ {f.type === 'image' ? '图片' : '文件'}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {/* Show attached document names */}
+                        {item.documentNames && item.documentNames.length > 0 && (
+                          <div className="mb-1.5 flex flex-wrap gap-1">
+                            {item.documentNames.map((name, i) => (
+                              <span key={i} className="inline-flex items-center gap-1 rounded bg-white/20 px-1.5 py-0.5 text-[11px]">
+                                📄 {name}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {item.content && (
+                          <div className="whitespace-pre-wrap break-words">{item.content}</div>
+                        )}
                       </div>
                     </div>
                   )
@@ -343,6 +487,13 @@ const ChatAssistant = () => {
 
           {/* Input Area */}
           <div className="bg-background-default-subtle/30 border-t border-divider-subtle">
+            {/* File preview list (vision model only) */}
+            {supportsFileUpload && (
+              <div className="px-4 pt-2.5">
+                <FileListInChatInput fileConfig={fileUploadConfig} />
+              </div>
+            )}
+
             {/* Toggles */}
             <div className="flex items-center gap-2 px-4 py-2.5">
               <button
@@ -380,6 +531,17 @@ const ChatAssistant = () => {
                 onChange={setSelectedDatasets}
                 disabled={isResponding}
               />
+              {/* File upload button (vision model only — images) */}
+              {supportsFileUpload && (
+                <FileUploaderInChatInput fileConfig={fileUploadConfig} />
+              )}
+              {/* Document upload button (any model — text extraction) */}
+              <DocumentUploadButton
+                documents={documentFiles}
+                onChange={setDocumentFiles}
+                disabled={isResponding}
+                isVisionModel={supportsFileUpload}
+              />
             </div>
 
             {/* Textarea + Send */}
@@ -390,7 +552,7 @@ const ChatAssistant = () => {
                   'flex-1 resize-none rounded-lg bg-transparent py-2.5 text-sm text-text-primary outline-none',
                   'placeholder:text-text-quaternary',
                 )}
-                placeholder={appReady ? '输入消息，开始对话...' : appError ? '初始化失败' : '正在初始化...'}
+                placeholder={appReady ? (supportsFileUpload ? '输入消息，或拖拽图片/点击文档按钮...' : '输入消息，或点击文档按钮上传文件...') : appError ? '初始化失败' : '正在初始化...'}
                 minRows={1}
                 maxRows={6}
                 value={query}
@@ -402,6 +564,13 @@ const ChatAssistant = () => {
                     isComposingRef.current = false
                   }, 50)
                 }}
+                {...(supportsFileUpload ? {
+                  onPaste: handleClipboardPasteFile as any,
+                  onDragEnter: handleDragFileEnter as any,
+                  onDragOver: handleDragFileOver as any,
+                  onDragLeave: handleDragFileLeave as any,
+                  onDrop: handleDropFile as any,
+                } : {})}
                 disabled={isResponding || !appReady || !!appError}
               />
               {isResponding
@@ -415,7 +584,7 @@ const ChatAssistant = () => {
                     className="!h-9 !w-9 !shrink-0 !p-0"
                     variant="primary"
                     onClick={() => handleSend()}
-                    disabled={!query.trim() || !appReady || !!appError}
+                    disabled={(!query.trim() && !(supportsFileUpload && fileStore.getState().files.length > 0) && !documentFiles.some(d => d.status === 'done')) || documentFiles.some(d => d.status === 'extracting' || d.status === 'uploading') || !appReady || !!appError}
                   >
                     <RiSendPlane2Fill className="h-4 w-4" />
                   </Button>
@@ -425,6 +594,44 @@ const ChatAssistant = () => {
         </div>
       </div>
     </div>
+  )
+}
+
+// ── Outer component (wraps in FileContextProvider) ──
+
+const ChatAssistant = () => {
+  const chatProps = useChatAssistant()
+
+  return (
+    <FileContextProvider>
+      <ChatAssistantInner
+        fileUploadConfig={chatProps.fileUploadConfig as FileUpload}
+        supportsFileUpload={chatProps.supportsFileUpload}
+        appReady={chatProps.appReady}
+        appError={chatProps.appError}
+        retryInit={chatProps.retryInit}
+        availableModels={chatProps.availableModels}
+        selectedModel={chatProps.selectedModel}
+        setSelectedModel={chatProps.setSelectedModel}
+        selectedDatasets={chatProps.selectedDatasets}
+        setSelectedDatasets={chatProps.setSelectedDatasets}
+        chatList={chatProps.chatList}
+        isResponding={chatProps.isResponding}
+        deepThinking={chatProps.deepThinking}
+        setDeepThinking={chatProps.setDeepThinking}
+        webSearch={chatProps.webSearch}
+        setWebSearch={chatProps.setWebSearch}
+        sendMessage={chatProps.sendMessage}
+        handleStop={chatProps.handleStop}
+        handleRestart={chatProps.handleRestart}
+        history={chatProps.history}
+        historyLoading={chatProps.historyLoading}
+        loadingHistoryId={chatProps.loadingHistoryId}
+        loadConversation={chatProps.loadConversation}
+        deleteHistoryItem={chatProps.deleteHistoryItem}
+        refreshHistory={chatProps.refreshHistory}
+      />
+    </FileContextProvider>
   )
 }
 

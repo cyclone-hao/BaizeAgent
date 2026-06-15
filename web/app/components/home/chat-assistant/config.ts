@@ -69,3 +69,10 @@ export const SUGGESTED_QUESTIONS = [
   { icon: '🔍', text: '帮我分析一段代码' },
   { icon: '🌐', text: '翻译一段文字' },
 ]
+
+/** 文件上传限制 */
+export const FILE_UPLOAD_LIMITS = {
+  maxFiles: 5,
+  imageMaxSize: 10 * 1024 * 1024, // 10 MB
+  docMaxSize: 15 * 1024 * 1024, // 15 MB
+}

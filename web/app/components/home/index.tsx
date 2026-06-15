@@ -13,9 +13,9 @@ const HomePage = () => {
 
   return (
     <div className="h-full overflow-y-auto bg-background-body">
-      <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-8 lg:px-12">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-col px-4 py-6 sm:px-8 lg:px-12">
         <GreetingSection userName={userProfile.name} />
-        <div className="mb-5">
+        <div className="flex-1">
           <ChatAssistant />
         </div>
         <AgentPlaza />

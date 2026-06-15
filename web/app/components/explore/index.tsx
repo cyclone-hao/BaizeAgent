@@ -3,7 +3,6 @@ import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ExploreContext from '@/context/explore-context'
-import Sidebar from '@/app/components/explore/sidebar'
 import { useAppContext } from '@/context/app-context'
 import { fetchMembers } from '@/service/common'
 import type { InstalledApp } from '@/models/explore'
@@ -57,7 +56,6 @@ const Explore: FC<IExploreProps> = ({
           }
         }
       >
-        <Sidebar controlUpdateInstalledApps={controlUpdateInstalledApps} />
         <div className='w-0 grow'>
           {children}
         </div>

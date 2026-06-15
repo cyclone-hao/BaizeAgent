@@ -19,15 +19,15 @@ import { useAppContext } from '@/context/app-context'
 import { useTranslation } from 'react-i18next'
 
 // 根据屏幕宽度返回 2 行对应的卡片数量
-// 2xl(1536+): 4 cols → 8, xl(1280+): 3 cols → 6, 其他: 2 cols → 4
+// 容器最大宽度 1400px，按实际可用空间计算
 function useDisplayLimit(): number {
-  const [limit, setLimit] = useState(8)
+  const [limit, setLimit] = useState(6)
   useEffect(() => {
     const calc = () => {
       const w = window.innerWidth
-      if (w >= 1536)
+      if (w >= 1800)
         setLimit(8)
-      else if (w >= 1280)
+      else if (w >= 1400)
         setLimit(6)
       else
         setLimit(4)

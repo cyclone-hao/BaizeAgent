@@ -6,6 +6,7 @@ import {
   ModelStatusEnum,
 } from '@/app/components/header/account-setting/model-provider-page/declarations'
 import type { Model as ModelGroup } from '@/app/components/header/account-setting/model-provider-page/declarations'
+import { TransferMethod } from '@/types/app'
 import { createApp } from '@/service/apps'
 import {
   deleteChatConversation,
@@ -27,6 +28,7 @@ import {
   getReasoningParams,
   isReasoningModel,
 } from './config'
+import { buildDocumentContext } from './document-extractor'
 
 // ── Types ──────────────────────────────────────────
 
@@ -44,6 +46,8 @@ export type ChatItem = {
   content: string
   isAnswer: boolean
   sources?: WebSearchResult[]
+  files?: { type: string; transfer_method: string; url: string; upload_file_id: string }[]
+  documentNames?: string[]
 }
 
 export type ModelSelection = {
@@ -337,12 +341,52 @@ export function useChatAssistant() {
       + '- 回答要准确，不要编造搜索结果中没有的信息'
   }, [])
 
+  // ── Model capability detection ──
+  const currentModelFeatures = useMemo(() => {
+    if (!selectedModel)
+      return [] as string[]
+    const m = availableModels.find(
+      am => am.provider === selectedModel.provider && am.model === selectedModel.model,
+    )
+    return m?.features ?? ([] as string[])
+  }, [selectedModel, availableModels])
+
+  const isVisionModel = useMemo(() => currentModelFeatures.includes('vision'), [currentModelFeatures])
+  // NOTE: document-capable models (e.g. qwen-long) have plugin compatibility issues
+  // with the Tongyi provider — fileid:// format causes 400 errors.
+  // Only enable file upload for vision models (image analysis works reliably).
+  const supportsFileUpload = isVisionModel
+
+  // ── File upload config (images only — document support pending plugin fix) ──
+  const fileUploadConfig = useMemo(() => {
+    if (!supportsFileUpload) {
+      return {
+        enabled: false,
+        image: { enabled: false },
+        allowed_file_types: [] as string[],
+        allowed_file_upload_methods: [] as TransferMethod[],
+        number_limits: 0,
+      }
+    }
+
+    return {
+      enabled: true,
+      image: { enabled: true, detail: 'high' as const, number_limits: 3, transfer_methods: [TransferMethod.local_file] },
+      document: { enabled: false, number_limits: 0, transfer_methods: [TransferMethod.local_file] },
+      allowed_file_types: ['image'] as string[],
+      allowed_file_extensions: [] as string[],
+      allowed_file_upload_methods: [TransferMethod.local_file],
+      number_limits: 3,
+    }
+  }, [supportsFileUpload])
+
   // ── Build model_config ──
   const buildModelConfig = useCallback((
     model: ModelSelection,
     datasets: DatasetSelection[],
     useDeepThinking: boolean,
     searchResults: WebSearchResult[] = [],
+    documentContext: string = '',
   ) => {
     const completionParams: Record<string, unknown> = { ...DEFAULT_COMPLETION_PARAMS }
     if (useDeepThinking && isReasoningModel(model.model)) {
@@ -351,7 +395,7 @@ export function useChatAssistant() {
         Object.assign(completionParams, reasoningParams)
     }
 
-    const prePrompt = DEFAULT_SYSTEM_PROMPT + buildSearchContext(searchResults)
+    const prePrompt = DEFAULT_SYSTEM_PROMPT + buildSearchContext(searchResults) + documentContext
 
     const config: Record<string, any> = {
       model: {
@@ -374,7 +418,16 @@ export function useChatAssistant() {
       retriever_resource: { enabled: datasets.length > 0 },
       sensitive_word_avoidance: { enabled: false },
       agent_mode: { enabled: false, tools: [] },
-      file_upload: { image: { enabled: false } },
+      file_upload: supportsFileUpload
+        ? {
+          enabled: true,
+          image: { enabled: true, number_limits: 3, detail: 'high', transfer_methods: ['local_file'] },
+          document: { enabled: false },
+          allowed_file_types: ['image'],
+          allowed_file_upload_methods: ['local_file'],
+          number_limits: 3,
+        }
+        : { image: { enabled: false } },
       dataset_configs: {
         retrieval_model: 'multiple',
         datasets: {
@@ -388,7 +441,7 @@ export function useChatAssistant() {
       },
     }
     return config
-  }, [buildSearchContext])
+  }, [buildSearchContext, supportsFileUpload])
 
   // ── Strip think tags ──
   const stripThinkTags = useCallback((content: string) => {
@@ -399,7 +452,11 @@ export function useChatAssistant() {
   }, [])
 
   // ── Send Message ──
-  const sendMessage = useCallback(async (query: string) => {
+  const sendMessage = useCallback(async (
+    query: string,
+    files?: { type: string; transfer_method: string; url: string; upload_file_id: string }[],
+    documentTexts?: { filename: string; text: string }[],
+  ) => {
     if (!baseAppId || !selectedModel || isResponding)
       return
 
@@ -414,14 +471,24 @@ export function useChatAssistant() {
       }
     }
 
-    const userMsg: ChatItem = { id: genId(), content: query, isAnswer: false }
+    // Build document context for system prompt injection
+    const docContext = buildDocumentContext(documentTexts || [])
+    const docNames = documentTexts?.map(d => d.filename) || []
+
+    const userMsg: ChatItem = {
+      id: genId(),
+      content: query,
+      isAnswer: false,
+      files: files?.length ? files : undefined,
+      documentNames: docNames.length ? docNames : undefined,
+    }
     const aiMsgId = genId()
     const aiMsg: ChatItem = { id: aiMsgId, content: '', isAnswer: true, sources: searchResults.length > 0 ? searchResults : undefined }
     setChatList(prev => [...prev, userMsg, aiMsg])
     setIsResponding(true)
 
     let accumulatedContent = ''
-    const modelConfig = buildModelConfig(selectedModel, selectedDatasets, deepThinking, searchResults)
+    const modelConfig = buildModelConfig(selectedModel, selectedDatasets, deepThinking, searchResults, docContext)
 
     sendChatMessage(baseAppId, {
       query,
@@ -429,6 +496,7 @@ export function useChatAssistant() {
       model_config: modelConfig,
       conversation_id: conversationIdRef.current || undefined,
       parent_message_id: lastMessageIdRef.current || undefined,
+      files: supportsFileUpload && files?.length ? files : undefined,
     }, {
       onData: (messageChunk, isFirstMessage, moreInfo) => {
         if (moreInfo.conversationId && (!conversationIdRef.current || isFirstMessage))
@@ -493,7 +561,7 @@ export function useChatAssistant() {
         }
       },
     })
-  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, isResponding, buildModelConfig, stripThinkTags, fetchHistory])
+  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload])
 
   // ── Stop ──
   const handleStop = useCallback(() => {
@@ -543,5 +611,8 @@ export function useChatAssistant() {
     loadConversation,
     deleteHistoryItem,
     refreshHistory: fetchHistory,
+    isVisionModel,
+    supportsFileUpload,
+    fileUploadConfig,
   }
 }

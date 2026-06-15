@@ -21,7 +21,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 <div className="flex h-screen overflow-hidden">
                   <GlobalSidebar />
                   <div className="flex min-w-0 grow flex-col overflow-hidden">
-                    {children}
+                    <div className="flex flex-1 flex-col overflow-hidden">
+                      {children}
+                    </div>
+                    <div className="shrink-0 border-t border-divider-subtle py-2 text-center text-xs text-text-quaternary">
+                      © 2026 中国广电 - 中广数智科技（北京）有限责任公司
+                    </div>
                   </div>
                 </div>
                 <GotoAnything />

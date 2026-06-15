@@ -11,10 +11,15 @@ import ExploreContext from '@/context/explore-context'
 import type { App } from '@/models/explore'
 import Category from '@/app/components/explore/category'
 import AppCard from '@/app/components/explore/app-card'
+import AppDetailModal from '@/app/components/explore/app-detail-modal'
 import { fetchAppDetail, fetchAppList } from '@/service/explore'
 import { useTabSearchParams } from '@/hooks/use-tab-searchparams'
 import CreateAppModal from '@/app/components/explore/create-app-modal'
 import type { CreateAppModalProps } from '@/app/components/explore/create-app-modal'
+import {
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+} from '@remixicon/react'
 import Loading from '@/app/components/base/loading'
 import Input from '@/app/components/base/input'
 import {
@@ -86,8 +91,21 @@ const Apps = ({
     )
   }, [searchKeywords, filteredList])
 
+  const PAGE_SIZE = 10
+  const [currentPage, setCurrentPage] = useState(1)
+
+  // Reset to page 1 when filters change
+  React.useEffect(() => {
+    setCurrentPage(1)
+  }, [currCategory, searchKeywords])
+
   const [currApp, setCurrApp] = React.useState<App | null>(null)
   const [isShowCreateModal, setIsShowCreateModal] = React.useState(false)
+  const [detailApp, setDetailApp] = React.useState<App | null>(null)
+  const [showDetailModal, setShowDetailModal] = React.useState(false)
+
+  const totalPages = Math.max(1, Math.ceil(searchFilteredList.length / PAGE_SIZE))
+  const pagedList = searchFilteredList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
   const {
     handleImportDSL,
@@ -172,19 +190,23 @@ const Apps = ({
       </div>
 
       <div className={cn(
-        'relative mt-4 flex flex-1 shrink-0 grow flex-col overflow-auto pb-6',
+        'relative mt-4 flex flex-1 shrink-0 grow flex-col overflow-auto',
       )}>
         <nav
           className={cn(
             s.appList,
-            'grid shrink-0 content-start gap-4 px-6 sm:px-12',
+            'grid shrink-0 content-start gap-5 px-8 sm:px-12',
           )}>
-          {searchFilteredList.map(app => (
+          {pagedList.map(app => (
             <AppCard
               key={app.app_id}
               isExplore
               app={app}
               canCreate={hasEditPermission}
+              onViewDetail={() => {
+                setDetailApp(app)
+                setShowDetailModal(true)
+              }}
               onCreate={() => {
                 setCurrApp(app)
                 setIsShowCreateModal(true)
@@ -192,6 +214,29 @@ const Apps = ({
             />
           ))}
         </nav>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-6 flex items-center justify-center gap-3 pb-6">
+            <button
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-divider-regular text-text-tertiary transition-colors hover:bg-state-base-hover disabled:cursor-not-allowed disabled:opacity-30"
+              disabled={currentPage <= 1}
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            >
+              <RiArrowLeftSLine className="h-4 w-4" />
+            </button>
+            <span className="min-w-[60px] text-center text-sm text-text-tertiary">
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-divider-regular text-text-tertiary transition-colors hover:bg-state-base-hover disabled:cursor-not-allowed disabled:opacity-30"
+              disabled={currentPage >= totalPages}
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            >
+              <RiArrowRightSLine className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
       {isShowCreateModal && (
         <CreateAppModal
@@ -205,6 +250,18 @@ const Apps = ({
           onConfirm={onCreate}
           confirmDisabled={isFetching}
           onHide={() => setIsShowCreateModal(false)}
+        />
+      )}
+      {showDetailModal && (
+        <AppDetailModal
+          app={detailApp}
+          show={showDetailModal}
+          onHide={() => setShowDetailModal(false)}
+          onAddToWorkspace={() => {
+            setShowDetailModal(false)
+            setCurrApp(detailApp)
+            setIsShowCreateModal(true)
+          }}
         />
       )}
       {

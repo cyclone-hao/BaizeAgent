@@ -41,6 +41,9 @@ const ModelRow = ({
         {model.features.includes('vision') && (
           <span className="rounded bg-util-colors-blue-blue-50 px-1 py-0.5 text-[10px] text-blue-600">视觉</span>
         )}
+        {model.features.includes('document') && (
+          <span className="rounded bg-util-colors-green-green-50 px-1 py-0.5 text-[10px] text-green-600">文档</span>
+        )}
         {(model.features.includes('tool-call') || model.features.includes('multi-tool-call')) && (
           <span className="rounded bg-util-colors-orange-orange-50 px-1 py-0.5 text-[10px] text-orange-600">工具</span>
         )}

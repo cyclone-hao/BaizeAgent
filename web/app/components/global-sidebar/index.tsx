@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation'
 import {
   RiBook2Fill,
   RiBook2Line,
+  RiCompass3Fill,
+  RiCompass3Line,
   RiHammerFill,
   RiHammerLine,
   RiHome4Fill,
@@ -92,6 +94,14 @@ const GlobalSidebar = () => {
           text="智能体编排"
           href="/apps"
           activeSegment={['apps', 'app']}
+        />
+        <SidebarNavItem
+          expand={expand}
+          icon={<RiCompass3Line className="h-5 w-5" />}
+          activeIcon={<RiCompass3Fill className="h-5 w-5" />}
+          text="智能体应用广场"
+          href="/explore/apps"
+          activeSegment="explore"
         />
         <SidebarNavItem
           expand={expand}
