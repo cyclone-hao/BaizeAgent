@@ -22,8 +22,9 @@ const CustomConnectionLine = ({ fromX, fromY, toX, toY }: ConnectionLineComponen
     <g>
       <path
         fill="none"
-        stroke='#D0D5DD'
+        stroke='#a855f7'
         strokeWidth={2}
+        strokeDasharray="6 4"
         d={edgePath}
       />
       <rect

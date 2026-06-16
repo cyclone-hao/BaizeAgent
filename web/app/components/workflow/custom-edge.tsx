@@ -133,9 +133,10 @@ const CustomEdge = ({
         path={edgePath}
         style={{
           stroke,
-          strokeWidth: 2,
+          strokeWidth: (selected || data?._connectedNodeIsHovering) ? 3 : 2,
           opacity: data._dimmed ? 0.3 : (data._waitingRun ? 0.7 : 1),
           strokeDasharray: data._isTemp ? '8 8' : undefined,
+          transition: 'stroke-width 0.15s ease, stroke 0.15s ease',
         }}
       />
       <EdgeLabelRenderer>

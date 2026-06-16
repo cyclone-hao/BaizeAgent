@@ -26,12 +26,9 @@ const GreetingSection = ({ userName }: GreetingSectionProps) => {
 
   return (
     <div className="mb-5">
-      <h1 className="mb-0.5 text-2xl font-semibold text-text-secondary">
-        {greeting}，{userName || '用户'}
+      <h1 className="text-2xl font-semibold text-text-secondary">
+        {greeting}，{userName || '用户'}，有什么我可以帮你的？
       </h1>
-      <p className="text-sm text-text-tertiary">
-        有什么我可以帮你的？
-      </p>
     </div>
   )
 }

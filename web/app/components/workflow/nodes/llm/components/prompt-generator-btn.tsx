@@ -36,7 +36,7 @@ const PromptGeneratorBtn: FC<Props> = ({
   return (
     <div className={cn(className)}>
       <ActionButton
-        className='hover:bg-[#155EFF]/8'
+        className='hover:bg-[#8b5cf6]/8'
         onClick={showAutomaticTrue}>
         <Generator className='h-4 w-4 text-primary-600' />
       </ActionButton>

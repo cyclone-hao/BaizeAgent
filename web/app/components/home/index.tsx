@@ -12,7 +12,7 @@ const HomePage = () => {
   useDocumentTitle('首页')
 
   return (
-    <div className="h-full overflow-y-auto bg-background-body">
+    <div className="no-scrollbar h-full overflow-y-auto bg-background-body">
       <div className="mx-auto flex w-full max-w-[1400px] flex-col px-4 py-6 sm:px-8 lg:px-12">
         <GreetingSection userName={userProfile.name} />
         <div className="flex-1">

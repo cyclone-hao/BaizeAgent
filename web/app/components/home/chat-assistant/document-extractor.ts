@@ -41,6 +41,9 @@ const DOC_EXTENSIONS: Record<string, 'pdf' | 'docx' | 'text'> = {
   yml: 'text',
 }
 
+/** 支持的图片扩展名（仅视觉模型可用） */
+const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp']
+
 export type ExtractionResult = {
   text: string
   truncated: boolean
@@ -185,16 +188,22 @@ export function isSupportedDocument(filename: string): boolean {
   return getExtension(filename) in DOC_EXTENSIONS
 }
 
+/** 判断文件是否为图片（仅视觉模型可用） */
+export function isImageFile(filename: string): boolean {
+  return IMAGE_EXTENSIONS.includes(getExtension(filename))
+}
+
 /** 获取支持的文件扩展名列表（用于 UI 提示） */
 export function getSupportedExtensions(): string[] {
   return Object.keys(DOC_EXTENSIONS)
 }
 
 /** 获取 accept 属性值（用于 <input type="file">） */
-export function getAcceptString(): string {
-  return Object.keys(DOC_EXTENSIONS)
-    .map(ext => `.${ext}`)
-    .join(',')
+export function getAcceptString(includeImages = false): string {
+  const exts = Object.keys(DOC_EXTENSIONS).map(ext => `.${ext}`)
+  if (includeImages)
+    exts.push(...IMAGE_EXTENSIONS.map(ext => `.${ext}`))
+  return exts.join(',')
 }
 
 /**

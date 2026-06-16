@@ -7,14 +7,14 @@
 }
 
 #workflow-container .react-flow__nodesselection-rect {
-  border: 1px solid #528BFF;
-  background: rgba(21, 94, 239, 0.05);
+  border: 1px solid #a855f7;
+  background: rgba(168, 85, 247, 0.05);
   cursor: move;
 }
 
 #workflow-container .react-flow__selection {
-  border: 1px solid #528BFF;
-  background: rgba(21, 94, 239, 0.05);
+  border: 1px solid #a855f7;
+  background: rgba(168, 85, 247, 0.05);
 }
 
 #workflow-container .react-flow__node-custom-note {
@@ -23,4 +23,22 @@
 
 #workflow-container .react-flow__attribution {
   background: none !important;
+}
+
+/* Hide scrollbar in workflow editor */
+#workflow-container *::-webkit-scrollbar {
+  display: none;
+}
+#workflow-container * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes workflow-node-running-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.3); }
+  50% { box-shadow: 0 0 0 4px rgba(168, 85, 247, 0); }
+}
+
+.workflow-node-running {
+  animation: workflow-node-running-pulse 2s ease-in-out infinite;
 }

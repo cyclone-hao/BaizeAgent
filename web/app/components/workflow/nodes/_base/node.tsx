@@ -140,7 +140,7 @@ const BaseNode: FC<BaseNodeProps> = ({
     <div
       className={cn(
         'relative flex rounded-2xl border',
-        showSelectedBorder ? 'border-components-option-card-option-selected-border' : 'border-transparent',
+        showSelectedBorder ? 'border-components-option-card-option-selected-border shadow-[0_0_0_1px_rgba(168,85,247,0.15),0_0_20px_rgba(168,85,247,0.08)]' : 'border-transparent',
         data._waitingRun && 'opacity-70',
         data._dimmed && 'opacity-30',
       )}
@@ -161,12 +161,12 @@ const BaseNode: FC<BaseNodeProps> = ({
       }
       <div
         className={cn(
-          'group relative pb-1 shadow-xs',
+          'group relative pb-1 shadow-sm',
           'rounded-[15px] border border-transparent',
           (data.type !== BlockEnum.Iteration && data.type !== BlockEnum.Loop) && 'w-[240px] bg-workflow-block-bg',
           (data.type === BlockEnum.Iteration || data.type === BlockEnum.Loop) && 'flex h-full w-full flex-col border-workflow-block-border bg-workflow-block-bg-transparent',
-          !data._runningStatus && 'hover:shadow-lg',
-          showRunningBorder && '!border-state-accent-solid',
+          !data._runningStatus && 'hover:shadow-[0_4px_20px_-2px_rgba(139,92,246,0.12),0_2px_8px_-2px_rgba(0,0,0,0.06)]',
+          showRunningBorder && 'workflow-node-running !border-state-accent-solid',
           showSuccessBorder && '!border-state-success-solid',
           showFailedBorder && '!border-state-destructive-solid',
           showExceptionBorder && '!border-state-warning-solid',
@@ -226,7 +226,7 @@ const BaseNode: FC<BaseNodeProps> = ({
           )
         }
         <div className={cn(
-          'flex items-center rounded-t-2xl px-3 pb-2 pt-3',
+          'border-divider-subtle/50 flex items-center rounded-t-2xl border-b px-3 pb-2 pt-3',
           (data.type === BlockEnum.Iteration || data.type === BlockEnum.Loop) && 'bg-transparent',
         )}>
           <BlockIcon

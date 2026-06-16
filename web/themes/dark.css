@@ -432,20 +432,20 @@ html[data-theme="dark"] {
 
   --color-workflow-block-border: rgb(255 255 255 / 0.08);
   --color-workflow-block-parma-bg: rgb(255 255 255 / 0.05);
-  --color-workflow-block-bg: #27272b;
-  --color-workflow-block-bg-transparent: rgb(39 39 43 / 0.96);
-  --color-workflow-block-border-highlight: rgb(200 206 218 / 0.2);
+  --color-workflow-block-bg: #25232b;
+  --color-workflow-block-bg-transparent: rgb(37 35 43 / 0.96);
+  --color-workflow-block-border-highlight: rgb(200 206 218 / 0.25);
   --color-workflow-block-wrapper-bg-1: #27272b;
   --color-workflow-block-wrapper-bg-2: rgb(39 39 43 / 0.2);
 
-  --color-workflow-canvas-workflow-dot-color: rgb(133 133 173 / 0.11);
+  --color-workflow-canvas-workflow-dot-color: rgb(139 92 246 / 0.10);
   --color-workflow-canvas-workflow-bg: #1d1d20;
   --color-workflow-canvas-workflow-top-bar-1: rgb(29 29 32 / 0.9);
   --color-workflow-canvas-workflow-top-bar-2: rgb(29 29 32 / 0.08);
   --color-workflow-canvas-canvas-overlay: rgb(29 29 32 / 0.8);
 
   --color-workflow-link-line-active: #c084fc;
-  --color-workflow-link-line-normal: #676f83;
+  --color-workflow-link-line-normal: #5e5772;
   --color-workflow-link-line-handle: #c084fc;
   --color-workflow-link-line-normal-transparent: rgb(103 111 131 / 0.2);
   --color-workflow-link-line-failure-active: #fdb022;
@@ -460,7 +460,7 @@ html[data-theme="dark"] {
   --color-workflow-link-line-error-handle: #f97066;
 
   --color-workflow-minimap-bg: #27272b;
-  --color-workflow-minimap-block: rgb(200 206 218 / 0.08);
+  --color-workflow-minimap-block: rgb(139 92 246 / 0.15);
 
   --color-workflow-display-success-bg: rgb(23 178 106 / 0.2);
   --color-workflow-display-success-border-1: rgb(23 178 106 / 0.9);

@@ -5,7 +5,7 @@ import { RiAttachmentLine, RiCloseLine, RiFileTextLine, RiImageLine, RiLoader4Li
 import cn from '@/utils/classnames'
 import Tooltip from '@/app/components/base/tooltip'
 import { fileUpload } from '@/app/components/base/file-uploader/utils'
-import { extractDocumentText, getAcceptString, isSupportedDocument } from './document-extractor'
+import { extractDocumentText, getAcceptString, isImageFile, isSupportedDocument } from './document-extractor'
 import type { ExtractionResult } from './document-extractor'
 
 // ── Types ──────────────────────────────────────────
@@ -67,6 +67,38 @@ const DocumentUploadButton = ({
       const docId = newDocs[idx].id
 
       try {
+        // 图片文件：直接上传到服务器（需视觉模型）
+        if (isImageFile(file.name)) {
+          if (!isVisionModel) {
+            onChange(prev => prev.map(d =>
+              d.id === docId
+                ? { ...d, status: 'error' as const, error: '图片上传需要视觉模型，请切换模型后重试' }
+                : d,
+            ))
+            continue
+          }
+
+          onChange(prev => prev.map(d =>
+            d.id === docId ? { ...d, status: 'uploading' as const } : d,
+          ))
+
+          const uploadResult = await new Promise<{ id: string }>((resolve, reject) => {
+            fileUpload({
+              file,
+              onProgressCallback: () => { /* noop */ },
+              onSuccessCallback: (res: { id: string }) => resolve(res),
+              onErrorCallback: () => reject(new Error('图片上传失败')),
+            })
+          })
+
+          onChange(prev => prev.map(d =>
+            d.id === docId
+              ? { ...d, status: 'done' as const, uploadedFileIds: [uploadResult.id], error: undefined }
+              : d,
+          ))
+          continue
+        }
+
         if (!isSupportedDocument(file.name))
           throw new Error(`不支持的文件类型: ${file.name}`)
 
@@ -166,9 +198,9 @@ const DocumentUploadButton = ({
       <Tooltip
         popupContent={
           <span>
-            上传文档（PDF、Word、TXT 等）
+            {isVisionModel ? '上传图片或文档（PDF、Word、TXT 等）' : '上传文档（PDF、Word、TXT 等）'}
             <br />
-            <span className="text-text-quaternary">自动提取文本或图片供 AI 分析</span>
+            <span className="text-text-quaternary">{isVisionModel ? '图片直接分析，文档自动提取文本' : '自动提取文本供 AI 分析'}</span>
           </span>
         }
       >
@@ -187,7 +219,7 @@ const DocumentUploadButton = ({
           {extracting
             ? <RiLoader4Line className="h-3.5 w-3.5 animate-spin" />
             : <RiAttachmentLine className="h-3.5 w-3.5" />}
-          <span>文档</span>
+          <span>上传</span>
         </button>
       </Tooltip>
 
@@ -195,7 +227,7 @@ const DocumentUploadButton = ({
       <input
         ref={inputRef}
         type="file"
-        accept={getAcceptString()}
+        accept={getAcceptString(isVisionModel)}
         multiple
         className="hidden"
         onChange={handleFilesSelected}

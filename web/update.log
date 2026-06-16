@@ -1,5 +1,91 @@
 # AgentFlow 二次开发更新日志
 
+## 2026-06-16 — 数字人视频替换
+
+### P0 — 用户直接可见
+- `web/public/digital-human.mp4` — 替换数字人视频为新版客服讲解视频（897KB）
+
+## 2026-06-16 — 数字人支持拖拽和隐藏
+
+### P0 — 用户直接可见
+- `web/app/components/home/chat-assistant/index.tsx` — 数字人视频改为 **可拖拽**（鼠标按住拖动到任意位置）+ **可隐藏**（双击数字人显示关闭按钮，点击关闭或点击别处隐藏按钮）；隐藏后右下角出现紫色圆形恢复按钮（人物图标）；定位改为 fixed（相对于视口），拖拽使用 document 级 mousemove/mouseup 事件
+
+## 2026-06-16 — 智能体编排页隐藏滚动条
+
+### P0 — 用户直接可见
+- `web/app/components/workflow/style.css` — 添加全局规则隐藏工作流编辑器内所有元素的滚动条（Chrome/Safari/Firefox/Edge），保留自然滚动功能
+
+## 2026-06-16 — 首页隐藏滚动条
+
+### P0 — 用户直接可见
+- `web/app/components/home/index.tsx` — 首页外层容器添加 `no-scrollbar` 类，隐藏右侧滚动条，保留自然滚动功能
+
+## 2026-06-16 — 首页问候语合并为一行
+
+### P0 — 用户直接可见
+- `web/app/components/home/greeting-section.tsx` — 问候语"下午好，xxx"和"有什么我可以帮你的？"合并为一行显示
+
+## 2026-06-16 — 页面加载动画替换为中国广电 Logo
+
+### P0 — 用户直接可见
+- `web/app/components/base/loading/index.tsx` — 替换蓝色四方格子为广电 Logo 图片 + 紫色呼吸脉动动画 + 三个紫色跳动圆点加载指示器
+- `web/app/components/base/loading/style.css` — 重写动画：Logo 呼吸缩放（scale 1→1.08）+ 紫色光晕投影 + 三个圆点依次跳动
+- `web/public/loading-logo.png` — 新增中国广电 Logo 图片（用于加载页）
+
+## 2026-06-16 — 首页 AI 助手添加数字人形象
+
+### P0 — 用户直接可见
+- `web/app/components/home/chat-assistant/index.tsx` — AI 助手右侧新增悬浮数字人视频（120×170px 可见区域，上下裁切）；空闲时轻柔浮动动画；AI 回复时紫色呼吸光晕 + 放大脉动 + 绿色状态点"回答中..."；每次播放至少持续 4 秒；**数字人左半部分悬浮在对话框右侧上方**（`right-[-60px]`，50/50 重叠）；AI 助手整体宽度 max-w-[1200px] 居中
+- `web/app/components/home/chat-assistant/index.tsx` — **固定对话区域高度**：整体布局改为固定 680px 高度，对话内容在内部滚动，不再撑长整个卡片和左侧历史栏；历史侧边栏高度与聊天卡片保持一致
+- `web/app/styles/globals.css` — 新增 `@keyframes digital-human-float`（轻柔浮动 3s）和 `@keyframes digital-human-breathe`（呼吸脉动 2.5s）动画
+- `web/public/digital-human.mp4` — 新增中国广电客户助手数字人形象视频
+
+## 2026-06-16 — 合并两个上传按钮为统一附件按钮
+
+### P0 — 用户直接可见
+- `web/app/components/home/chat-assistant/document-extractor.ts` — 新增图片类型支持（jpg/png/gif/webp/bmp），添加 `isImageFile()` 函数，`getAcceptString()` 支持可选图片类型
+- `web/app/components/home/chat-assistant/document-upload-button.tsx` — 按钮改名"文档"→"上传"；视觉模型时接受图片文件并直接上传 Dify 管线；tooltip 根据模型类型动态显示
+- `web/app/components/home/chat-assistant/index.tsx` — 移除 FileUploaderInChatInput（图片上传按钮）和 FileListInChatInput（图片预览列表）；移除 useFile/fileStore/drag-paste 拖拽上传基础设施；移除 FileContextProvider 包裹；简化 handleSend 逻辑统一从 DocumentUploadButton 收集文件
+
+## 2026-06-16 — 首页历史对话移除轮次统计
+
+### P0 — 用户直接可见
+- `web/app/components/home/chat-assistant/index.tsx` — 历史对话列表中移除"· N 轮"轮次统计，仅保留日期时间显示
+
+## 2026-06-16 — 工作流画布节点样式大幅改造
+
+### P0 — 用户直接可见
+
+**清除 Dify 蓝色残留：**
+- `web/app/components/workflow/style.css` — 选区矩形边框 #528BFF → #a855f7，选区背景 rgba(21,94,239) → rgba(168,85,247)
+- `web/app/components/workflow/nodes/_base/components/title-description-input.tsx` — 光标颜色 #295EFF → #8b5cf6
+- `web/app/components/workflow/nodes/llm/components/json-schema-config-modal/visual-editor/edit-card/auto-width-input.tsx` — 光标颜色修复
+- `web/app/components/workflow/nodes/llm/components/json-schema-config-modal/visual-editor/edit-card/index.tsx` — 光标颜色修复
+
+**节点图标配色统一为紫色系：**
+- `web/app/components/workflow/block-icon.tsx` — LLM/Agent 图标 indigo→violet，Code/Template/Variable/Tool/Assigner/ParameterExtractor 的 blue→blue-brand（紫色）
+
+**节点卡片视觉增强：**
+- `web/app/components/workflow/nodes/_base/node.tsx` — 选中态添加紫色外发光阴影、默认阴影升级(shadow-xs→shadow-sm)、悬停阴影改为紫色调自定义阴影、标题区添加底部分隔线、运行中节点添加脉冲动画
+- `web/app/components/workflow/style.css` — 新增 `@keyframes workflow-node-running-pulse` 脉冲动画和 `.workflow-node-running` 类
+
+**主题 Token 紫调微调：**
+- `web/themes/light.css` — 节点背景 #fcfcfd→#faf8ff（微紫）、画布点阵改为紫色、连线默认色改为紫调灰、小地图色块改为紫色、边框高亮增强
+- `web/themes/dark.css` — 暗色主题同步更新：节点背景 #27272b→#25232b、画布点阵紫调、连线紫调灰、小地图紫色
+
+**连线/边缘样式优化：**
+- `web/app/components/workflow/custom-edge.tsx` — 选中/悬停时连线加粗(2→3px)、添加过渡动画
+- `web/app/components/workflow/custom-connection-line.tsx` — 拖拽连接线改为紫色虚线效果
+
+**节点名称精简：**
+- `web/i18n/zh-Hans/workflow.ts` — 直接回复→回复、问题分类器→问题分类、变量赋值器→变量赋值、变量聚合器→变量聚合、参数提取器→参数提取、文档提取器→文档提取、变量赋值(assigner)→变量操作
+- `web/i18n/en-US/workflow.ts` — Knowledge Retrieval→Knowledge Search、Question Classifier→Question Classify、Variable Aggregator→Var Assign/Var Aggregate、Parameter Extractor→Param Extract、Doc Extractor→Doc Extract、List Operator→List Ops、Variable Assigner→Var Operator
+
+### P1 — 内部标识符
+
+- `web/app/components/workflow/nodes/_base/components/code-generator-button.tsx` — hover 色值 #155EFF → #8b5cf6
+- `web/app/components/workflow/nodes/llm/components/prompt-generator-btn.tsx` — hover 色值 #155EFF → #8b5cf6
+
 ## 2026-06-15 — 首页 AI 助手添加 PDF/Word 文档分析功能
 
 ### P0 — 用户直接可见

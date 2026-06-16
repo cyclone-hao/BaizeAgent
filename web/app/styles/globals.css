@@ -715,3 +715,14 @@ button:focus-within {
     -moz-appearance: textfield;
   }
 }
+
+/* Digital Human Animations */
+@keyframes digital-human-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes digital-human-breathe {
+  0%, 100% { transform: translateY(-2px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.03); }
+}
