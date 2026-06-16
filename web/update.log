@@ -1,5 +1,12 @@
 # AgentFlow 二次开发更新日志
 
+## 2026-06-16 — 联网搜索功能配置 Tavily API
+
+### P1 — 外部链接与接口
+- `api/.env` — 添加 `WEB_SEARCH_API_KEY`（Tavily API），启用首页 AI 助手的"联网搜索"功能
+- `docker/.env` — 添加 `WEB_SEARCH_API_KEY`（Docker 环境）
+- `docker/docker-compose.yaml` — 共享环境变量中添加 `WEB_SEARCH_API_KEY`；api 服务添加 volume 挂载 `web_search.py` 和 `__init__.py`
+
 ## 2026-06-16 — 数字人视频替换
 
 ### P0 — 用户直接可见
