@@ -26,7 +26,7 @@ const DifyLogo: FC<DifyLogoProps> = ({
     <img
       src={`${basePath}/logo/logo1.png`}
       className={classNames('block object-contain', logoSizeMap[size], className)}
-      alt='AgentFlow logo'
+      alt='白泽智能体平台 logo'
     />
   )
 }

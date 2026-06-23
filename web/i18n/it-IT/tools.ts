@@ -1,7 +1,7 @@
 const translation = {
   title: 'Strumenti',
   createCustomTool: 'Crea Strumento Personalizzato',
-  customToolTip: 'Scopri di più sugli strumenti personalizzati di AgentFlow',
+  customToolTip: 'Scopri di più sugli strumenti personalizzati di 白泽智能体平台',
   type: {
     all: 'Tutti',
     builtIn: 'Integrato',
@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'Sono interessato a ',
-    line2: 'contribuire con strumenti a AgentFlow.',
+    line2: 'contribuire con strumenti a 白泽智能体平台.',
     viewGuide: 'Visualizza la guida',
   },
   author: 'Di',

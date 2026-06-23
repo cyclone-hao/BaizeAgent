@@ -1,7 +1,7 @@
 const translation = {
   title: 'उपकरण',
   createCustomTool: 'कस्टम उपकरण बनाएं',
-  customToolTip: 'AgentFlow कस्टम उपकरणों के बारे में और जानें',
+  customToolTip: '白泽智能体平台 कस्टम उपकरणों के बारे में और जानें',
   type: {
     all: 'सभी',
     builtIn: 'निर्मित',
@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'मैं रुचि रखता हूं ',
-    line2: 'AgentFlow में उपकरण दान करने में।',
+    line2: '白泽智能体平台 में उपकरण दान करने में।',
     viewGuide: 'गाइड देखें',
   },
   author: 'द्वारा',

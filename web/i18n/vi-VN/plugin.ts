@@ -188,15 +188,15 @@ const translation = {
     },
     empower: 'Hỗ trợ phát triển AI của bạn',
     viewMore: 'Xem thêm',
-    difyMarketplace: 'Thị trường AgentFlow',
+    difyMarketplace: 'Thị trường 白泽智能体平台',
     discover: 'Khám phá',
     pluginsResult: '{{num}} kết quả',
     moreFrom: 'Các ứng dụng khác từ Marketplace',
     sortBy: 'Thành phố đen',
     noPluginFound: 'Không tìm thấy plugin nào',
     and: 'và',
-    verifiedTip: 'Được xác nhận bởi AgentFlow',
-    partnerTip: 'Được xác nhận bởi một đối tác của AgentFlow',
+    verifiedTip: 'Được xác nhận bởi 白泽智能体平台',
+    partnerTip: 'Được xác nhận bởi một đối tác của 白泽智能体平台',
   },
   task: {
     installingWithError: 'Cài đặt {{installingLength}} plugins, {{successLength}} thành công, {{errorLength}} không thành công',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugin',
   },
-  difyVersionNotCompatible: 'Phiên bản AgentFlow hiện tại không tương thích với plugin này, vui lòng nâng cấp lên phiên bản tối thiểu cần thiết: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Phiên bản 白泽智能体平台 hiện tại không tương thích với plugin này, vui lòng nâng cấp lên phiên bản tối thiểu cần thiết: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Yêu cầu một plugin',
   publishPlugins: 'Xuất bản plugin',
   auth: {

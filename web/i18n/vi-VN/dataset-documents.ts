@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Tài liệu',
-    desc: 'Tất cả các tệp của Kiến thức được hiển thị ở đây. Toàn bộ Kiến thức có thể được liên kết với trích dẫn của AgentFlow hoặc được lập chỉ mục thông qua plugin Chat.',
+    desc: 'Tất cả các tệp của Kiến thức được hiển thị ở đây. Toàn bộ Kiến thức có thể được liên kết với trích dẫn của 白泽智能体平台 hoặc được lập chỉ mục thông qua plugin Chat.',
     addFile: 'Thêm tệp',
     addPages: 'Thêm trang',
     table: {
@@ -54,7 +54,7 @@ const translation = {
         tip: 'Bạn có thể tải lên tệp, đồng bộ từ trang web, hoặc từ ứng dụng web như Notion, GitHub, v.v.',
       },
       sync: {
-        tip: 'AgentFlow sẽ định kỳ tải xuống tệp từ Notion của bạn và hoàn tất xử lý.',
+        tip: '白泽智能体平台 sẽ định kỳ tải xuống tệp từ Notion của bạn và hoàn tất xử lý.',
       },
     },
     delete: {

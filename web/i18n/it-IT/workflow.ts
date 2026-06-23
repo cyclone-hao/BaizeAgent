@@ -959,7 +959,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Ulteriori informazioni',
         title: 'Si prega di scegliere una struttura a blocchi',
-        message: 'La Knowledge Base di AgentFlow supporta tre strutture di suddivisione in blocchi: Generale, Padre-figlio e Domande e risposte. Ogni Knowledge Base può avere una sola struttura. L\'output del nodo precedente deve essere allineato con la struttura del blocco selezionata. Si noti che la scelta della struttura di suddivisione in blocchi influisce sui metodi di indice disponibili.',
+        message: 'La Knowledge Base di 白泽智能体平台 supporta tre strutture di suddivisione in blocchi: Generale, Padre-figlio e Domande e risposte. Ogni Knowledge Base può avere una sola struttura. L\'output del nodo precedente deve essere allineato con la struttura del blocco selezionata. Si noti che la scelta della struttura di suddivisione in blocchi influisce sui metodi di indice disponibili.',
       },
       indexMethodIsRequired: 'È necessario il metodo dell\'indice',
       chunkStructure: 'Struttura a blocchi',

@@ -49,7 +49,7 @@ const translation = {
         tip: 'Anda dapat mengunggah file, menyinkronkan dari situs web, atau dari aplikasi web seperti Notion, GitHub, dll.',
       },
       sync: {
-        tip: 'AgentFlow akan mengunduh file dari Notion Anda secara berkala dan menyelesaikan pemrosesan.',
+        tip: '白泽智能体平台 akan mengunduh file dari Notion Anda secara berkala dan menyelesaikan pemrosesan.',
       },
       title: 'Belum ada dokumentasi',
     },
@@ -75,7 +75,7 @@ const translation = {
       browse: 'ramban',
       title: 'Tambahkan potongan batch',
     },
-    desc: 'Semua file Pengetahuan ditampilkan di sini, dan seluruh Pengetahuan dapat ditautkan ke kutipan AgentFlow atau diindeks melalui plugin Obrolan.',
+    desc: 'Semua file Pengetahuan ditampilkan di sini, dan seluruh Pengetahuan dapat ditautkan ke kutipan 白泽智能体平台 atau diindeks melalui plugin Obrolan.',
     addPages: 'Tambahkan Halaman',
     addFile: 'Tambahkan file',
     learnMore: 'Pelajari lebih lanjut',

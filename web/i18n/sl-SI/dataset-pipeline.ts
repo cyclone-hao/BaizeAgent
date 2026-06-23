@@ -148,7 +148,7 @@ const translation = {
   knowledgeDescription: 'Opis znanja',
   knowledgeNameAndIcon: 'Ime in ikona znanja',
   editPipelineInfo: 'Urejanje informacij o cevovodu',
-  knowledgeDescriptionPlaceholder: 'Opišite, kaj je v tej bazi znanja. Podroben opis omogoča umetni inteligenci natančnejši dostop do vsebine nabora podatkov. Če je prazen, bo AgentFlow uporabil privzeto strategijo zadetkov. (Neobvezno)',
+  knowledgeDescriptionPlaceholder: 'Opišite, kaj je v tej bazi znanja. Podroben opis omogoča umetni inteligenci natančnejši dostop do vsebine nabora podatkov. Če je prazen, bo 白泽智能体平台 uporabil privzeto strategijo zadetkov. (Neobvezno)',
 }
 
 export default translation

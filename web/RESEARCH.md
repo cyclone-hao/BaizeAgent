@@ -1,4 +1,4 @@
-# AgentFlow 二次开发调研笔记
+# 白泽智能体平台 二次开发调研笔记
 
 > 基于 Dify v1.9.0 源码分析，为后续重构提供技术依据。
 
@@ -148,7 +148,7 @@ Marketplace(marketplace.dify.ai) — 插件分发
 |---|---|---|
 | Marketplace | marketplace.dify.ai 下载 | ❌ 外部服务 |
 | GitHub | GitHub Release 下载 | ⚠️ 需要网络 |
-| Package | 本地 .afpkg 上传 | ✅ 完全可控 |
+| Package | 本地 .bzpkg 上传 | ✅ 完全可控 |
 | Remote | 远程调试 | ✅ 开发用 |
 
 ### 关键配置
@@ -181,8 +181,8 @@ TenantPluginPermission:
 
 ### 重构建议
 1. 关闭 Marketplace（`MARKETPLACE_ENABLED=false`）
-2. 前端隐藏 Marketplace 标签，改名为"AgentFlow 插件中心"
-3. 所有插件通过 .afpkg 本地安装或 GitHub 安装
+2. 前端隐藏 Marketplace 标签，改名为"白泽智能体平台 插件中心"
+3. 所有插件通过 .bzpkg 本地安装或 GitHub 安装
 4. 中期：搭建私有插件仓库，实现兼容 API：
    - `GET /api/v1/plugins/download?unique_identifier=...`
    - `POST /api/v1/plugins/batch`
@@ -247,7 +247,7 @@ HOSTED_FETCH_APP_TEMPLATES_MODE: "remote" | "db" | "builtin"
 
 | 问题 | 位置 | 影响 |
 |---|---|---|
-| 嵌入聊天域名检测 | `embedded-chatbot/utils.ts` | `isAgentFlow()` 检查 `agentflow.ai`，部署在其他域名时图标不对 |
+| 嵌入聊天域名检测 | `embedded-chatbot/utils.ts` | `isBaizeAgent()` 检查 `baize-agent.ai`，部署在其他域名时图标不对 |
 | Marketplace URL | `.env.local` | 仍指向 marketplace.dify.ai |
 | 首页AI助手 | `.env.local` | `NEXT_PUBLIC_HOME_CHAT_APP_ID` 为空 |
 | 文档链接 | 多个文件 | docs.dify.ai 替换为 `#`，无法打开 |
@@ -266,7 +266,7 @@ HOSTED_FETCH_APP_TEMPLATES_MODE: "remote" | "db" | "builtin"
 ### Phase 2（1-2个月）
 - [ ] 重做插件管理页面（隐藏安装来源选项）
 - [ ] 自建插件仓库服务
-- [ ] 打包常用插件为 .afbndl 预装
+- [ ] 打包常用插件为 .bzbndl 预装
 - [ ] 工作流模板/节点描述全面中文化
 
 ### Phase 3（长期）

@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Apps von AgentFlow erkunden',
+    title: 'Apps von 白泽智能体平台 erkunden',
     description: 'Nutzen Sie diese Vorlagen-Apps sofort oder passen Sie Ihre eigenen Apps basierend auf den Vorlagen an.',
     allCategories: 'Alle Kategorien',
   },

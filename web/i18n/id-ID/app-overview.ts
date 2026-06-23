@@ -23,7 +23,7 @@ const translation = {
     },
     usedToken: 'Token bekas',
     callTimes: 'Waktu panggilan',
-    tryCloud: 'Atau coba AgentFlow versi cloud dengan penawaran gratis',
+    tryCloud: 'Atau coba 白泽智能体平台 versi cloud dengan penawaran gratis',
     setAPIBtn: 'Buka penyedia model penyiapan',
   },
   overview: {
@@ -74,7 +74,7 @@ const translation = {
         entry: 'Tertanam',
         explanation: 'Pilih cara menyematkan aplikasi obrolan ke situs web Anda',
         copy: 'Menyalin',
-        chromePlugin: 'Instal Ekstensi Chrome AgentFlow Chatbot',
+        chromePlugin: 'Instal Ekstensi Chrome 白泽智能体平台 Chatbot',
         iframe: 'Untuk menambahkan aplikasi obrolan di mana saja di situs web Anda, tambahkan iframe ini ke kode html Anda.',
         scripts: 'Untuk menambahkan aplikasi obrolan ke kanan bawah situs web Anda, tambahkan kode ini ke html Anda.',
       },
@@ -85,7 +85,7 @@ const translation = {
       },
       customize: {
         way1: {
-          step1Operation: 'AgentFlow-WebClient',
+          step1Operation: '白泽智能体平台-WebClient',
           step2Operation: 'Impor repositori',
           step1: 'Fork kode klien dan modifikasi',
           step2Tip: 'Klik di sini untuk mengimpor repositori ke Vercel dan menyebarkan',

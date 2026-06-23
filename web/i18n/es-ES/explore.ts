@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Explorar aplicaciones de AgentFlow',
+    title: 'Explorar aplicaciones de 白泽智能体平台',
     description: 'Utiliza estas aplicaciones de plantilla al instante o personaliza tus propias aplicaciones basadas en las plantillas.',
     allCategories: 'Recomendado',
   },

@@ -591,6 +591,8 @@ x-shared-env: &shared-api-worker-env
   ENABLE_CHECK_UPGRADABLE_PLUGIN_TASK: ${ENABLE_CHECK_UPGRADABLE_PLUGIN_TASK:-true}
   # Web Search (Tavily API)
   WEB_SEARCH_API_KEY: ${WEB_SEARCH_API_KEY:-}
+  # DashScope (Alibaba Cloud Bailian) for image/video generation
+  DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
 
 services:
   # API service
@@ -619,9 +621,13 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
-      # Mount custom web_search endpoint
-      - ../api/controllers/console/web_search.py:/app/api/controllers/console/web_search.py
-      - ../api/controllers/console/__init__.py:/app/api/controllers/console/__init__.py
+      # Mount secondary development code overrides
+      - ../api/controllers:/app/api/controllers
+      - ../api/configs:/app/api/configs
+      - ../api/services:/app/api/services
+      - ../api/core:/app/api/core
+      - ../api/extensions:/app/api/extensions
+      - ../api/models:/app/api/models
     networks:
       - ssrf_proxy_network
       - default
@@ -649,6 +655,13 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
+      # Mount secondary development code overrides
+      - ../api/controllers:/app/api/controllers
+      - ../api/configs:/app/api/configs
+      - ../api/services:/app/api/services
+      - ../api/core:/app/api/core
+      - ../api/extensions:/app/api/extensions
+      - ../api/models:/app/api/models
     networks:
       - ssrf_proxy_network
       - default

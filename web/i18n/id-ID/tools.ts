@@ -8,7 +8,7 @@ const translation = {
   contribute: {
     viewGuide: 'Lihat panduan',
     line1: 'Saya tertarik',
-    line2: 'menyumbangkan alat untuk AgentFlow.',
+    line2: 'menyumbangkan alat untuk 白泽智能体平台.',
   },
   auth: {
     setup: 'Menyiapkan otorisasi untuk digunakan',
@@ -229,7 +229,7 @@ const translation = {
   },
   title: 'Perkakas',
   createCustomTool: 'Buat Alat Kustom',
-  customToolTip: 'Pelajari alat kustom AgentFlow lebih lanjut',
+  customToolTip: 'Pelajari alat kustom 白泽智能体平台 lebih lanjut',
   addTool: 'Tambahkan Alat',
   author: 'Oleh',
   copyToolName: 'Salin Nama',

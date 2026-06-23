@@ -1,6 +1,6 @@
 const translation = {
   toVerifiedTip: {
-    end: 'za profesionalni načrt AgentFlow.',
+    end: 'za profesionalni načrt 白泽智能体平台.',
     front: 'Zdaj ste upravičeni do statusa Preverjeno izobraževanje. Prosimo, vnesite svoje izobraževalne podatke spodaj, da zaključite postopek in prejmete',
     coupon: 'izključno 100% kupon',
   },
@@ -26,26 +26,26 @@ const translation = {
         front: 'Vaše informacije in uporaba statusa preverjene izobrazbe so predmet naših',
       },
       option: {
-        inSchool: 'Potrjujem, da sem vpisan ali zaposlen na navedenem zavodu. AgentFlow lahko zahteva dokazilo o vpisu/zaposlitvi. Če napačno predstavim svojo upravičenost, se strinjam, da plačam morebitne pristojbine, ki so bile sprva oproščene na podlagi mojega izobraževalnega statusa.',
+        inSchool: 'Potrjujem, da sem vpisan ali zaposlen na navedenem zavodu. 白泽智能体平台 lahko zahteva dokazilo o vpisu/zaposlitvi. Če napačno predstavim svojo upravičenost, se strinjam, da plačam morebitne pristojbine, ki so bile sprva oproščene na podlagi mojega izobraževalnega statusa.',
         age: 'Potrjujem, da sem star najmanj 18 let',
       },
       title: 'Pogoji in dogovori',
     },
   },
   toVerified: 'Preverite izobrazbo',
-  successContent: 'Za vaše račune smo izdali kupon za 100% popust na profesionalni načrt AgentFlow. Kupon je veljaven eno leto, prosimo, uporabite ga v veljavnem obdobju.',
-  successTitle: 'Imate verifikacijo izobraževanja AgentFlow',
+  successContent: 'Za vaše račune smo izdali kupon za 100% popust na profesionalni načrt 白泽智能体平台. Kupon je veljaven eno leto, prosimo, uporabite ga v veljavnem obdobju.',
+  successTitle: 'Imate verifikacijo izobraževanja 白泽智能体平台',
   submitError: 'Pošiljanje obrazca ni uspelo. Prosimo, poskusite znova kasneje.',
   submit: 'Predloži',
-  rejectTitle: 'Vaša AgentFlow izobraževalna verifikacija je bila zavrnjena.',
+  rejectTitle: 'Vaša 白泽智能体平台 izobraževalna verifikacija je bila zavrnjena.',
   learn: 'Naučite se, kako preveriti izobrazbo',
   emailLabel: 'Vaš trenutni elektronski naslov',
   currentSigned: 'Trenutno prijavljen kot',
-  rejectContent: 'Na žalost niste upravičeni do statusa Verificirane izobrazbe in zato ne morete prejeti ekskluzivnega 100-odstotnega kupona za AgentFlow profesionalni načrt, če uporabljate ta e-poštni naslov.',
+  rejectContent: 'Na žalost niste upravičeni do statusa Verificirane izobrazbe in zato ne morete prejeti ekskluzivnega 100-odstotnega kupona za 白泽智能体平台 profesionalni načrt, če uporabljate ta e-poštni naslov.',
   notice: {
     expired: {
       summary: {
-        line1: 'Še vedno lahko dostopate in uporabljate AgentFlow.',
+        line1: 'Še vedno lahko dostopate in uporabljate 白泽智能体平台.',
         line2: 'Vendar pa niste več upravičeni do novih kuponov za popust na izobraževanje.',
       },
       title: 'Vaš status izobrazbe je potekel.',

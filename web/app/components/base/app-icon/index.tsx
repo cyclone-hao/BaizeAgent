@@ -1,15 +1,11 @@
 'use client'
 import React from 'react'
 import { type FC, useRef } from 'react'
-import { init } from 'emoji-mart'
-import data from '@emoji-mart/data'
 import { cva } from 'class-variance-authority'
 import type { AppIconType } from '@/types/app'
 import classNames from '@/utils/classnames'
 import { useHover } from 'ahooks'
 import { RiEditLine } from '@remixicon/react'
-
-init({ data })
 
 export type AppIconProps = {
   size?: 'xs' | 'tiny' | 'small' | 'medium' | 'large' | 'xl' | 'xxl'
@@ -100,7 +96,11 @@ const AppIcon: FC<AppIconProps> = ({
   showEditIcon = false,
 }) => {
   const isValidImageIcon = iconType === 'image' && imageUrl
-  const Icon = (icon && icon !== '') ? <em-emoji id={icon} /> : <em-emoji id='🤖' />
+  const emojiChar = (icon && icon !== '') ? icon : null
+  const isDefaultIcon = !isValidImageIcon && !emojiChar
+  const Icon = isDefaultIcon
+    ? <img src="/default-bot-icon.jpeg" className="h-full w-full object-cover" alt="default bot icon" />
+    : <span className="not-emoji">{emojiChar}</span>
   const wrapperRef = useRef<HTMLSpanElement>(null)
   const isHovering = useHover(wrapperRef)
 
@@ -108,7 +108,7 @@ const AppIcon: FC<AppIconProps> = ({
     <span
       ref={wrapperRef}
       className={classNames(appIconVariants({ size, rounded }), className)}
-      style={{ background: isValidImageIcon ? undefined : (background || '#FFEAD5') }}
+      style={{ background: (isValidImageIcon || isDefaultIcon) ? undefined : (background || '#FFEAD5') }}
       onClick={onClick}
     >
       {

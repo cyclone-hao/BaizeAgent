@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Context
 
-This is a **secondary development (二次开发)** fork of [Dify](https://github.com/langgenius/dify) v1.9.0, rebranded as **AgentFlow** for 中国广电 - 中广数智科技（北京）有限责任公司. The project name in package.json is `agentflow-web`. All "Dify" branding visible to end users has been replaced with "AgentFlow". Backend protocol-level identifiers (e.g. `X-Dify-Version`, `dify_model_identity`, `langgenius/*` provider IDs) are intentionally preserved for plugin system compatibility.
+This is a **secondary development (二次开发)** fork of [Dify](https://github.com/langgenius/dify) v1.9.0, rebranded as **白泽智能体平台** for 中国广电 - 中广数智科技（北京）有限责任公司. The project name in package.json is `baize-agent-web`. All "Dify" branding visible to end users has been replaced with "白泽智能体平台". Backend protocol-level identifiers (e.g. `X-Dify-Version`, `dify_model_identity`, `langgenius/*` provider IDs) are intentionally preserved for plugin system compatibility.
 
 **Key reference files:**
 - `web/update.log` — 二次开发更新日志（所有改动必须记录）
@@ -99,7 +99,7 @@ Two distinct user types:
 - **RBAC decorators** on console endpoints: `@only_edition_cloud`, `@account_initialization_required`, role checks via `current_user.is_admin_or_owner`
 - **Cloud vs Self-hosted**: Many features gated by `EDITION` env var (`CLOUD` vs `SELF_HOSTED`). Billing features only active in Cloud edition.
 - **i18n**: All user-facing text must use i18n keys from `web/i18n/en-US/`. Source language is English. Chinese (zh-Hans) is the primary target language for this fork.
-- **Branding**: All user-visible "Dify" references have been replaced with "AgentFlow". Do not reintroduce "Dify" in user-facing strings. Backend protocol identifiers are intentionally kept as-is.
+- **Branding**: All user-visible "Dify" references have been replaced with "白泽智能体平台". Do not reintroduce "Dify" in user-facing strings. Backend protocol identifiers are intentionally kept as-is.
 
 ## Intentionally Preserved Dify References
 
@@ -115,7 +115,7 @@ These must NOT be renamed (backend protocol compatibility):
 
 Known issues from the rebranding that need attention when deploying:
 
-1. **Embedded chatbot domain detection**: `web/app/components/base/chat/embedded-chatbot/utils.ts` has `isAgentFlow()` which checks `document.referrer.includes('agentflow.ai')`. If deployed on a different domain, the embedded chatbot won't show AgentFlow branding. Update the domain string to match actual deployment domain.
+1. **Embedded chatbot domain detection**: `web/app/components/base/chat/embedded-chatbot/utils.ts` has `isBaizeAgent()` which checks `document.referrer.includes('baize-agent.ai')`. If deployed on a different domain, the embedded chatbot won't show 白泽智能体平台 branding. Update the domain string to match actual deployment domain.
 
 2. **Marketplace URLs**: `web/.env.local` still has `marketplace.dify.ai` for `NEXT_PUBLIC_MARKETPLACE_API_PREFIX` and `NEXT_PUBLIC_MARKETPLACE_URL_PREFIX`. In air-gapped networks, replace with internal marketplace or accept that plugin browsing won't work.
 
@@ -123,4 +123,4 @@ Known issues from the rebranding that need attention when deploying:
 
 4. **Documentation links**: All `docs.dify.ai` links were replaced with `#`. If an internal documentation site exists, update these to the real URL.
 
-5. **i18n safety**: The bulk Dify→AgentFlow replacement in i18n files had issues with curly quotes and escaped apostrophes (fixed per update.log). When adding new i18n keys, use straight quotes only (`'` not `'`/`'`, `"` not `"`/`"`).
+5. **i18n safety**: The bulk Dify→白泽智能体平台 replacement in i18n files had issues with curly quotes and escaped apostrophes (fixed per update.log). When adding new i18n keys, use straight quotes only (`'` not `'`/`'`, `"` not `"`/`"`).

@@ -191,12 +191,12 @@ const translation = {
     noPluginFound: 'Плагин не найден',
     sortBy: 'Черный город',
     empower: 'Расширьте возможности разработки ИИ',
-    difyMarketplace: 'Торговая площадка AgentFlow',
+    difyMarketplace: 'Торговая площадка 白泽智能体平台',
     viewMore: 'Подробнее',
     and: 'и',
     discover: 'Обнаруживать',
-    verifiedTip: 'Подтверждено AgentFlow',
-    partnerTip: 'Подтверждено партнером AgentFlow',
+    verifiedTip: 'Подтверждено 白泽智能体平台',
+    partnerTip: 'Подтверждено партнером 白泽智能体平台',
   },
   task: {
     installing: 'Установка плагинов {{installingLength}}, 0 готово.',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагины',
   },
-  difyVersionNotCompatible: 'Текущая версия AgentFlow не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Текущая версия 白泽智能体平台 не совместима с этим плагином, пожалуйста, обновите до минимально необходимой версии: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Запросите плагин',
   publishPlugins: 'Публикация плагинов',
   auth: {

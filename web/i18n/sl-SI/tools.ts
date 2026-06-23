@@ -1,7 +1,7 @@
 const translation = {
   title: 'Orodja',
   createCustomTool: 'Ustvari prilagojeno orodje',
-  customToolTip: 'Izvedite več o prilagojenih orodjih AgentFlow',
+  customToolTip: 'Izvedite več o prilagojenih orodjih 白泽智能体平台',
   type: {
     all: 'Vsa',
     builtIn: 'Vgrajena',
@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'Zanima me ',
-    line2: 'prispevanje orodij k AgentFlow.',
+    line2: 'prispevanje orodij k 白泽智能体平台.',
     viewGuide: 'Oglejte si vodič',
   },
   author: 'Avtor',

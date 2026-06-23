@@ -1,7 +1,7 @@
 const translation = {
   toVerifiedTip: {
     coupon: 'cupón exclusivo del 100%',
-    end: 'para el Plan Profesional de AgentFlow.',
+    end: 'para el Plan Profesional de 白泽智能体平台.',
     front: 'Ahora eres elegible para el estado de Educación Verificada. Por favor, introduce tu información educativa a continuación para completar el proceso y recibir un',
   },
   form: {
@@ -27,7 +27,7 @@ const translation = {
       },
       option: {
         age: 'Confirmo que tengo al menos 18 años',
-        inSchool: 'Confirmo que estoy inscrito o empleado en la institución indicada. AgentFlow puede solicitar prueba de inscripción/empleo. Si falseo mi elegibilidad, acepto pagar cualquier tarifa que se haya eximido inicialmente en función de mi estado educativo.',
+        inSchool: 'Confirmo que estoy inscrito o empleado en la institución indicada. 白泽智能体平台 puede solicitar prueba de inscripción/empleo. Si falseo mi elegibilidad, acepto pagar cualquier tarifa que se haya eximido inicialmente en función de mi estado educativo.',
       },
       title: 'Términos y Acuerdos',
     },
@@ -35,17 +35,17 @@ const translation = {
   emailLabel: 'Tu correo electrónico actual',
   submit: 'Enviar',
   submitError: 'Error en el envío del formulario. Por favor, inténtelo de nuevo más tarde.',
-  successTitle: 'Tienes la educación AgentFlow verificada',
+  successTitle: 'Tienes la educación 白泽智能体平台 verificada',
   toVerified: 'Verifica la educación',
-  successContent: 'Hemos emitido un cupón de descuento del 100% para el plan AgentFlow Professional en tu cuenta. El cupón es válido por un año, por favor utilízalo dentro del período de validez.',
+  successContent: 'Hemos emitido un cupón de descuento del 100% para el plan 白泽智能体平台 Professional en tu cuenta. El cupón es válido por un año, por favor utilízalo dentro del período de validez.',
   learn: 'Aprende cómo obtener la verificación de la educación',
-  rejectTitle: 'Su verificación educativa de AgentFlow ha sido rechazada.',
+  rejectTitle: 'Su verificación educativa de 白泽智能体平台 ha sido rechazada.',
   currentSigned: 'ACTUALMENTE CONECTADO COMO',
-  rejectContent: 'Desafortunadamente, no eres elegible para el estado de Educación Verificada y, por lo tanto, no puedes recibir el exclusivo cupón del 100% para el Plan Profesional de AgentFlow si utilizas esta dirección de correo electrónico.',
+  rejectContent: 'Desafortunadamente, no eres elegible para el estado de Educación Verificada y, por lo tanto, no puedes recibir el exclusivo cupón del 100% para el Plan Profesional de 白泽智能体平台 si utilizas esta dirección de correo electrónico.',
   notice: {
     expired: {
       summary: {
-        line1: 'Todavía puedes acceder y usar AgentFlow.',
+        line1: 'Todavía puedes acceder y usar 白泽智能体平台.',
         line2: 'Sin embargo, ya no eres elegible para nuevos cupones de descuento educativo.',
       },
       title: 'Tu estado de educación ha expirado',

@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Personalizar marca de web app',
-    removeBrand: 'Eliminar Powered by AgentFlow',
+    removeBrand: 'Eliminar Powered by 白泽智能体平台',
     changeLogo: 'Cambiar Imagen de Marca Powered by',
     changeLogoTip: 'Formato SVG o PNG con un tamaño mínimo de 40x40px',
   },

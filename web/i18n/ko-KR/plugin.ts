@@ -189,14 +189,14 @@ const translation = {
     noPluginFound: '플러그인을 찾을 수 없습니다.',
     empower: 'AI 개발 역량 강화',
     viewMore: '더보기',
-    difyMarketplace: 'AgentFlow 마켓플레이스',
+    difyMarketplace: '白泽智能体平台 마켓플레이스',
     pluginsResult: '{{num}} 결과',
     discover: '발견하다',
     moreFrom: 'Marketplace 에서 더 보기',
     sortBy: '정렬',
     and: '그리고',
-    verifiedTip: 'AgentFlow 에 의해 확인됨',
-    partnerTip: 'AgentFlow 파트너에 의해 확인됨',
+    verifiedTip: '白泽智能体平台 에 의해 확인됨',
+    partnerTip: '白泽智能体平台 파트너에 의해 확인됨',
   },
   task: {
     installingWithSuccess: '{{installingLength}} 플러그인 설치, {{successLength}} 성공.',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: '플러그인',
   },
-  difyVersionNotCompatible: '현재 AgentFlow 버전이 이 플러그인과 호환되지 않습니다. 필요한 최소 버전으로 업그레이드하십시오: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: '현재 白泽智能体平台 버전이 이 플러그인과 호환되지 않습니다. 필요한 최소 버전으로 업그레이드하십시오: {{minimal白泽智能体平台Version}}',
   requestAPlugin: '플러그인을 요청하세요',
   publishPlugins: '플러그인 게시',
   auth: {

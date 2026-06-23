@@ -25,7 +25,7 @@ const Header = () => {
             ? <img
               src={systemFeatures.branding.login_page_logo}
               className='block h-[22px] w-auto object-contain'
-              alt='AgentFlow logo'
+              alt='白泽智能体平台 logo'
             />
             : <DifyLogo />}
         </div>

@@ -1,7 +1,7 @@
 const translation = {
   tips: {
-    notLoggedIn: 'Questa app vuole accedere al tuo account AgentFlow Cloud',
-    loggedIn: 'Questa app vuole accedere alle seguenti informazioni dal tuo account AgentFlow Cloud.',
+    notLoggedIn: 'Questa app vuole accedere al tuo account 白泽智能体平台 Cloud',
+    loggedIn: 'Questa app vuole accedere alle seguenti informazioni dal tuo account 白泽智能体平台 Cloud.',
     common: 'Rispettiamo la tua privacy e utilizzeremo queste informazioni solo per migliorare la tua esperienza con i nostri strumenti per sviluppatori.',
     needLogin: 'Per favore, accedi per autorizzare',
   },

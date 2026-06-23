@@ -12,7 +12,7 @@ const translation = {
   datasetDeleted: 'Cunoștințe șterse',
   datasetDeleteFailed: 'Eșec la ștergerea Cunoștințelor',
   didYouKnow: 'Știați că?',
-  intro1: 'Cunoștințele pot fi integrate în aplicația AgentFlow ',
+  intro1: 'Cunoștințele pot fi integrate în aplicația 白泽智能体平台 ',
   intro2: 'ca un context',
   intro3: ',',
   intro4: 'sau ele ',
@@ -148,7 +148,7 @@ const translation = {
   externalKnowledgeId: 'ID de cunoștințe extern',
   editExternalAPITooltipTitle: 'CUNOȘTINȚE LEGATE',
   mixtureInternalAndExternalTip: 'Modelul Rerank este necesar pentru amestecul de cunoștințe interne și externe.',
-  externalAPIPanelDescription: 'API-ul de cunoștințe externe este utilizat pentru a se conecta la o bază de cunoștințe din afara AgentFlow și pentru a prelua cunoștințe din acea bază de cunoștințe.',
+  externalAPIPanelDescription: 'API-ul de cunoștințe externe este utilizat pentru a se conecta la o bază de cunoștințe din afara 白泽智能体平台 și pentru a prelua cunoștințe din acea bază de cunoștințe.',
   createNewExternalAPI: 'Creați un nou API de cunoștințe externe',
   chunkingMode: {
     general: 'General',

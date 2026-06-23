@@ -1,3 +1,3 @@
-export const isAgentFlow = () => {
-  return document.referrer.includes('agentflow.ai')
+export const isBaizeAgent = () => {
+  return document.referrer.includes('baize-agent.ai')
 }

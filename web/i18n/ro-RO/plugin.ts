@@ -191,12 +191,12 @@ const translation = {
     discover: 'Descoperi',
     empower: 'Îmbunătățește-ți dezvoltarea AI',
     pluginsResult: '{{num}} rezultate',
-    difyMarketplace: 'Piața AgentFlow',
+    difyMarketplace: 'Piața 白泽智能体平台',
     moreFrom: 'Mai multe din Marketplace',
     and: 'și',
     viewMore: 'Vezi mai mult',
-    partnerTip: 'Verificat de un partener AgentFlow',
-    verifiedTip: 'Verificat de AgentFlow',
+    partnerTip: 'Verificat de un partener 白泽智能体平台',
+    verifiedTip: 'Verificat de 白泽智能体平台',
   },
   task: {
     installError: '{{errorLength}} plugin-urile nu s-au instalat, faceți clic pentru a vizualiza',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Pluginuri',
   },
-  difyVersionNotCompatible: 'Versiunea curentă AgentFlow nu este compatibilă cu acest plugin, vă rugăm să faceți upgrade la versiunea minimă necesară: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Versiunea curentă 白泽智能体平台 nu este compatibilă cu acest plugin, vă rugăm să faceți upgrade la versiunea minimă necesară: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Solicitați un plugin',
   publishPlugins: 'Publicați pluginuri',
   auth: {

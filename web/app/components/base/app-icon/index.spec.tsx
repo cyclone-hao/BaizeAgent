@@ -2,14 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import AppIcon from './index'
 
-// Mock emoji-mart initialization
-jest.mock('emoji-mart', () => ({
-  init: jest.fn(),
-}))
-
-// Mock emoji data
-jest.mock('@emoji-mart/data', () => ({}))
-
 // Mock the ahooks useHover hook
 jest.mock('ahooks', () => ({
   useHover: jest.fn(() => false),
@@ -17,36 +9,22 @@ jest.mock('ahooks', () => ({
 
 describe('AppIcon', () => {
   beforeEach(() => {
-    // Mock custom element
-    if (!customElements.get('em-emoji')) {
-      customElements.define('em-emoji', class extends HTMLElement {
-        constructor() {
-          super()
-        }
-
-        // Mock basic functionality
-        connectedCallback() {
-          this.innerHTML = '🤖'
-        }
-      })
-    }
-
     // Reset mocks
     require('ahooks').useHover.mockReset().mockReturnValue(false)
   })
 
-  it('renders default emoji when no icon or image is provided', () => {
+  it('renders default image when no icon or image is provided', () => {
     render(<AppIcon />)
-    const emojiElement = document.querySelector('em-emoji')
-    expect(emojiElement).toBeInTheDocument()
-    expect(emojiElement?.getAttribute('id')).toBe('🤖')
+    const imgElement = screen.getByAltText('default bot icon')
+    expect(imgElement).toBeInTheDocument()
+    expect(imgElement).toHaveAttribute('src', '/default-bot-icon.jpeg')
   })
 
   it('renders with custom emoji when icon is provided', () => {
-    render(<AppIcon icon='smile' />)
-    const emojiElement = document.querySelector('em-emoji')
+    render(<AppIcon icon='😀' />)
+    const emojiElement = document.querySelector('.not-emoji')
     expect(emojiElement).toBeInTheDocument()
-    expect(emojiElement?.getAttribute('id')).toBe('smile')
+    expect(emojiElement?.textContent).toBe('😀')
   })
 
   it('renders image when iconType is image and imageUrl is provided', () => {
@@ -91,13 +69,13 @@ describe('AppIcon', () => {
   })
 
   it('applies custom background color', () => {
-    const { container } = render(<AppIcon background='#FF5500' />)
+    const { container } = render(<AppIcon icon='😀' background='#FF5500' />)
     expect(container.firstChild).toHaveStyle('background: #FF5500')
   })
 
-  it('uses default background color when no background is provided for non-image icons', () => {
+  it('does not apply background style for default icon (uses image)', () => {
     const { container } = render(<AppIcon />)
-    expect(container.firstChild).toHaveStyle('background: #FFEAD5')
+    expect(container.firstChild).not.toHaveStyle('background: #FFEAD5')
   })
 
   it('does not apply background style for image icons', () => {

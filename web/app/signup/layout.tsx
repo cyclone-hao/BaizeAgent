@@ -20,8 +20,8 @@ export default function SignUpLayout({ children }: any) {
       {/* Header */}
       <header className="relative z-20 flex w-full items-center justify-between bg-[#fafbfc]/80 px-6 py-5 backdrop-blur-md md:px-10 lg:px-14">
         <a href="/signin" className="flex items-center gap-2.5">
-          <img src="/logo/logo1.png" alt="AgentFlow" className="h-8 w-auto object-contain" />
-          <span className="text-[18px] font-bold" style={{ color: '#6938ef' }}>AgentFlow</span>
+          <img src="/logo/logo1.png" alt="白泽智能体平台" className="h-8 w-auto object-contain" />
+          <span className="text-[18px] font-bold" style={{ color: '#6938ef' }}>白泽智能体平台</span>
         </a>
         <a href="/signin" className="text-[14px] font-medium text-[#667085] transition-colors hover:text-[#6938ef]">
           已有账户？去登录

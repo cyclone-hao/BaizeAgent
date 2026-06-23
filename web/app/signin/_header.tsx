@@ -29,7 +29,7 @@ const Header = () => {
         : <img
           src='/logo/logo-monochrome-white.svg'
           className='block h-7 w-auto object-contain opacity-80'
-          alt='AgentFlow'
+          alt='白泽智能体平台'
         />}
       <div className='flex items-center gap-1'>
         <LocaleSigninSelect

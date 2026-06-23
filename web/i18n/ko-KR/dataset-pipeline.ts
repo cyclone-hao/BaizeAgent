@@ -148,7 +148,7 @@ const translation = {
   pipelineNameAndIcon: '파이프라인 이름 & 아이콘',
   editPipelineInfo: '파이프라인 정보 편집',
   knowledgeNameAndIconPlaceholder: '기술 자료의 이름을 입력하십시오.',
-  knowledgeDescriptionPlaceholder: '이 기술 자료에 포함된 내용을 설명하십시오. 자세한 설명을 통해 AI는 데이터 세트의 콘텐츠에 보다 정확하게 액세스할 수 있습니다. 비어 있으면 AgentFlow는 기본 히트 전략을 사용합니다. (선택 사항)',
+  knowledgeDescriptionPlaceholder: '이 기술 자료에 포함된 내용을 설명하십시오. 자세한 설명을 통해 AI는 데이터 세트의 콘텐츠에 보다 정확하게 액세스할 수 있습니다. 비어 있으면 白泽智能体平台는 기본 히트 전략을 사용합니다. (선택 사항)',
 }
 
 export default translation

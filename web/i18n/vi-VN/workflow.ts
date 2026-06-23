@@ -932,7 +932,7 @@ const translation = {
     knowledgeBase: {
       chunkStructureTip: {
         learnMore: 'Tìm hiểu thêm',
-        message: 'Cơ sở kiến thức AgentFlow hỗ trợ ba cấu trúc phân đoạn: General, Parent-child và Q&A. Mỗi cơ sở tri thức chỉ có thể có một cấu trúc. Đầu ra từ nút trước đó phải phù hợp với cấu trúc chunk đã chọn. Lưu ý rằng việc lựa chọn cấu trúc chunking ảnh hưởng đến các phương thức index có sẵn.',
+        message: 'Cơ sở kiến thức 白泽智能体平台 hỗ trợ ba cấu trúc phân đoạn: General, Parent-child và Q&A. Mỗi cơ sở tri thức chỉ có thể có một cấu trúc. Đầu ra từ nút trước đó phải phù hợp với cấu trúc chunk đã chọn. Lưu ý rằng việc lựa chọn cấu trúc chunking ảnh hưởng đến các phương thức index có sẵn.',
         title: 'Vui lòng chọn cấu trúc chunk',
       },
       chunkIsRequired: 'Cấu trúc chunk là bắt buộc',

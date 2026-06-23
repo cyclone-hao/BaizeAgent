@@ -2,7 +2,7 @@ const translation = {
   toVerifiedTip: {
     front: 'Vous êtes maintenant éligible pour le statut Vérifié en Éducation. Veuillez entrer vos informations éducatives ci-dessous pour compléter le processus et recevoir un',
     coupon: 'coupon exclusif 100%',
-    end: 'pour le Plan Professionnel AgentFlow.',
+    end: 'pour le Plan Professionnel 白泽智能体平台.',
   },
   form: {
     schoolName: {
@@ -27,7 +27,7 @@ const translation = {
       },
       option: {
         age: 'Je confirme que j\'ai au moins 18 ans.',
-        inSchool: 'Je confirme que je suis inscrit ou employé dans l\'institution indiquée. AgentFlow peut demander une preuve d\'inscription/employé. Si je falsifie mon éligibilité, j\'accepte de payer tous les frais initialement annulés en fonction de mon statut éducatif.',
+        inSchool: 'Je confirme que je suis inscrit ou employé dans l\'institution indiquée. 白泽智能体平台 peut demander une preuve d\'inscription/employé. Si je falsifie mon éligibilité, j\'accepte de payer tous les frais initialement annulés en fonction de mon statut éducatif.',
       },
       title: 'Conditions et accords',
     },
@@ -35,18 +35,18 @@ const translation = {
   emailLabel: 'Votre email actuel',
   learn: 'Apprenez comment faire vérifier votre éducation',
   currentSigned: 'ACTUELLEMENT CONNECTÉ EN TANT QUE',
-  successTitle: 'Vous avez obtenu une éducation AgentFlow vérifiée.',
-  successContent: 'Nous avons émis un coupon de réduction de 100 % pour le plan AgentFlow Professionnel sur votre compte. Le coupon est valable pendant un an, veuillez l\'utiliser dans la période de validité.',
-  rejectTitle: 'Votre vérification éducative AgentFlow a été rejetée.',
+  successTitle: 'Vous avez obtenu une éducation 白泽智能体平台 vérifiée.',
+  successContent: 'Nous avons émis un coupon de réduction de 100 % pour le plan 白泽智能体平台 Professionnel sur votre compte. Le coupon est valable pendant un an, veuillez l\'utiliser dans la période de validité.',
+  rejectTitle: 'Votre vérification éducative 白泽智能体平台 a été rejetée.',
   submit: 'Soumettre',
   submitError: 'L\'envoi du formulaire a échoué. Veuillez réessayer plus tard.',
   toVerified: 'Faire vérifier l\'éducation',
-  rejectContent: 'Malheureusement, vous n\'êtes pas éligible au statut Éducation Vérifié et ne pouvez donc pas recevoir le coupon exclusif de 100 % pour le Plan Professionnel AgentFlow si vous utilisez cette adresse e-mail.',
+  rejectContent: 'Malheureusement, vous n\'êtes pas éligible au statut Éducation Vérifié et ne pouvez donc pas recevoir le coupon exclusif de 100 % pour le Plan Professionnel 白泽智能体平台 si vous utilisez cette adresse e-mail.',
   notice: {
     expired: {
       summary: {
         line2: 'Cependant, vous n\'êtes plus éligible pour de nouveaux bons de réduction pour l\'éducation.',
-        line1: 'Vous pouvez toujours accéder à AgentFlow et l\'utiliser.',
+        line1: 'Vous pouvez toujours accéder à 白泽智能体平台 et l\'utiliser.',
       },
       title: 'Votre statut éducatif a expiré',
     },

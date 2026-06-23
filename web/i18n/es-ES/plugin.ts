@@ -213,9 +213,9 @@ const translation = {
     pluginsResult: '{{num}} resultados',
     discover: 'Descubrir',
     and: 'y',
-    difyMarketplace: 'Mercado de AgentFlow',
-    verifiedTip: 'Verificado por AgentFlow',
-    partnerTip: 'Verificado por un socio de AgentFlow',
+    difyMarketplace: 'Mercado de 白泽智能体平台',
+    verifiedTip: 'Verificado por 白泽智能体平台',
+    partnerTip: 'Verificado por un socio de 白泽智能体平台',
   },
   task: {
     installing: 'Instalando plugins {{installingLength}}, 0 hecho.',
@@ -246,7 +246,7 @@ const translation = {
     title: 'Complementos',
   },
   difyVersionNotCompatible:
-    'La versión actual de AgentFlow no es compatible con este plugin, por favor actualiza a la versión mínima requerida: {{minimalAgentFlowVersion}}',
+    'La versión actual de 白泽智能体平台 no es compatible con este plugin, por favor actualiza a la versión mínima requerida: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Solicitar un plugin',
   publishPlugins: 'Publicar plugins',
   auth: {

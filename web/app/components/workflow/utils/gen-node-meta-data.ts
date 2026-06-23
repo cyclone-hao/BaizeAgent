@@ -19,7 +19,7 @@ export const genNodeMetaData = ({
   sort,
   type,
   title = '',
-  author = 'AgentFlow',
+  author = '白泽智能体平台',
   helpLinkUri,
   isRequired = false,
   isUndeletable = false,

@@ -2,7 +2,7 @@ const translation = {
   toVerifiedTip: {
     coupon: 'mã giảm giá độc quyền 100%',
     front: 'Bạn hiện đủ điều kiện để có trạng thái Xác minh Giáo dục. Vui lòng nhập thông tin giáo dục của bạn bên dưới để hoàn tất quá trình và nhận một',
-    end: 'cho Kế hoạch Chuyên nghiệp AgentFlow.',
+    end: 'cho Kế hoạch Chuyên nghiệp 白泽智能体平台.',
   },
   form: {
     schoolName: {
@@ -27,25 +27,25 @@ const translation = {
       },
       option: {
         age: 'Tôi xác nhận rằng tôi ít nhất 18 tuổi',
-        inSchool: 'Tôi xác nhận rằng tôi đã đăng ký hoặc làm việc tại cơ sở đã cung cấp. AgentFlow có thể yêu cầu chứng minh về việc đăng ký/làm việc. Nếu tôi cung cấp thông tin không chính xác về đủ điều kiện của mình, tôi đồng ý trả bất kỳ khoản phí nào ban đầu được miễn dựa trên tình trạng giáo dục của tôi.',
+        inSchool: 'Tôi xác nhận rằng tôi đã đăng ký hoặc làm việc tại cơ sở đã cung cấp. 白泽智能体平台 có thể yêu cầu chứng minh về việc đăng ký/làm việc. Nếu tôi cung cấp thông tin không chính xác về đủ điều kiện của mình, tôi đồng ý trả bất kỳ khoản phí nào ban đầu được miễn dựa trên tình trạng giáo dục của tôi.',
       },
       title: 'Điều khoản & Thỏa thuận',
     },
   },
   toVerified: 'Xác thực giáo dục',
-  successTitle: 'Bạn đã được xác minh giáo dục AgentFlow',
+  successTitle: 'Bạn đã được xác minh giáo dục 白泽智能体平台',
   submit: 'Gửi',
-  rejectTitle: 'Yêu cầu xác minh giáo dục AgentFlow của bạn đã bị từ chối',
-  successContent: 'Chúng tôi đã phát hành một phiếu giảm giá 100% cho gói AgentFlow Professional vào tài khoản của bạn. Phiếu giảm giá có hiệu lực trong một năm, vui lòng sử dụng nó trong thời gian hiệu lực.',
+  rejectTitle: 'Yêu cầu xác minh giáo dục 白泽智能体平台 của bạn đã bị từ chối',
+  successContent: 'Chúng tôi đã phát hành một phiếu giảm giá 100% cho gói 白泽智能体平台 Professional vào tài khoản của bạn. Phiếu giảm giá có hiệu lực trong một năm, vui lòng sử dụng nó trong thời gian hiệu lực.',
   currentSigned: 'HIỆN ĐANG ĐĂNG NHẬP VÀO',
   learn: 'Học cách xác minh trình độ giáo dục',
   emailLabel: 'Email hiện tại của bạn',
-  rejectContent: 'Rất tiếc, bạn không đủ điều kiện để nhận trạng thái Xác minh Giáo dục và do đó không thể nhận được mã giảm giá độc quyền 100% cho Kế hoạch Chuyên nghiệp AgentFlow nếu bạn sử dụng địa chỉ email này.',
+  rejectContent: 'Rất tiếc, bạn không đủ điều kiện để nhận trạng thái Xác minh Giáo dục và do đó không thể nhận được mã giảm giá độc quyền 100% cho Kế hoạch Chuyên nghiệp 白泽智能体平台 nếu bạn sử dụng địa chỉ email này.',
   submitError: 'Gửi mẫu không thành công. Vui lòng thử lại sau.',
   notice: {
     expired: {
       summary: {
-        line1: 'Bạn vẫn có thể truy cập và sử dụng AgentFlow.',
+        line1: 'Bạn vẫn có thể truy cập và sử dụng 白泽智能体平台.',
         line2: 'Tuy nhiên, bạn không còn đủ điều kiện để nhận phiếu giảm giá giáo dục mới.',
       },
       title: 'Tình trạng giáo dục của bạn đã hết hạn',

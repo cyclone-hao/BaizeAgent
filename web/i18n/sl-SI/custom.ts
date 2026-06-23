@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Prilagodi blagovno znamko spletne aplikacije',
-    removeBrand: 'Odstrani Powered by AgentFlow',
+    removeBrand: 'Odstrani Powered by 白泽智能体平台',
     changeLogo: 'Spremeni sliko Powered by Brand',
     changeLogoTip: 'Format SVG ali PNG z minimalno velikostjo 40x40px',
   },

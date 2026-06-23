@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'web app markasını özelleştir',
-    removeBrand: 'Powered by AgentFlow\'i kaldır',
+    removeBrand: 'Powered by 白泽智能体平台\'i kaldır',
     changeLogo: 'Powered by Brand Resmini Değiştir',
     changeLogoTip: 'SVG veya PNG formatında, en az 40x40px boyutunda',
   },

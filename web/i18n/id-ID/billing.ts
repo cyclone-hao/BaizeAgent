@@ -39,7 +39,7 @@ const translation = {
       workflow: 'Alur Kerja',
     },
     messageRequest: {
-      tooltip: 'Kredit pesan disediakan untuk membantu Anda mencoba berbagai model OpenAI dengan mudah di AgentFlow. Kredit digunakan berdasarkan jenis model. Setelah habis, Anda dapat beralih ke kunci API OpenAI Anda sendiri.',
+      tooltip: 'Kredit pesan disediakan untuk membantu Anda mencoba berbagai model OpenAI dengan mudah di 白泽智能体平台. Kredit digunakan berdasarkan jenis model. Setelah habis, Anda dapat beralih ke kunci API OpenAI Anda sendiri.',
     },
     annotatedResponse: {
       tooltip: 'Pengeditan manual dan anotasi respons memberikan kemampuan menjawab pertanyaan berkualitas tinggi yang dapat disesuaikan untuk aplikasi. (Hanya berlaku di aplikasi Chat)',
@@ -66,7 +66,7 @@ const translation = {
     currentPlan: 'Rencana Saat Ini',
     unlimitedApiRate: 'Tidak Ada Batas Tarif API',
     priceTip: 'per ruang kerja/',
-    apiRateLimitTooltip: 'Batas Tarif API berlaku untuk semua permintaan yang dibuat melalui AgentFlow API, termasuk pembuatan teks, percakapan obrolan, eksekusi alur kerja, dan pemrosesan dokumen.',
+    apiRateLimitTooltip: 'Batas Tarif API berlaku untuk semua permintaan yang dibuat melalui 白泽智能体平台 API, termasuk pembuatan teks, percakapan obrolan, eksekusi alur kerja, dan pemrosesan dokumen.',
     documentsTooltip: 'Kuota jumlah dokumen yang diimpor dari Sumber Data Pengetahuan.',
     days: 'Hari',
     vectorSpaceTooltip: 'Dokumen dengan mode pengindeksan Kualitas Tinggi akan menggunakan sumber daya Penyimpanan Data Pengetahuan. Ketika Penyimpanan Data Pengetahuan mencapai batas, dokumen baru tidak akan diunggah.',
@@ -81,7 +81,7 @@ const translation = {
     documentsRequestQuotaTooltip: 'Menentukan jumlah total tindakan yang dapat dilakukan ruang kerja per menit dalam pangkalan pengetahuan, termasuk pembuatan, penghapusan, pembaruan, pengunggahan dokumen, modifikasi, pengarsipan, dan kueri basis pengetahuan himpunan data. Metrik ini digunakan untuk mengevaluasi performa permintaan basis pengetahuan. Misalnya, jika pengguna Sandbox melakukan 10 pengujian hit berturut-turut dalam satu menit, ruang kerja mereka akan dibatasi sementara untuk melakukan tindakan berikut selama menit berikutnya: pembuatan, penghapusan, pembaruan, dan unggahan atau modifikasi himpunan data.',
     unlimited: 'Unlimited',
     documentProcessingPriorityUpgrade: 'Proses lebih banyak data dengan akurasi yang lebih tinggi pada kecepatan yang lebih tinggi.',
-    ragAPIRequestTooltip: 'Mengacu pada jumlah panggilan API yang hanya memanggil kemampuan pemrosesan basis pengetahuan AgentFlow.',
+    ragAPIRequestTooltip: 'Mengacu pada jumlah panggilan API yang hanya memanggil kemampuan pemrosesan basis pengetahuan 白泽智能体平台.',
     receiptInfo: 'Hanya pemilik tim dan admin tim yang dapat berlangganan dan melihat informasi penagihan',
     customTools: 'Alat Kustom',
     modelProviders: 'Mendukung OpenAI/Anthropic/Llama2/Azure OpenAI/Hugging Face/Replite',
@@ -108,7 +108,7 @@ const translation = {
       features: {
         0: 'Semua fitur inti dirilis di bawah repositori publik',
         1: 'Ruang Kerja Tunggal',
-        2: 'Sesuai dengan Lisensi Sumber Terbuka AgentFlow',
+        2: 'Sesuai dengan Lisensi Sumber Terbuka 白泽智能体平台',
       },
       price: 'Bebas',
       for: 'Untuk Pengguna Individu, Tim Kecil, atau Proyek Non-Komersial',
@@ -135,11 +135,11 @@ const translation = {
     },
     enterprise: {
       features: {
-        5: 'SLA yang Dinegosiasikan oleh Mitra AgentFlow',
+        5: 'SLA yang Dinegosiasikan oleh Mitra 白泽智能体平台',
         3: 'Beberapa Ruang Kerja & Manajemen Perusahaan',
         4: 'SSO',
         2: 'Fitur Eksklusif Enterprise',
-        7: 'Pembaruan dan Pemeliharaan oleh AgentFlow Secara Resmi',
+        7: 'Pembaruan dan Pemeliharaan oleh 白泽智能体平台 Secara Resmi',
         1: 'Otorisasi Lisensi Komersial',
         8: 'Dukungan Teknis Profesional',
         0: 'Solusi Penerapan yang Dapat Diskalakan Tingkat Perusahaan',

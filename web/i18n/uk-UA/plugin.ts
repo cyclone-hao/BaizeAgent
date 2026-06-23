@@ -192,11 +192,11 @@ const translation = {
     sortBy: 'Чорне місто',
     pluginsResult: 'Результати {{num}}',
     empower: 'Розширюйте можливості розробки штучного інтелекту',
-    difyMarketplace: 'AgentFlow Marketplace',
+    difyMarketplace: '白泽智能体平台 Marketplace',
     viewMore: 'Дивитись більше',
     noPluginFound: 'Плагін не знайдено',
-    verifiedTip: 'Перевірено AgentFlow',
-    partnerTip: 'Перевірено партнером AgentFlow',
+    verifiedTip: 'Перевірено 白泽智能体平台',
+    partnerTip: 'Перевірено партнером 白泽智能体平台',
   },
   task: {
     installingWithError: 'Не вдалося встановити плагіни {{installingLength}}, успіх {{successLength}}, {{errorLength}}',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Плагіни',
   },
-  difyVersionNotCompatible: 'Поточна версія AgentFlow не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Поточна версія 白泽智能体平台 не сумісна з цим плагіном, будь ласка, оновіть до мінімальної версії: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Запросити плагін',
   publishPlugins: 'Публікація плагінів',
   auth: {

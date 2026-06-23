@@ -28,7 +28,7 @@ const translation = {
     callTimes: 'Liczba wywołań',
     usedToken: 'Zużyty token',
     setAPIBtn: 'Przejdź do konfiguracji dostawcy modelu',
-    tryCloud: 'Lub wypróbuj wersję chmurową AgentFlow z darmowym limitem',
+    tryCloud: 'Lub wypróbuj wersję chmurową 白泽智能体平台 z darmowym limitem',
   },
   overview: {
     title: 'Przegląd',
@@ -67,7 +67,7 @@ const translation = {
           privacyPolicy: 'Polityka prywatności',
           privacyPolicyPlaceholder: 'Wprowadź link do polityki prywatności',
           privacyPolicyTip:
-            'Pomaga odwiedzającym zrozumieć, jakie dane zbiera aplikacja, zobacz <privacyPolicyLink>Politykę prywatności AgentFlow</privacyPolicyLink>.',
+            'Pomaga odwiedzającym zrozumieć, jakie dane zbiera aplikacja, zobacz <privacyPolicyLink>Politykę prywatności 白泽智能体平台</privacyPolicyLink>.',
           customDisclaimer: 'Oświadczenie o ochronie danych',
           customDisclaimerPlaceholder: 'Wprowadź oświadczenie o ochronie danych',
           customDisclaimerTip: 'Niestandardowy tekst oświadczenia będzie wyświetlany po stronie klienta, dostarczając dodatkowych informacji o aplikacji.',
@@ -91,7 +91,7 @@ const translation = {
           'Aby dodać aplikację czatu w dowolnym miejscu na swojej stronie internetowej, dodaj ten kod iframe do swojego kodu HTML.',
         scripts:
           'Aby dodać aplikację czatu w prawym dolnym rogu swojej strony internetowej, dodaj ten kod do swojego HTML.',
-        chromePlugin: 'Zainstaluj rozszerzenie Chrome AgentFlow Chatbot',
+        chromePlugin: 'Zainstaluj rozszerzenie Chrome 白泽智能体平台 Chatbot',
         copied: 'Skopiowane',
         copy: 'Kopiuj',
       },
@@ -111,7 +111,7 @@ const translation = {
           step1: 'Skopiuj kod klienta i zmodyfikuj go',
           step1Tip:
             'Kliknij tutaj, aby skopiować kod źródłowy na swoje konto GitHub i zmodyfikować kod',
-          step1Operation: 'AgentFlow-WebClient',
+          step1Operation: '白泽智能体平台-WebClient',
           step2: 'Wdroż na Vercel',
           step2Tip:
             'Kliknij tutaj, aby zaimportować repozytorium do Vercel i wdrożyć',

@@ -723,6 +723,17 @@ class WebSearchConfig(BaseSettings):
     )
 
 
+class DashScopeConfig(BaseSettings):
+    """
+    Configuration for DashScope (Alibaba Cloud Bailian) API — image/video generation
+    """
+
+    DASHSCOPE_API_KEY: str | None = Field(
+        description="API key for DashScope (Alibaba Cloud Bailian) services",
+        default=None,
+    )
+
+
 class TemplateMode(StrEnum):
     # unsafe mode allows flexible operations in templates, but may cause security vulnerabilities
     UNSAFE = "unsafe"
@@ -1105,6 +1116,7 @@ class FeatureConfig(
     ToolConfig,
     UpdateConfig,
     WebSearchConfig,
+    DashScopeConfig,
     WorkflowConfig,
     WorkflowNodeExecutionConfig,
     WorkspaceConfig,

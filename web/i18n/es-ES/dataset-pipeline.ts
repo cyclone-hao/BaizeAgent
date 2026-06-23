@@ -145,7 +145,7 @@ const translation = {
   knowledgeNameAndIcon: 'Nombre e icono de conocimiento',
   inputField: 'Campo de entrada',
   knowledgeNameAndIconPlaceholder: 'Ingrese el nombre de la base de conocimientos',
-  knowledgeDescriptionPlaceholder: 'Describa lo que hay en esta base de conocimientos. Una descripción detallada permite a la IA acceder al contenido del conjunto de datos con mayor precisión. Si está vacío, AgentFlow usará la estrategia de golpe predeterminada. (Opcional)',
+  knowledgeDescriptionPlaceholder: 'Describa lo que hay en esta base de conocimientos. Una descripción detallada permite a la IA acceder al contenido del conjunto de datos con mayor precisión. Si está vacío, 白泽智能体平台 usará la estrategia de golpe predeterminada. (Opcional)',
   pipelineNameAndIcon: 'Nombre e icono de la tubería',
   knowledgePermissions: 'Permisos',
   editPipelineInfo: 'Editar información de canalización',

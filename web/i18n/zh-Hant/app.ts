@@ -160,7 +160,7 @@ const translation = {
     },
     aliyun: {
       title: '雲端監控',
-      description: '阿里雲提供的完全管理且無需維護的可觀察性平台，支持即時監控、追蹤和評估 AgentFlow 應用程序。',
+      description: '阿里雲提供的完全管理且無需維護的可觀察性平台，支持即時監控、追蹤和評估 白泽智能体平台 應用程序。',
     },
   },
   answerIcon: {

@@ -204,7 +204,7 @@ const translation = {
   },
   otherDataSource: {
     learnMore: 'Daha fazla bilgi edinin',
-    description: 'Şu anda, AgentFlow\'ın bilgi tabanı yalnızca sınırlı veri kaynaklarına sahiptir. AgentFlow bilgi tabanına bir veri kaynağına katkıda bulunmak, tüm kullanıcılar için platformun esnekliğini ve gücünü artırmaya yardımcı olmanın harika bir yoludur. Katkı kılavuzumuz, başlamanızı kolaylaştırır. Daha fazla bilgi edinmek için lütfen aşağıdaki bağlantıya tıklayın.',
+    description: 'Şu anda, 白泽智能体平台\'ın bilgi tabanı yalnızca sınırlı veri kaynaklarına sahiptir. 白泽智能体平台 bilgi tabanına bir veri kaynağına katkıda bulunmak, tüm kullanıcılar için platformun esnekliğini ve gücünü artırmaya yardımcı olmanın harika bir yoludur. Katkı kılavuzumuz, başlamanızı kolaylaştırır. Daha fazla bilgi edinmek için lütfen aşağıdaki bağlantıya tıklayın.',
     title: 'Diğer veri kaynaklarına bağlanılıyor mu?',
   },
   watercrawl: {

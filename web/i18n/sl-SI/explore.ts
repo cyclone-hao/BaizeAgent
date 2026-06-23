@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Razišči aplikacije AgentFlow',
+    title: 'Razišči aplikacije 白泽智能体平台',
     description: 'Uporabite te predloge aplikacij takoj ali prilagodite svoje aplikacije na podlagi predlog.',
     allCategories: 'Priporočeno',
   },

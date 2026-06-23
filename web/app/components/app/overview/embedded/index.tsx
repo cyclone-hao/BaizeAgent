@@ -38,7 +38,7 @@ const OPTION_MAP = {
   scripts: {
     getContent: (url: string, token: string, primaryColor: string, isTestEnv?: boolean) =>
       `<script>
- window.agentflowChatbotConfig = {
+ window.baizeAgentChatbotConfig = {
   token: '${token}'${isTestEnv
     ? `,
   isDev: true`
@@ -68,10 +68,10 @@ const OPTION_MAP = {
  defer>
 </script>
 <style>
-  #agentflow-chatbot-bubble-button {
+  #baize-agent-chatbot-bubble-button {
     background-color: ${primaryColor} !important;
   }
-  #agentflow-chatbot-bubble-window {
+  #baize-agent-chatbot-bubble-window {
     width: 24rem !important;
     height: 40rem !important;
   }

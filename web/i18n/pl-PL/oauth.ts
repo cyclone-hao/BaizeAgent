@@ -1,9 +1,9 @@
 const translation = {
   tips: {
     needLogin: 'Proszę się zalogować, aby autoryzować',
-    notLoggedIn: 'Ta aplikacja chce uzyskać dostęp do twojego konta AgentFlow Cloud',
+    notLoggedIn: 'Ta aplikacja chce uzyskać dostęp do twojego konta 白泽智能体平台 Cloud',
     common: 'Szanujemy Twoją prywatność i będziemy wykorzystywać te informacje tylko w celu ulepszenia Twojego doświadczenia z naszymi narzędziami deweloperskimi.',
-    loggedIn: 'Ta aplikacja chce uzyskać dostęp do następujących informacji z twojego konta AgentFlow Cloud.',
+    loggedIn: 'Ta aplikacja chce uzyskać dostęp do następujących informacji z twojego konta 白泽智能体平台 Cloud.',
   },
   scopes: {
     timezone: 'Strefa czasowa',

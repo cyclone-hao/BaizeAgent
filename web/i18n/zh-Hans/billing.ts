@@ -61,7 +61,7 @@ const translation = {
     apiRateLimit: 'API 请求频率限制',
     apiRateLimitUnit: '{{count,number}} 次/天',
     unlimitedApiRate: 'API 请求频率无限制',
-    apiRateLimitTooltip: 'API 请求频率限制涵盖所有通过 AgentFlow API 发起的调用，例如文本生成、聊天对话、工作流执行和文档处理等。',
+    apiRateLimitTooltip: 'API 请求频率限制涵盖所有通过 白泽智能体平台 API 发起的调用，例如文本生成、聊天对话、工作流执行和文档处理等。',
     documentProcessingPriority: '文档处理',
     documentProcessingPriorityUpgrade: '以更快的速度、更高的精度处理更多的数据。',
     priority: {
@@ -97,13 +97,13 @@ const translation = {
     messageRequest: {
       title: '{{count,number}} 条消息额度',
       titlePerMonth: '{{count,number}} 条消息额度/月',
-      tooltip: '消息额度旨在帮助您便捷地试用 AgentFlow 中的各类 OpenAI 模型。不同模型会消耗不同额度。额度用尽后，您可以切换为使用自己的 OpenAI API 密钥。',
+      tooltip: '消息额度旨在帮助您便捷地试用 白泽智能体平台 中的各类 OpenAI 模型。不同模型会消耗不同额度。额度用尽后，您可以切换为使用自己的 OpenAI API 密钥。',
     },
     annotatedResponse: {
       title: '{{count,number}} 个标注回复数',
       tooltip: '标注回复功能通过人工编辑标注为应用提供了可定制的高质量问答回复能力。',
     },
-    ragAPIRequestTooltip: '指单独调用 AgentFlow 知识库数据处理能力的 API。',
+    ragAPIRequestTooltip: '指单独调用 白泽智能体平台 知识库数据处理能力的 API。',
     receiptInfo: '只有团队所有者和团队管理员才能订阅和查看账单信息',
   },
   plans: {
@@ -132,7 +132,7 @@ const translation = {
       features: [
         '所有核心功能均在公共存储库下发布',
         '单一工作空间',
-        '符合 AgentFlow 开源许可证',
+        '符合 白泽智能体平台 开源许可证',
       ],
     },
     premium: {
@@ -165,9 +165,9 @@ const translation = {
         '专属企业级功能',
         '多个工作空间 & 企业级管理',
         'SSO',
-        '由 AgentFlow 合作伙伴支持的可协商的 SLAs',
+        '由 白泽智能体平台 合作伙伴支持的可协商的 SLAs',
         '高级的安全 & 控制',
-        '由 AgentFlow 官方提供的更新 & 维护',
+        '由 白泽智能体平台 官方提供的更新 & 维护',
         '专业技术支持',
       ],
     },

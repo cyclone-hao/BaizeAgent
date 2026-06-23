@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Tùy chỉnh thương hiệu web app',
-    removeBrand: 'Xóa "Được hỗ trợ bởi AgentFlow"',
+    removeBrand: 'Xóa "Được hỗ trợ bởi 白泽智能体平台"',
     changeLogo: 'Thay đổi logo "Được hỗ trợ bởi"',
     changeLogoTip: 'Định dạng SVG hoặc PNG với kích thước tối thiểu 40x40px',
   },

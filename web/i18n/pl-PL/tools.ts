@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Interesuje mnie ',
-    line2: 'współtworzenie narzędzi dla AgentFlow.',
+    line2: 'współtworzenie narzędzi dla 白泽智能体平台.',
     viewGuide: 'Zobacz przewodnik',
   },
   author: 'Przez',
@@ -167,7 +167,7 @@ const translation = {
     },
   },
   openInStudio: 'Otwieranie w Studio',
-  customToolTip: 'Dowiedz się więcej o niestandardowych narzędziach AgentFlow',
+  customToolTip: 'Dowiedz się więcej o niestandardowych narzędziach 白泽智能体平台',
   toolNameUsageTip: 'Nazwa wywołania narzędzia do wnioskowania i podpowiadania agentowi',
   noTools: 'Nie znaleziono narzędzi',
   copyToolName: 'Kopiuj nazwę',

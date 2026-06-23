@@ -1,7 +1,7 @@
 const translation = {
   title: 'ツール',
   createCustomTool: 'カスタムツールを作成する',
-  customToolTip: 'AgentFlow カスタムツールの詳細',
+  customToolTip: '白泽智能体平台 カスタムツールの詳細',
   type: {
     all: 'すべて',
     builtIn: 'ツール',
@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: '私は',
-    line2: 'AgentFlow へのツールの貢献に興味があります。',
+    line2: '白泽智能体平台 へのツールの貢献に興味があります。',
     viewGuide: 'ガイドを見る',
   },
   author: '著者：',

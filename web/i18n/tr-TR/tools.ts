@@ -1,7 +1,7 @@
 const translation = {
   title: 'Araçlar',
   createCustomTool: 'Özel Araç Oluştur',
-  customToolTip: 'AgentFlow özel araçları hakkında daha fazla bilgi edinin',
+  customToolTip: '白泽智能体平台 özel araçları hakkında daha fazla bilgi edinin',
   type: {
     all: 'Hepsi',
     builtIn: 'Yerleşik',
@@ -9,7 +9,7 @@ const translation = {
     workflow: 'Workflow',
   },
   contribute: {
-    line1: 'AgentFlow\'ye ',
+    line1: '白泽智能体平台\'ye ',
     line2: 'araçlar eklemekle ilgileniyorum.',
     viewGuide: 'Rehberi Görüntüle',
   },

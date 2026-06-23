@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'ปรับแต่งแบรนด์ web app',
-    removeBrand: 'ลบ ขับเคลื่อนโดย AgentFlow',
+    removeBrand: 'ลบ ขับเคลื่อนโดย 白泽智能体平台',
     changeLogo: 'การเปลี่ยนแปลงที่ขับเคลื่อนโดยภาพลักษณ์ของแบรนด์',
     changeLogoTip: 'รูปแบบ SVG หรือ PNG ที่มีขนาดขั้นต่ํา 40x40px',
   },

@@ -76,3 +76,34 @@ export const FILE_UPLOAD_LIMITS = {
   imageMaxSize: 10 * 1024 * 1024, // 10 MB
   docMaxSize: 15 * 1024 * 1024, // 15 MB
 }
+
+/** 识图助手固定使用的视觉模型名称 */
+export const VISION_MODEL_NAME = 'qwen3.6-plus'
+
+/** 识图助手专用系统提示词 */
+export const VISION_SYSTEM_PROMPT
+  = '你是一个专业的图像识别与分析助手。请仔细观察用户上传的图片，并结合用户的文字描述进行准确分析。\n\n'
+  + '分析能力：\n'
+  + '- 文字识别（OCR）：准确识别图片中的文字内容\n'
+  + '- 物体识别：识别图片中的人物、动物、物品等\n'
+  + '- 图表分析：解读图表、数据可视化内容\n'
+  + '- 场景描述：详细描述图片中的场景、环境和氛围\n'
+  + '- 专业分析：根据图片内容提供专业见解\n\n'
+  + '回答要求：\n'
+  + '- 先描述图片整体内容\n'
+  + '- 针对用户的具体问题进行详细回答\n'
+  + '- 如果图片包含文字，优先提取和整理文字内容\n'
+  + '- 使用清晰的结构化格式（如需要可用列表或标题）\n'
+  + '- 如果图片模糊或无法识别，请如实说明'
+
+/**
+ * 在可用模型列表中查找识图专用视觉模型
+ * 使用模糊匹配，兼容版本后缀（如 qwen3.6-plus-latest）
+ */
+export function findVisionModel(
+  availableModels: { provider: string; model: string; mode: string }[],
+): { provider: string; model: string; mode: string } | null {
+  const target = VISION_MODEL_NAME.toLowerCase()
+  const found = availableModels.find(m => m.model.toLowerCase().includes(target))
+  return found ? { provider: found.provider, model: found.model, mode: found.mode } : null
+}

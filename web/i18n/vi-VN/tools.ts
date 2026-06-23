@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Tôi quan tâm đến việc ',
-    line2: 'đóng góp công cụ cho AgentFlow.',
+    line2: 'đóng góp công cụ cho 白泽智能体平台.',
     viewGuide: 'Xem hướng dẫn',
   },
   author: 'Tác giả',
@@ -163,7 +163,7 @@ const translation = {
     },
   },
   toolNameUsageTip: 'Tên cuộc gọi công cụ để lý luận và nhắc nhở tổng đài viên',
-  customToolTip: 'Tìm hiểu thêm về các công cụ tùy chỉnh AgentFlow',
+  customToolTip: 'Tìm hiểu thêm về các công cụ tùy chỉnh 白泽智能体平台',
   openInStudio: 'Mở trong Studio',
   noTools: 'Không tìm thấy công cụ',
   copyToolName: 'Sao chép tên',

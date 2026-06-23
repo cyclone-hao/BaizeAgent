@@ -76,7 +76,7 @@ const translation = {
         '수동으로 편집 및 응답 주석 달기로 앱의 사용자 정의 가능한 고품질 질의응답 기능을 제공합니다 (채팅 앱에만 해당).',
     },
     ragAPIRequestTooltip:
-      'AgentFlow 의 지식베이스 처리 기능을 호출하는 API 호출 수를 나타냅니다.',
+      '白泽智能体平台 의 지식베이스 처리 기능을 호출하는 API 호출 수를 나타냅니다.',
     receiptInfo: '팀 소유자 및 팀 관리자만 구독 및 청구 정보를 볼 수 있습니다',
     annotationQuota: 'Annotation Quota(주석 할당량)',
     freeTrialTipPrefix: '요금제에 가입하고 ',
@@ -96,7 +96,7 @@ const translation = {
     teamMember_one: '{{count,number}} 팀원',
     priceTip: '작업 공간당/',
     apiRateLimitTooltip:
-      'AgentFlow API 를 통한 모든 요청에는 API 요금 한도가 적용되며, 여기에는 텍스트 생성, 채팅 대화, 워크플로 실행 및 문서 처리가 포함됩니다.',
+      '白泽智能体平台 API 를 통한 모든 요청에는 API 요금 한도가 적용되며, 여기에는 텍스트 생성, 채팅 대화, 워크플로 실행 및 문서 처리가 포함됩니다.',
     documentsRequestQuota: '{{count,number}}/분 지식 요청 비율 제한',
     documentsTooltip:
       '지식 데이터 소스에서 가져올 수 있는 문서 수에 대한 쿼터.',
@@ -136,9 +136,9 @@ const translation = {
         '전용 엔터프라이즈 기능',
         '다중 워크스페이스 및 엔터프라이즈 관리',
         'SSO(싱글 사인온)',
-        'AgentFlow 파트너와의 협상을 통한 SLA',
+        '白泽智能体平台 파트너와의 협상을 통한 SLA',
         '고급 보안 및 제어 기능',
-        'AgentFlow의 공식 업데이트 및 유지 관리',
+        '白泽智能体平台의 공식 업데이트 및 유지 관리',
         '전문 기술 지원',
       ],
     },
@@ -152,7 +152,7 @@ const translation = {
       features: [
         '모든 핵심 기능이 공개 저장소에 공개됨',
         '단일 워크스페이스',
-        'AgentFlow 오픈소스 라이선스를 준수함',
+        '白泽智能体平台 오픈소스 라이선스를 준수함',
       ],
     },
     premium: {

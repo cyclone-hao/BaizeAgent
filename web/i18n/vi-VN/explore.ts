@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Khám phá ứng dụng bởi AgentFlow',
+    title: 'Khám phá ứng dụng bởi 白泽智能体平台',
     description: 'Sử dụng ngay các ứng dụng mẫu này hoặc tùy chỉnh ứng dụng của bạn dựa trên các mẫu có sẵn.',
     allCategories: 'Tất cả danh mục',
   },

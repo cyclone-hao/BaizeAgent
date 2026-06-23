@@ -29,7 +29,7 @@ const APIKeyInfoPanel: FC = () => {
   return (
     <div className={cn('border-components-panel-border bg-components-panel-bg', 'relative mb-6 rounded-2xl border p-8 shadow-md ')}>
       <div className={cn('text-[24px] font-semibold text-text-primary', isCloud ? 'flex h-8 items-center space-x-1' : 'mb-6 leading-8')}>
-        {isCloud && <em-emoji id={'😀'} />}
+        {isCloud && <span className="not-emoji">{'😀'}</span>}
         {isCloud
           ? (
             <div>{t('appOverview.apiKeyInfo.cloud.trial.title', { providerName: 'OpenAI' })}</div>

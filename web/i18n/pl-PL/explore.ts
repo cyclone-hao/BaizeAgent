@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Odkrywaj aplikacje stworzone przez AgentFlow',
+    title: 'Odkrywaj aplikacje stworzone przez 白泽智能体平台',
     description:
       'Wykorzystaj te aplikacje szablonowe natychmiast lub dostosuj własne aplikacje na podstawie szablonów.',
     allCategories: 'Polecane',

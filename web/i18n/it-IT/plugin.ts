@@ -187,7 +187,7 @@ const translation = {
       mostPopular: 'I più popolari',
     },
     moreFrom: 'Altro da Marketplace',
-    difyMarketplace: 'Mercato AgentFlow',
+    difyMarketplace: 'Mercato 白泽智能体平台',
     discover: 'Scoprire',
     pluginsResult: '{{num}} risultati',
     noPluginFound: 'Nessun plug-in trovato',
@@ -195,8 +195,8 @@ const translation = {
     sortBy: 'Ordina per',
     and: 'e',
     viewMore: 'Vedi di più',
-    verifiedTip: 'Verificato da AgentFlow',
-    partnerTip: 'Verificato da un partner AgentFlow',
+    verifiedTip: 'Verificato da 白泽智能体平台',
+    partnerTip: 'Verificato da un partner 白泽智能体平台',
   },
   task: {
     clearAll: 'Cancella tutto',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugin',
   },
-  difyVersionNotCompatible: 'L\'attuale versione di AgentFlow non è compatibile con questo plugin, si prega di aggiornare alla versione minima richiesta: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'L\'attuale versione di 白泽智能体平台 non è compatibile con questo plugin, si prega di aggiornare alla versione minima richiesta: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Richiedi un plugin',
   publishPlugins: 'Pubblicare plugin',
   auth: {

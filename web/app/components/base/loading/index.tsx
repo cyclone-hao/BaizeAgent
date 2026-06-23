@@ -12,7 +12,7 @@ const Loading = (
       <div className="loading-logo-wrapper">
         <img
           src="/loading-logo.png"
-          alt="AgentFlow"
+          alt="白泽智能体平台"
           className="loading-logo"
         />
       </div>

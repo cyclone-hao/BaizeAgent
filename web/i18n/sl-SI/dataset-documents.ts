@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Dokumenti',
-    desc: 'Vse datoteke znanja so prikazane tukaj, celotno znanje pa je mogoče povezati s citati AgentFlow ali indeksirati prek vtičnika Chat.',
+    desc: 'Vse datoteke znanja so prikazane tukaj, celotno znanje pa je mogoče povezati s citati 白泽智能体平台 ali indeksirati prek vtičnika Chat.',
     addFile: 'Dodaj datoteko',
     addPages: 'Dodaj strani',
     addUrl: 'Dodaj URL',
@@ -55,7 +55,7 @@ const translation = {
         tip: 'Lahko naložite datoteke, sinhronizirate z spletno stranjo ali aplikacijami, kot so Notion, GitHub itd.',
       },
       sync: {
-        tip: 'AgentFlow bo občasno prenesel datoteke iz Notion in dokončal obdelavo.',
+        tip: '白泽智能体平台 bo občasno prenesel datoteke iz Notion in dokončal obdelavo.',
       },
     },
     delete: {

@@ -161,7 +161,7 @@ const translation = {
     },
     aliyun: {
       title: 'Monitoramento em Nuvem',
-      description: 'A plataforma de observabilidade totalmente gerenciada e sem manutenção fornecida pela Alibaba Cloud, permite monitoramento, rastreamento e avaliação prontos para uso de aplicações AgentFlow.',
+      description: 'A plataforma de observabilidade totalmente gerenciada e sem manutenção fornecida pela Alibaba Cloud, permite monitoramento, rastreamento e avaliação prontos para uso de aplicações 白泽智能体平台.',
     },
   },
   answerIcon: {

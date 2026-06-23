@@ -148,7 +148,7 @@ const translation = {
   knowledgeNameAndIcon: 'Nome e icona della Knowledge Base',
   pipelineNameAndIcon: 'Nome e icona della pipeline',
   knowledgeNameAndIconPlaceholder: 'Inserisci il nome della Knowledge Base',
-  knowledgeDescriptionPlaceholder: 'Descrivi cosa c\'è in questa Knowledge Base. Una descrizione dettagliata consente all\'intelligenza artificiale di accedere al contenuto del set di dati in modo più accurato. Se vuoto, AgentFlow utilizzerà la strategia di hit predefinita. (Facoltativo)',
+  knowledgeDescriptionPlaceholder: 'Descrivi cosa c\'è in questa Knowledge Base. Una descrizione dettagliata consente all\'intelligenza artificiale di accedere al contenuto del set di dati in modo più accurato. Se vuoto, 白泽智能体平台 utilizzerà la strategia di hit predefinita. (Facoltativo)',
 }
 
 export default translation

@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'Explorați aplicațiile AgentFlow',
+    title: 'Explorați aplicațiile 白泽智能体平台',
     description: 'Utilizați aceste aplicații model imediat sau personalizați-vă propria aplicație pe baza modelelor.',
     allCategories: 'Recomandate',
   },

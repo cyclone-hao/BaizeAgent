@@ -204,7 +204,7 @@ const translation = {
   },
   otherDataSource: {
     learnMore: 'Saiba Mais',
-    description: 'Atualmente, a base de conhecimento da AgentFlow possui apenas fontes de dados limitadas. Contribuir com uma fonte de dados para a base de conhecimento AgentFlow é uma maneira fantástica de ajudar a aumentar a flexibilidade e o poder da plataforma para todos os usuários. Nosso guia de contribuição facilita o início. Clique no link abaixo para saber mais.',
+    description: 'Atualmente, a base de conhecimento da 白泽智能体平台 possui apenas fontes de dados limitadas. Contribuir com uma fonte de dados para a base de conhecimento 白泽智能体平台 é uma maneira fantástica de ajudar a aumentar a flexibilidade e o poder da plataforma para todos os usuários. Nosso guia de contribuição facilita o início. Clique no link abaixo para saber mais.',
     title: 'Conectar-se a outras fontes de dados?',
   },
   watercrawl: {

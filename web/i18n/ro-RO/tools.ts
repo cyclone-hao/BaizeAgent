@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Sunt interesat să ',
-    line2: 'contribui la AgentFlow cu instrumente.',
+    line2: 'contribui la 白泽智能体平台 cu instrumente.',
     viewGuide: 'Vezi ghidul',
   },
   author: 'De',
@@ -163,7 +163,7 @@ const translation = {
     },
   },
   openInStudio: 'Deschide în Studio',
-  customToolTip: 'Aflați mai multe despre instrumentele personalizate AgentFlow',
+  customToolTip: 'Aflați mai multe despre instrumentele personalizate 白泽智能体平台',
   toolNameUsageTip: 'Numele de apel al instrumentului pentru raționamentul și solicitarea agentului',
   copyToolName: 'Copiază numele',
   noTools: 'Nu s-au găsit unelte',

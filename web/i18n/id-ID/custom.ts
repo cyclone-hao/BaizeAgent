@@ -7,7 +7,7 @@ const translation = {
   },
   webapp: {
     changeLogoTip: 'Format SVG atau PNG dengan ukuran minimum 40x40px',
-    removeBrand: 'Hapus Branding AgentFlow',
+    removeBrand: 'Hapus Branding 白泽智能体平台',
     changeLogo: 'Ubah Logo Merek',
     title: 'Kustomisasi Branding Aplikasi Web',
   },

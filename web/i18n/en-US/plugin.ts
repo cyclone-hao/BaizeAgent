@@ -251,7 +251,7 @@ const translation = {
     empower: 'Empower your AI development',
     discover: 'Discover',
     and: 'and',
-    difyMarketplace: 'AgentFlow Marketplace',
+    difyMarketplace: '白泽智能体平台 Marketplace',
     moreFrom: 'More from Marketplace',
     noPluginFound: 'No plugin found',
     pluginsResult: '{{num}} results',
@@ -263,8 +263,8 @@ const translation = {
       firstReleased: 'First Released',
     },
     viewMore: 'View more',
-    verifiedTip: 'Verified by AgentFlow',
-    partnerTip: 'Verified by a AgentFlow partner',
+    verifiedTip: 'Verified by 白泽智能体平台',
+    partnerTip: 'Verified by a 白泽智能体平台 partner',
   },
   task: {
     installing: 'Installing {{installingLength}} plugins, 0 done.',
@@ -284,7 +284,7 @@ const translation = {
     confirm: 'Confirm',
   },
   installedPlugins: 'Installed Plugins',
-  difyVersionNotCompatible: 'The current AgentFlow version is not compatible with this plugin, please upgrade to the minimum version required: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'The current 白泽智能体平台 version is not compatible with this plugin, please upgrade to the minimum version required: {{minimal白泽智能体平台Version}}',
   auth: {
     default: 'Default',
     custom: 'Custom',

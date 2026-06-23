@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Personalizați marca web app',
-    removeBrand: 'Eliminați "Powered by AgentFlow"',
+    removeBrand: 'Eliminați "Powered by 白泽智能体平台"',
     changeLogo: 'Schimbați imaginea mărcii "Powered by"',
     changeLogoTip: 'Format SVG sau PNG cu o dimensiune minimă de 40x40px',
   },

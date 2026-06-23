@@ -40,10 +40,10 @@ export default function SignInLayout({ children }: any) {
         <div className="flex items-center gap-2.5">
           <img
             src="/logo/logo1.png"
-            alt="AgentFlow"
+            alt="白泽智能体平台"
             className="h-8 w-auto object-contain"
           />
-          <span className="text-[18px] font-bold" style={{ color: '#6938ef' }}>AgentFlow</span>
+          <span className="text-[18px] font-bold" style={{ color: '#6938ef' }}>白泽智能体平台</span>
         </div>
         <button
           onClick={openLogin}

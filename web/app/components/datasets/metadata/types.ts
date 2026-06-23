@@ -38,4 +38,4 @@ export type MetadataItemWithEdit = MetadataItemWithValue & {
   updateType?: UpdateType
 }
 
-export const isShowManageMetadataLocalStorageKey = 'agentflow-isShowManageMetadata'
+export const isShowManageMetadataLocalStorageKey = 'baize-agent-isShowManageMetadata'

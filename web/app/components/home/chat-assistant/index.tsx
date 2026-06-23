@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
-import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainLine, RiChat3Line, RiCloseLine, RiDeleteBinLine, RiGlobalLine, RiRobot2Line, RiSendPlane2Fill, RiSparkling2Fill, RiStopCircleFill, RiUserSmileLine } from '@remixicon/react'
+import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainLine, RiChat3Line, RiCloseLine, RiDeleteBinLine, RiGlobalLine, RiImage2Line, RiMagicLine, RiRobot2Line, RiSendPlane2Fill, RiSparkling2Fill, RiStopCircleFill, RiUserSmileLine } from '@remixicon/react'
 import { Markdown } from '@/app/components/base/markdown'
 import Button from '@/app/components/base/button'
 import { useToastContext } from '@/app/components/base/toast'
@@ -34,6 +34,11 @@ const ChatAssistantInner = ({
   setDeepThinking,
   webSearch,
   setWebSearch,
+  visionMode,
+  setVisionMode,
+  visionModel,
+  imageGen,
+  setImageGen,
   sendMessage,
   handleStop,
   handleRestart,
@@ -59,6 +64,11 @@ const ChatAssistantInner = ({
   setDeepThinking: (v: boolean) => void
   webSearch: boolean
   setWebSearch: (v: boolean) => void
+  visionMode: boolean
+  setVisionMode: (v: boolean) => void
+  visionModel: { provider: string; model: string; mode: string } | null
+  imageGen: boolean
+  setImageGen: (v: boolean) => void
   sendMessage: (query: string, files?: any[], documentTexts?: { filename: string; text: string }[]) => Promise<void>
   handleStop: () => void
   handleRestart: () => void
@@ -372,6 +382,18 @@ const ChatAssistantInner = ({
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {visionMode && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-600">
+                    <RiImage2Line className="h-3 w-3" />
+                    识图模式
+                  </span>
+                )}
+                {imageGen && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-600">
+                    <RiMagicLine className="h-3 w-3" />
+                    生图模式
+                  </span>
+                )}
                 <ModelSelector
                   models={availableModels}
                   selected={selectedModel}
@@ -470,16 +492,39 @@ const ChatAssistantInner = ({
                                   : (
                                     isLast && isResponding && (
                                       <div className="rounded-2xl rounded-tl-sm bg-background-body px-4 py-3.5 shadow-xs">
-                                        <div className="flex items-center gap-1.5">
-                                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '0ms' }} />
-                                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '150ms' }} />
-                                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '300ms' }} />
-                                        </div>
+                                        {imageGen
+                                          ? (
+                                            <div className="flex items-center gap-2">
+                                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-violet-200 border-t-violet-500" />
+                                              <span className="text-xs text-violet-500">图片生成中，请稍候...</span>
+                                            </div>
+                                          )
+                                          : (
+                                            <div className="flex items-center gap-1.5">
+                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '0ms' }} />
+                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '150ms' }} />
+                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '300ms' }} />
+                                            </div>
+                                          )}
                                       </div>
                                     )
                                   )}
                                 {item.sources && item.sources.length > 0 && !(isLast && isResponding) && (
                                   <SourcesPanel sources={item.sources} />
+                                )}
+                                {item.generatedImages && item.generatedImages.length > 0 && !(isLast && isResponding) && (
+                                  <div className="mt-2 grid grid-cols-2 gap-2">
+                                    {item.generatedImages.map((url, i) => (
+                                      <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg border border-divider-subtle transition-all hover:shadow-md">
+                                        <img src={url} alt={`generated-${i}`} className="h-auto w-full object-cover" />
+                                        <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all group-hover:bg-black/20">
+                                          <span className="rounded-lg bg-white/90 px-3 py-1.5 text-xs font-medium text-text-secondary opacity-0 shadow-sm transition-all group-hover:opacity-100">
+                                            点击查看原图
+                                          </span>
+                                        </div>
+                                      </a>
+                                    ))}
+                                  </div>
                                 )}
                               </div>
                             </div>
@@ -553,6 +598,47 @@ const ChatAssistantInner = ({
                     <RiGlobalLine className="h-3.5 w-3.5" />
                     <span>联网搜索</span>
                   </button>
+                  <button
+                    type="button"
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                      visionMode
+                        ? 'border-amber-300 bg-amber-50 text-amber-600 shadow-xs shadow-amber-500/10'
+                        : 'border-divider-regular bg-transparent text-text-tertiary hover:border-components-input-border-hover hover:text-text-secondary',
+                      isResponding && 'cursor-not-allowed opacity-50',
+                    )}
+                    onClick={() => {
+                      if (!visionModel) {
+                        notify({ type: 'warning', message: '未找到识图专用模型 (qwen3.6-plus)，请在模型供应商中配置' })
+                        return
+                      }
+                      setVisionMode(!visionMode)
+                      if (!visionMode) setImageGen(false)
+                    }}
+                    disabled={isResponding}
+                  >
+                    <RiImage2Line className="h-3.5 w-3.5" />
+                    <span>识图</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                      imageGen
+                        ? 'border-violet-300 bg-violet-50 text-violet-600 shadow-xs shadow-violet-500/10'
+                        : 'border-divider-regular bg-transparent text-text-tertiary hover:border-components-input-border-hover hover:text-text-secondary',
+                      isResponding && 'cursor-not-allowed opacity-50',
+                    )}
+                    onClick={() => {
+                      if (!imageGen)
+                        setVisionMode(false)
+                      setImageGen(!imageGen)
+                    }}
+                    disabled={isResponding}
+                  >
+                    <RiMagicLine className="h-3.5 w-3.5" />
+                    <span>生图</span>
+                  </button>
                   <DatasetSelector
                     selected={selectedDatasets}
                     onChange={setSelectedDatasets}
@@ -575,7 +661,7 @@ const ChatAssistantInner = ({
                       'flex-1 resize-none rounded-lg bg-transparent py-2.5 text-sm text-text-primary outline-none',
                       'placeholder:text-text-quaternary',
                     )}
-                    placeholder={appReady ? '输入消息，或点击上传按钮添加附件...' : appError ? '初始化失败' : '正在初始化...'}
+                    placeholder={imageGen ? '描述你想生成的图片内容...' : appReady ? '输入消息，或点击上传按钮添加附件...' : appError ? '初始化失败' : '正在初始化...'}
                     minRows={1}
                     maxRows={6}
                     value={query}
@@ -716,6 +802,11 @@ const ChatAssistant = () => {
       setDeepThinking={chatProps.setDeepThinking}
       webSearch={chatProps.webSearch}
       setWebSearch={chatProps.setWebSearch}
+      visionMode={chatProps.visionMode}
+      setVisionMode={chatProps.setVisionMode}
+      visionModel={chatProps.visionModel}
+      imageGen={chatProps.imageGen}
+      setImageGen={chatProps.setImageGen}
       sendMessage={chatProps.sendMessage}
       handleStop={chatProps.handleStop}
       handleRestart={chatProps.handleRestart}

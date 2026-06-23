@@ -204,7 +204,7 @@ const translation = {
   },
   otherDataSource: {
     title: 'Conectați-vă la alte surse de date?',
-    description: 'În prezent, baza de cunoștințe a AgentFlow are doar surse de date limitate. Contribuția cu o sursă de date la baza de cunoștințe AgentFlow este o modalitate fantastică de a ajuta la îmbunătățirea flexibilității și puterii platformei pentru toți utilizatorii. Ghidul nostru de contribuție vă ajută să începeți. Vă rugăm să faceți clic pe linkul de mai jos pentru a afla mai multe.',
+    description: 'În prezent, baza de cunoștințe a 白泽智能体平台 are doar surse de date limitate. Contribuția cu o sursă de date la baza de cunoștințe 白泽智能体平台 este o modalitate fantastică de a ajuta la îmbunătățirea flexibilității și puterii platformei pentru toți utilizatorii. Ghidul nostru de contribuție vă ajută să începeți. Vă rugăm să faceți clic pe linkul de mai jos pentru a afla mai multe.',
     learnMore: 'Află mai multe',
   },
   watercrawl: {

@@ -64,6 +64,7 @@ from . import (
     spec,
     version,
     web_search,
+    image_generate,
 )
 
 # Import app controllers
@@ -293,6 +294,7 @@ __all__ = [
     "tool_providers",
     "version",
     "web_search",
+    "image_generate",
     "website",
     "workflow",
     "workflow_app_log",

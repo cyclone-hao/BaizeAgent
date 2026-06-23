@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'AgentFlow Tarafından Keşfet Uygulamaları',
+    title: '白泽智能体平台 Tarafından Keşfet Uygulamaları',
     description: 'Bu şablon uygulamalarını anında kullanın veya şablonlara dayalı kendi uygulamalarınızı özelleştirin.',
     allCategories: 'Önerilen',
   },

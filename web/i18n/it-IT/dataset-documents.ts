@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Documenti',
-    desc: 'Tutti i file della Conoscenza sono mostrati qui, e l\'intera Conoscenza può essere collegata alle citazioni di AgentFlow o indicizzata tramite il plugin di Chat.',
+    desc: 'Tutti i file della Conoscenza sono mostrati qui, e l\'intera Conoscenza può essere collegata alle citazioni di 白泽智能体平台 o indicizzata tramite il plugin di Chat.',
     addFile: 'Aggiungi file',
     addPages: 'Aggiungi Pagine',
     addUrl: 'Aggiungi URL',
@@ -55,7 +55,7 @@ const translation = {
         tip: 'Puoi caricare file, sincronizzare dal sito web o da app web come Notion, GitHub, ecc.',
       },
       sync: {
-        tip: 'AgentFlow scaricherà periodicamente i file dal tuo Notion e completerà l\'elaborazione.',
+        tip: '白泽智能体平台 scaricherà periodicamente i file dal tuo Notion e completerà l\'elaborazione.',
       },
     },
     delete: {

@@ -189,14 +189,14 @@ const translation = {
     and: 've',
     empower: 'Yapay zeka geliştirmenizi güçlendirin',
     pluginsResult: '{{num}} sonuç',
-    difyMarketplace: 'AgentFlow Pazar Yeri',
+    difyMarketplace: '白泽智能体平台 Pazar Yeri',
     sortBy: 'Kara şehir',
     moreFrom: 'Marketplace\'ten daha fazlası',
     noPluginFound: 'Eklenti bulunamadı',
     viewMore: 'Daha fazla göster',
     discover: 'Keşfetmek',
-    verifiedTip: 'AgentFlow tarafından doğrulanmıştır.',
-    partnerTip: 'AgentFlow partner\'ı tarafından doğrulandı',
+    verifiedTip: '白泽智能体平台 tarafından doğrulanmıştır.',
+    partnerTip: '白泽智能体平台 partner\'ı tarafından doğrulandı',
   },
   task: {
     installedError: '{{errorLength}} eklentileri yüklenemedi',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Eklentiler',
   },
-  difyVersionNotCompatible: 'Mevcut AgentFlow sürümü bu eklentiyle uyumlu değil, lütfen gerekli minimum sürüme güncelleyin: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Mevcut 白泽智能体平台 sürümü bu eklentiyle uyumlu değil, lütfen gerekli minimum sürüme güncelleyin: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Bir eklenti iste',
   publishPlugins: 'Eklentileri yayınlayın',
   auth: {

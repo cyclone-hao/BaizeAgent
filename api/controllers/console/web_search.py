@@ -51,7 +51,7 @@ class WebSearchApi(Resource):
                     "include_answer": True,
                     "search_depth": "basic",
                 },
-                timeout=httpx.Timeout(connect=5.0, read=15.0),
+                timeout=httpx.Timeout(connect=5.0, read=15.0, write=5.0, pool=5.0),
             )
             response.raise_for_status()
             data = response.json()

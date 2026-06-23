@@ -13,7 +13,7 @@ const translation = {
   datasetDeleted: 'Wiedza usunięta',
   datasetDeleteFailed: 'Nie udało się usunąć Wiedzy',
   didYouKnow: 'Czy wiedziałeś?',
-  intro1: 'Wiedzę można zintegrować z aplikacją AgentFlow ',
+  intro1: 'Wiedzę można zintegrować z aplikacją 白泽智能体平台 ',
   intro2: 'jako kontekst',
   intro3: ',',
   intro4: 'lub ',
@@ -155,7 +155,7 @@ const translation = {
   externalTag: 'Zewnętrzny',
   learnHowToWriteGoodKnowledgeDescription: 'Dowiedz się, jak napisać dobry opis wiedzy',
   externalKnowledgeNamePlaceholder: 'Podaj nazwę bazy wiedzy',
-  externalAPIPanelDescription: 'Interfejs API wiedzy zewnętrznej służy do łączenia się z bazą wiedzy poza AgentFlow i pobierania wiedzy z tej bazy wiedzy.',
+  externalAPIPanelDescription: 'Interfejs API wiedzy zewnętrznej służy do łączenia się z bazą wiedzy poza 白泽智能体平台 i pobierania wiedzy z tej bazy wiedzy.',
   chunkingMode: {
     parentChild: 'Rodzic-dziecko',
     general: 'Ogólne',

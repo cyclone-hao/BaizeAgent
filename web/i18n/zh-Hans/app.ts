@@ -190,7 +190,7 @@ const translation = {
     },
     aliyun: {
       title: '云监控',
-      description: '阿里云提供的全托管免运维可观测平台，一键开启AgentFlow应用的监控追踪和评估',
+      description: '阿里云提供的全托管免运维可观测平台，一键开启白泽智能体平台应用的监控追踪和评估',
     },
   },
   appSelector: {

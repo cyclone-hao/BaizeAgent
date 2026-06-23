@@ -1,4 +1,103 @@
-# AgentFlow 二次开发更新日志
+# 白泽智能体平台 二次开发更新日志
+
+## 2026-06-23 — 首页 AI 助手新增"生图"功能（DashScope qwen-image）
+
+### P0 — 用户直接可见
+- **新增"生图"按钮**：输入框工具栏新增 violet 配色"生图"Toggle，点击后进入生图模式
+- **生图模式**：placeholder 变为"描述你想生成的图片内容..."，发送文字描述后调用 DashScope qwen-image 模型生成图片
+- **结果内联展示**：生成的图片以 2 列网格展示在 AI 回复中，点击查看原图
+- **互斥设计**：生图模式与识图模式互斥，开启生图自动关闭识图
+- **加载动画**：生图过程中显示"🎨 图片生成中，请稍候..."专属加载状态
+
+### P1 — 外部链接与接口
+- `api/controllers/console/image_generate.py` — **新增** POST /console/api/image-generate 端点，代理 DashScope 异步图片生成（提交+轮询+返回 URL）
+- `api/configs/feature/__init__.py` — 新增 `DashScopeConfig` 配置类（`DASHSCOPE_API_KEY`）
+- `web/service/generate.ts` — **新增** 前端生图服务函数 `generateImage()`
+
+### P2 — 内部标识符
+- `web/app/components/home/chat-assistant/config.ts` — 已有视觉模型配置（识图功能）
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — 新增 `imageGen` 状态 + 生图分支逻辑 + `generatedImages` ChatItem 字段
+- `web/app/components/home/chat-assistant/index.tsx` — 新增生图 Toggle（`RiMagicLine`）+ 生图模式 header 标记 + 图片网格渲染 + 专属加载动画
+- `docker/docker-compose.yaml` — 新增 `DASHSCOPE_API_KEY` 环境变量传递
+
+## 2026-06-23 — 首页 AI 助手新增"识图"Toggle 功能
+
+### P0 — 用户直接可见
+- **新增"识图"按钮**：输入框工具栏新增 amber 配色"识图"Toggle，点击后强制使用 qwen3.6-plus 视觉模型 + 专用 system prompt
+- **自动启用图片上传**：识图模式开启后，上传按钮自动支持图片上传（无需手动切换模型）
+- **模型不冲突**：识图模式不影响用户已选模型偏好，关闭后自动恢复
+
+### P2 — 内部标识符
+- `app/components/home/chat-assistant/config.ts` — 新增 `VISION_MODEL_NAME`、`VISION_SYSTEM_PROMPT`、`findVisionModel()`
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 新增 `visionMode` 状态、`effectiveModel` 覆盖逻辑、`buildModelConfig` 视觉模式参数
+- `app/components/home/chat-assistant/index.tsx` — 新增识图 Toggle 按钮（`RiImage2Line`）、header 识图模式标记
+
+## 2026-06-23 — 修复 httpx.Timeout 兼容性 & Docker 开发环境代码挂载
+
+### P1 — 外部链接与接口
+- `api/controllers/console/web_search.py` — 修复 `httpx.Timeout` 参数，补充 `write` 和 `pool` 字段以兼容容器内 httpx 0.27.2
+
+### P2 — 内部标识符
+- `docker/docker-compose.yaml` — API/Worker 容器 volume 改为挂载 controllers、configs、services、core、extensions、models 六个目录，确保二次开发代码在 Docker 环境中生效
+
+## 2026-06-18 — 默认机器人图标替换为自定义图片
+
+### P0 — 用户直接可见
+- **默认头像**：应用/对话中无自定义图标时，不再显示 🤖 emoji，改为显示自定义图片 (`/default-bot-icon.jpeg`)
+- 影响范围：聊天机器人头像（AnswerIcon）、应用图标（AppIcon）、浏览器 favicon
+
+### P2 — 内部标识符
+- `public/default-bot-icon.jpeg` — **新增** 默认机器人图标图片
+- `app/components/base/answer-icon/index.tsx` — 默认图标从 🤖 改为自定义图片
+- `app/components/base/app-icon/index.tsx` — 同上，default icon 时不设置背景色
+- `hooks/use-app-favicon.ts` — 无图标时 favicon 使用自定义图片替代 🤖 emoji SVG
+
+## 2026-06-18 — 移除 emoji-mart 库，替换为轻量原生 emoji 渲染
+
+### P0 — 用户直接可见
+- **emoji 渲染方式改变**：移除 `emoji-mart` Web Component（`<em-emoji>`），改为原生 emoji 字符 + `.not-emoji` CSS 类渲染，减少约 **500KB** bundle 体积
+- **emoji 选择器**：重写 emoji picker 组件，使用 `unicode-emoji-json`（1914 个 emoji，9 大分类）作为数据源，搜索功能改为本地模糊匹配
+- **默认图标不变**：应用默认 emoji 仍为 🤖
+
+### P2 — 内部标识符
+- `package.json` — 移除 `emoji-mart`、`@emoji-mart/data`，新增 `unicode-emoji-json`
+- `utils/emoji-data.ts` — **新建** emoji 数据模块，将 unicode-emoji-json 数据转为分类结构 + 搜索函数
+- `utils/emoji.ts` — 重写 `searchEmoji()`，改为调用本地 `emoji-data.ts` 的搜索
+- `app/components/base/app-icon/index.tsx` — 移除 `emoji-mart` init + `<em-emoji>`，改为 `<span className="not-emoji">`
+- `app/components/base/answer-icon/index.tsx` — 同上
+- `app/components/base/emoji-picker/Inner.tsx` — 移除 `emoji-mart` + `@emoji-mart/data`，使用 `emojiCategories` 和 `searchEmoji` 本地数据
+- `app/components/app/overview/apikey-info-panel/index.tsx` — `<em-emoji>` → `<span className="not-emoji">`
+- `app/styles/globals.css` — 新增 `.not-emoji` 工具类（统一 emoji 字体栈，防止 OS 字体覆盖）
+- `app/components/base/app-icon/index.spec.tsx` — 更新测试，移除 emoji-mart mock，断言改为 `.not-emoji` 选择器
+
+## 2026-06-18 — 品牌全面替换：AgentFlow → 白泽智能体平台
+
+### P0 — 用户直接可见
+- **401 个文件**批量替换，将 "AgentFlow" 全部替换为 "白泽智能体平台"
+- 覆盖范围：
+  - 21 个 i18n 语言目录中所有用户可见文案
+  - 登录页、注册页、安装页、忘记密码页等认证页面
+  - 全局侧边栏品牌名和 logo alt 文本
+  - 页面标题（document.title）和 meta 标签
+  - 嵌入式聊天机器人品牌标识
+  - 版权声明信息
+  - 离线页面标题
+  - 应用广场描述文案
+
+### P1 — 外部链接与接口
+- 邮箱地址 `support@agentflow.ai` → `support@baize-agent.ai`（2 个文件）
+- 嵌入式聊天域名检测 `agentflow.ai` → `baize-agent.ai`
+- 聊天机器人配置标识 `agentflowChatbotConfig` → `baizeAgentChatbotConfig`
+- postMessage 类型 `agentflow-chatbot-*` → `baize-agent-chatbot-*`
+
+### P2 — 内部标识符
+- `package.json` name `agentflow-web` → `baize-agent-web`
+- 函数名 `isAgentFlow()` → `isBaizeAgent()`
+- localStorage key `agentflow-isShowManageMetadata` → `baize-agent-isShowManageMetadata`
+- 文件扩展名 `.afpkg` → `.bzpkg`，`.afbndl` → `.bzbndl`
+- `CLAUDE.md` 项目指导文件全面更新品牌引用
+- `UI-CUSTOMIZATION.md` 定制记录全面更新品牌引用
+- `update.log` 更新日志标题和历史条目品牌名更新
 
 ## 2026-06-16 — 联网搜索功能配置 Tavily API
 
@@ -633,13 +732,13 @@
 - 手机号注册账户的 email 字段使用 `{phone}@phone.local` 占位格式
 - 后续接入短信验证码时，需修改 phone_register.py 增加 SMS 发送和校验流程
 
-## 2026-06-09 — Dify 品牌全面替换为 AgentFlow
+## 2026-06-09 — Dify 品牌全面替换为 白泽智能体平台
 
 ### Bug Fix
 - `i18n/en-US/billing.ts:101` — 修复 i18n 批量替换时引入的 smart quote（'）语法错误，"they're" → "they are"
 - 全量修复 66 个 i18n 文件中的 curly quotes（U+2018/U+2019 → U+0027，U+201C/U+201D → U+0022），涉及所有语言目录
 - 修复 155 个 i18n 文件中 1480 行因 curly quote → 普通引号后导致的未转义撇号问题（如 don't → don\'t）
-- **i18n 重做方案**：git revert i18n 目录到 HEAD，使用安全的 Python 脚本仅替换字符串值中的 Dify→AgentFlow（267 处），不触碰引号/格式
+- **i18n 重做方案**：git revert i18n 目录到 HEAD，使用安全的 Python 脚本仅替换字符串值中的 Dify→白泽智能体平台（267 处），不触碰引号/格式
 - 修复 git HEAD 中已存在的 `''` 双引号结尾问题（206 文件 346 行），恢复正确的 `'` + `,` 结构
 - 修复 unterminated string 问题（16 文件中 `key: '` → `key: ''`）
 - 修复缺失逗号问题（escaped-quote 结尾和常规结尾共 2 处）
@@ -650,33 +749,33 @@
 - `app/components/base/logo/dify-logo.tsx` — DifyLogo 组件改为使用 logo1.png（替代原 SVG），所有 10+ 处引用自动生效
 - `app/signin/_header.tsx` — 登录页头部 logo 从 DifyLogo SVG 替换为 logo1.png
 - `app/signin/branding-panel.tsx` — 登录页左侧品牌面板使用 logo1.png
-- `app/components/global-sidebar/index.tsx` — 全局侧边栏左上角 logo 使用 logo1.png + "AgentFlow" 紫色文字（text-primary-600, text-xs）
-- `app/account/(commonLayout)/header.tsx` — alt 文本 "Dify logo" → "AgentFlow logo"
+- `app/components/global-sidebar/index.tsx` — 全局侧边栏左上角 logo 使用 logo1.png + "白泽智能体平台" 紫色文字（text-primary-600, text-xs）
+- `app/account/(commonLayout)/header.tsx` — alt 文本 "Dify logo" → "白泽智能体平台 logo"
 
 #### 页面标题
-- `hooks/use-document-title.ts` — 默认标题后缀 Dify → AgentFlow（此前已完成）
-- `hooks/use-document-title.spec.ts` — 测试用例期望值 Dify → AgentFlow
-- `app/components/datasets/list/datasets.tsx` — document.title 硬编码 Dify → AgentFlow
-- `public/_offline.html` — <title> Dify - Offline → AgentFlow - Offline
+- `hooks/use-document-title.ts` — 默认标题后缀 Dify → 白泽智能体平台（此前已完成）
+- `hooks/use-document-title.spec.ts` — 测试用例期望值 Dify → 白泽智能体平台
+- `app/components/datasets/list/datasets.tsx` — document.title 硬编码 Dify → 白泽智能体平台
+- `public/_offline.html` — <title> Dify - Offline → 白泽智能体平台 - Offline
 
 #### i18n 文案（21 个语言目录，~300+ 处）
 - 批量替换规则：
-  - Dify → AgentFlow
-  - Dify Cloud → AgentFlow Cloud
-  - Dify Marketplace / Dify 市场 → AgentFlow Marketplace / AgentFlow 插件市场
-  - Powered by Dify → Powered by AgentFlow
-  - Dify 知识库 → AgentFlow 知识库
-  - Verified by Dify → Verified by AgentFlow
-  - Dify Chatbot → AgentFlow Chatbot
-  - Dify API → AgentFlow API
-  - Dify Open Source License → AgentFlow Open Source License
+  - Dify → 白泽智能体平台
+  - Dify Cloud → 白泽智能体平台 Cloud
+  - Dify Marketplace / Dify 市场 → 白泽智能体平台 Marketplace / 白泽智能体平台 插件市场
+  - Powered by Dify → Powered by 白泽智能体平台
+  - Dify 知识库 → 白泽智能体平台 知识库
+  - Verified by Dify → Verified by 白泽智能体平台
+  - Dify Chatbot → 白泽智能体平台 Chatbot
+  - Dify API → 白泽智能体平台 API
+  - Dify Open Source License → 白泽智能体平台 Open Source License
   - 等其他变体
 - 涉及语言：en-US, zh-Hans, de-DE, es-ES, fa-IR, fr-FR, hi-IN, id-ID, it-IT, ja-JP, ko-KR, pl-PL, pt-BR, ro-RO, ru-RU, sl-SI, th-TH, tr-TR, uk-UA, vi-VN, zh-Hant
 
 #### 硬编码文案
-- `app/components/custom/custom-web-app-brand/index.tsx` — placeholder "Talk to Dify" → "Talk to AgentFlow"
-- `app/components/app/overview/customize/index.tsx` — "<Web API Key From Dify>" → "<Web API Key From AgentFlow>"
-- `app/components/workflow/utils/gen-node-meta-data.ts` — 默认 author 'Dify' → 'AgentFlow'
+- `app/components/custom/custom-web-app-brand/index.tsx` — placeholder "Talk to Dify" → "Talk to 白泽智能体平台"
+- `app/components/app/overview/customize/index.tsx` — "<Web API Key From Dify>" → "<Web API Key From 白泽智能体平台>"
+- `app/components/workflow/utils/gen-node-meta-data.ts` — 默认 author 'Dify' → '白泽智能体平台'
 
 ### P1 — 外部链接与接口
 
@@ -687,25 +786,25 @@
 - `app/components/billing/pricing/index.tsx` — 清除 dify.ai/pricing URL
 - `context/i18n.ts` — docs.dify.ai 基准 URL 清空
 - `app/components/app/overview/apikey-info-panel/index.tsx` — 移除 cloud.dify.ai 链接
-- `app/signin/one-more-step.tsx` — 邮箱 request-invitation@langgenius.ai → support@agentflow.ai
+- `app/signin/one-more-step.tsx` — 邮箱 request-invitation@langgenius.ai → support@baize-agent.ai
 - `app/components/header/account-dropdown/support.tsx` — 清除 GitHub/Discord 链接
 - `app/components/goto-anything/actions/commands/feedback.tsx` — 清除 GitHub discussions 链接
 - 12+ 文件中 docs.dify.ai 文档链接全部替换为 '#'
 - `app/components/tools/mcp/mock.ts` — cloud.dify.dev URL 替换为 '#'
 
 #### 嵌入式聊天 iframe 通信标识
-- `app/components/app/overview/embedded/index.tsx` — difyChatbotConfig → agentflowChatbotConfig, dify-chatbot-bubble-* → agentflow-chatbot-bubble-*, Chrome 插件链接清除
-- `app/components/base/chat/embedded-chatbot/utils.ts` — isDify() → isAgentFlow(), dify.ai → agentflow.ai
-- `app/components/base/chat/embedded-chatbot/chat-wrapper.tsx` — isDify → isAgentFlow 引用更新
-- `app/components/base/chat/embedded-chatbot/header/index.tsx` — postMessage 类型 dify-chatbot-* → agentflow-chatbot-*
-- `app/components/base/chat/embedded-chatbot/index.tsx` — isDify → isAgentFlow 引用更新
+- `app/components/app/overview/embedded/index.tsx` — difyChatbotConfig → baizeAgentChatbotConfig, dify-chatbot-bubble-* → baize-agent-chatbot-bubble-*, Chrome 插件链接清除
+- `app/components/base/chat/embedded-chatbot/utils.ts` — isDify() → isBaizeAgent(), dify.ai → baize-agent.ai
+- `app/components/base/chat/embedded-chatbot/chat-wrapper.tsx` — isDify → isBaizeAgent 引用更新
+- `app/components/base/chat/embedded-chatbot/header/index.tsx` — postMessage 类型 dify-chatbot-* → baize-agent-chatbot-*
+- `app/components/base/chat/embedded-chatbot/index.tsx` — isDify → isBaizeAgent 引用更新
 
 ### P2 — 内部标识符
 
-- `package.json` — name "dify-web" → "agentflow-web"
-- `app/components/datasets/metadata/types.ts` — localStorage key "dify-isShowManageMetadata" → "agentflow-isShowManageMetadata"
-- `config/index.ts` — 文件扩展名 ".difypkg,.difybndl" → ".afpkg,.afbndl"
-- `app/components/datasets/create/website/base/mock-crawl-result.ts` — mock 数据标题 Dify → AgentFlow
+- `package.json` — name "dify-web" → "baize-agent-web"
+- `app/components/datasets/metadata/types.ts` — localStorage key "dify-isShowManageMetadata" → "baize-agent-isShowManageMetadata"
+- `config/index.ts` — 文件扩展名 ".difypkg,.difybndl" → ".bzpkg,.bzbndl"
+- `app/components/datasets/create/website/base/mock-crawl-result.ts` — mock 数据标题 Dify → 白泽智能体平台
 
 ### 故意保留（后端协议兼容）
 - `X-Dify-Version` HTTP header — 插件市场 API 协议字段
@@ -738,7 +837,7 @@
 
 ### P2 — 内部标识符
 - `CLAUDE.md` — 创建完整的项目指导文件，包含：
-  - 二次开发项目上下文（AgentFlow 品牌、SELF_HOSTED 部署环境）
+  - 二次开发项目上下文（白泽智能体平台 品牌、SELF_HOSTED 部署环境）
   - 强制更新日志规则（每次改动必须记录到 web/update.log）
   - 前后端开发命令（含单测运行方式）
   - 后端架构概览（Flask + SQLAlchemy + Celery，控制器分层）
@@ -776,7 +875,7 @@
 - 三件套微服务架构：Dify API + Plugin Daemon(:5002) + Marketplace(marketplace.dify.ai)
 - Plugin Daemon 是外部二进制，无法修改内部逻辑
 - 插件类型：Model、Tool、Extension、AgentStrategy、Datasource
-- 安装来源：Marketplace、GitHub、本地.afpkg、远程调试
+- 安装来源：Marketplace、GitHub、本地.bzpkg、远程调试
 - 插件通过 Backwards Invocation 回调 Dify 能力（LLM/工具/工作流节点）
 - 建议策略：短期关闭Marketplace改本地安装，中期建私有仓库，长期fork Daemon
 
@@ -788,7 +887,7 @@
 - 自定义分类只需改 i18n + Category 组件
 
 ### 重构路线图
-- Phase 1：探索应用→AgentFlow应用中心(db模式+自定义模板+改分类)、关闭Marketplace、清理残留标识
+- Phase 1：探索应用→白泽智能体平台应用中心(db模式+自定义模板+改分类)、关闭Marketplace、清理残留标识
 - Phase 2：重做插件管理页面、自建插件仓库、打包预装插件、工作流模板中文化
 - Phase 3：Fork Plugin Daemon、自建插件生态、广电特色功能模块
 
@@ -801,15 +900,15 @@
 ### P0 — 用户直接可见
 
 #### 登录页全新白底企业风格着陆页 + 弹窗模式
-- `app/signin/layout.tsx` — 全新布局：浅灰背景（#fafbfc）+ 左上角 logo + 紫色 "AgentFlow" + 右上角紫色「登录」按钮 + 居中着陆内容 + 点击弹出白色登录弹窗
+- `app/signin/layout.tsx` — 全新布局：浅灰背景（#fafbfc）+ 左上角 logo + 紫色 "白泽智能体平台" + 右上角紫色「登录」按钮 + 居中着陆内容 + 点击弹出白色登录弹窗
 - `app/signin/branding-panel.tsx` — 着陆页居中内容：大标题「构建 AI 智能体 / 从此 effortlessly」（紫色高亮）+ 4 张功能特性卡片（紫色图标 + 白底圆角卡片）
-- `app/signin/normal-form.tsx` — 移除重复标题（"登录 AgentFlow"）和欢迎语，弹窗已有 "欢迎登录"；保留初始化引导链接
+- `app/signin/normal-form.tsx` — 移除重复标题（"登录 白泽智能体平台"）和欢迎语，弹窗已有 "欢迎登录"；保留初始化引导链接
 - `app/signin/components/mail-and-password-auth.tsx` — 表单间距加大、标签固定色值（#344054）、忘记密码链接改紫色（#6938ef）、登录按钮增高至 44px
 - `app/signin/page.module.css` — 浅紫色装饰光斑 + 弹窗入场动画 + 白色弹窗阴影 + 紫色登录按钮 hover 发光
 
 #### 设计特点
 - 浅灰白底（#fafbfc），干净明亮的企业级风格
-- 左上角：logo1.png + 紫色 "AgentFlow" 品牌名（#6938ef）
+- 左上角：logo1.png + 紫色 "白泽智能体平台" 品牌名（#6938ef）
 - 右上角：紫色实心「登录」按钮，hover 带紫色光晕
 - 居中着陆内容：大标题 + 紫色高亮 + 4 张白底功能卡片（紫色 SVG 图标）
 - 弹窗：白色圆角卡片 + 柔和阴影 + "欢迎登录" + 完整表单

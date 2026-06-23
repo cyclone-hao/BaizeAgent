@@ -239,7 +239,7 @@ const translation = {
     title: 'پلاگین ها',
   },
   difyVersionNotCompatible:
-    'نسخه فعلی دیفی با این پلاگین سازگار نیست، لطفاً به نسخه حداقل مورد نیاز به‌روزرسانی کنید: {{minimalAgentFlowVersion}}',
+    'نسخه فعلی دیفی با این پلاگین سازگار نیست، لطفاً به نسخه حداقل مورد نیاز به‌روزرسانی کنید: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'درخواست یک افزونه',
   publishPlugins: 'انتشار افزونه ها',
   auth: {

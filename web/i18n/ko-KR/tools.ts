@@ -1,7 +1,7 @@
 const translation = {
   title: '도구',
   createCustomTool: '커스텀 도구 만들기',
-  customToolTip: 'AgentFlow 커스텀 도구에 대해 더 알아보기',
+  customToolTip: '白泽智能体平台 커스텀 도구에 대해 더 알아보기',
   type: {
     all: '모두',
     builtIn: '내장',
@@ -9,7 +9,7 @@ const translation = {
     workflow: '워크플로우',
   },
   contribute: {
-    line1: '저는 AgentFlow 에',
+    line1: '저는 白泽智能体平台 에',
     line2: '도구를 기여하는데 관심이 있습니다.',
     viewGuide: '가이드 보기',
   },

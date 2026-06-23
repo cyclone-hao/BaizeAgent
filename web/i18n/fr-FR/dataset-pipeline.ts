@@ -148,7 +148,7 @@ const translation = {
   knowledgeDescription: 'Description des connaissances',
   knowledgeNameAndIcon: 'Nom et icône de la connaissance',
   inputField: 'Champ de saisie',
-  knowledgeDescriptionPlaceholder: 'Décrivez le contenu de cette base de connaissances. Une description détaillée permet à l’IA d’accéder plus précisément au contenu de l’ensemble de données. S’il est vide, AgentFlow utilisera la stratégie d’accès par défaut. (Facultatif)',
+  knowledgeDescriptionPlaceholder: 'Décrivez le contenu de cette base de connaissances. Une description détaillée permet à l’IA d’accéder plus précisément au contenu de l’ensemble de données. S’il est vide, 白泽智能体平台 utilisera la stratégie d’accès par défaut. (Facultatif)',
 }
 
 export default translation

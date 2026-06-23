@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Dokumenty',
-    desc: 'Wszystkie pliki wiedzy są tutaj pokazane, a cała wiedza może być powiązana z odnośnikami AgentFlow lub zindeksowana za pomocą wtyczki Chat.',
+    desc: 'Wszystkie pliki wiedzy są tutaj pokazane, a cała wiedza może być powiązana z odnośnikami 白泽智能体平台 lub zindeksowana za pomocą wtyczki Chat.',
     addFile: 'dodaj plik',
     addPages: 'Dodaj strony',
     table: {
@@ -54,7 +54,7 @@ const translation = {
         tip: 'Możesz wgrać pliki, synchronizować z witryny lub z aplikacji internetowych takich jak Notion, GitHub, itp.',
       },
       sync: {
-        tip: 'AgentFlow regularnie pobiera pliki z Twojego Notion i dokonuje ich przetwarzania.',
+        tip: '白泽智能体平台 regularnie pobiera pliki z Twojego Notion i dokonuje ich przetwarzania.',
       },
     },
     delete: {

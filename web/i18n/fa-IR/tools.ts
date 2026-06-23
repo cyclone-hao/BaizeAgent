@@ -1,7 +1,7 @@
 const translation = {
   title: 'ابزارها',
   createCustomTool: 'ایجاد ابزار سفارشی',
-  customToolTip: 'بیشتر در مورد ابزارهای سفارشی AgentFlow بیاموزید',
+  customToolTip: 'بیشتر در مورد ابزارهای سفارشی 白泽智能体平台 بیاموزید',
   type: {
     all: 'همه',
     builtIn: 'سفارشی شده',
@@ -10,7 +10,7 @@ const translation = {
   },
   contribute: {
     line1: 'من علاقه‌مند به ',
-    line2: 'مشارکت در ابزارهای AgentFlow هستم.',
+    line2: 'مشارکت در ابزارهای 白泽智能体平台 هستم.',
     viewGuide: 'مشاهده راهنما',
   },
   author: 'توسط',

@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'Налаштувати бренд для web app',
-    removeBrand: 'Видалити Powered by AgentFlow',
+    removeBrand: 'Видалити Powered by 白泽智能体平台',
     changeLogo: 'Змінити зображення бренду "Powered by"',
     changeLogoTip: 'Формат SVG або PNG з мінімальним розміром 40x40 пікселів',
   },

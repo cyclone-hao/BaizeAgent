@@ -1,6 +1,6 @@
 const translation = {
   toVerifiedTip: {
-    end: 'untuk Paket Profesional AgentFlow.',
+    end: 'untuk Paket Profesional 白泽智能体平台.',
     coupon: 'kupon eksklusif 100%',
     front: 'Anda sekarang memenuhi syarat untuk status Terverifikasi Pendidikan. Silakan masukkan informasi pendidikan Anda di bawah ini untuk menyelesaikan proses dan menerima',
   },
@@ -27,7 +27,7 @@ const translation = {
       },
       option: {
         age: 'Saya mengonfirmasi bahwa saya berusia setidaknya 18 tahun',
-        inSchool: 'Saya mengonfirmasi bahwa saya terdaftar atau dipekerjakan di lembaga yang disediakan. AgentFlow dapat meminta bukti pendaftaran/pekerjaan. Jika saya salah menggambarkan kelayakan saya, saya setuju untuk membayar biaya apa pun yang awalnya dibebaskan berdasarkan status pendidikan saya.',
+        inSchool: 'Saya mengonfirmasi bahwa saya terdaftar atau dipekerjakan di lembaga yang disediakan. 白泽智能体平台 dapat meminta bukti pendaftaran/pekerjaan. Jika saya salah menggambarkan kelayakan saya, saya setuju untuk membayar biaya apa pun yang awalnya dibebaskan berdasarkan status pendidikan saya.',
       },
       title: 'Syarat & Perjanjian',
     },
@@ -36,7 +36,7 @@ const translation = {
     expired: {
       summary: {
         line2: 'Namun, Anda tidak lagi memenuhi syarat untuk kupon diskon pendidikan baru.',
-        line1: 'Anda masih dapat mengakses dan menggunakan AgentFlow.',
+        line1: 'Anda masih dapat mengakses dan menggunakan 白泽智能体平台.',
       },
       title: 'Status pendidikan Anda telah kedaluwarsa',
     },
@@ -63,11 +63,11 @@ const translation = {
   submit: 'Kirim',
   toVerified: 'Dapatkan Pendidikan Terverifikasi',
   currentSigned: 'SAAT INI MASUK SEBAGAI',
-  successTitle: 'Anda telah mendapatkan AgentFlow Education Verified',
-  rejectTitle: 'Verifikasi Pendidikan AgentFlow Anda telah ditolak',
-  successContent: 'Kami telah mengeluarkan kupon diskon 100% untuk paket AgentFlow Professional ke akun Anda. Kupon berlaku selama satu tahun, harap gunakan dalam masa berlaku.',
+  successTitle: 'Anda telah mendapatkan 白泽智能体平台 Education Verified',
+  rejectTitle: 'Verifikasi Pendidikan 白泽智能体平台 Anda telah ditolak',
+  successContent: 'Kami telah mengeluarkan kupon diskon 100% untuk paket 白泽智能体平台 Professional ke akun Anda. Kupon berlaku selama satu tahun, harap gunakan dalam masa berlaku.',
   emailLabel: 'Email Anda saat ini',
-  rejectContent: 'Sayangnya, Anda tidak memenuhi syarat untuk status Education Verified dan oleh karena itu tidak dapat menerima kupon 100% eksklusif untuk Paket AgentFlow Professional jika Anda menggunakan alamat email ini.',
+  rejectContent: 'Sayangnya, Anda tidak memenuhi syarat untuk status Education Verified dan oleh karena itu tidak dapat menerima kupon 100% eksklusif untuk Paket 白泽智能体平台 Professional jika Anda menggunakan alamat email ini.',
   learn: 'Pelajari cara mendapatkan verifikasi pendidikan',
   submitError: 'Pengiriman formulir gagal. Silakan coba lagi nanti.',
 }

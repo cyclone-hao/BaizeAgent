@@ -9,7 +9,7 @@ const translation = {
   },
   contribute: {
     line1: 'Estou interessado em ',
-    line2: 'contribuir com ferramentas para o AgentFlow.',
+    line2: 'contribuir com ferramentas para o 白泽智能体平台.',
     viewGuide: 'Ver o guia',
   },
   author: 'Por',
@@ -163,7 +163,7 @@ const translation = {
     },
   },
   openInStudio: 'Abrir no Studio',
-  customToolTip: 'Saiba mais sobre as ferramentas personalizadas da AgentFlow',
+  customToolTip: 'Saiba mais sobre as ferramentas personalizadas da 白泽智能体平台',
   toolNameUsageTip: 'Nome da chamada da ferramenta para raciocínio e solicitação do agente',
   copyToolName: 'Nome da cópia',
   noTools: 'Nenhuma ferramenta encontrada',

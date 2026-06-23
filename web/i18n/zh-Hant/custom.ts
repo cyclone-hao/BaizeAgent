@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: '定製 web app 品牌',
-    removeBrand: '移除 Powered by AgentFlow',
+    removeBrand: '移除 Powered by 白泽智能体平台',
     changeLogo: '更改 Powered by Brand 圖片',
     changeLogoTip: 'SVG 或 PNG 格式，最小尺寸為 40x40px',
   },
@@ -24,7 +24,7 @@ const translation = {
   restore: '恢復預設',
   customize: {
     contactUs: '聯絡我們',
-    prefix: '如需在 AgentFlow 內自定義品牌圖示，請',
+    prefix: '如需在 白泽智能体平台 內自定義品牌圖示，請',
     suffix: '升級至企業版。',
   },
 }

@@ -714,6 +714,14 @@ button:focus-within {
   .no-spinner {
     -moz-appearance: textfield;
   }
+
+  /* Prevent OS emoji font override — render emojis as plain text glyphs */
+  .not-emoji {
+    font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji",
+      "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji", sans-serif;
+    font-style: normal;
+    line-height: 1;
+  }
 }
 
 /* Digital Human Animations */

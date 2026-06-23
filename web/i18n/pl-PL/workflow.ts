@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Dowiedz się więcej',
         title: 'Wybierz strukturę porcji',
-        message: 'Baza wiedzy AgentFlow obsługuje trzy struktury fragmentacji: Ogólne, Nadrzędne-podrzędne oraz Q&A. Każda baza wiedzy może mieć tylko jedną strukturę. Dane wyjściowe z poprzedniego węzła muszą być wyrównane z wybraną strukturą fragmentów. Należy pamiętać, że wybór struktury fragmentacji ma wpływ na dostępne metody indeksowania.',
+        message: 'Baza wiedzy 白泽智能体平台 obsługuje trzy struktury fragmentacji: Ogólne, Nadrzędne-podrzędne oraz Q&A. Każda baza wiedzy może mieć tylko jedną strukturę. Dane wyjściowe z poprzedniego węzła muszą być wyrównane z wybraną strukturą fragmentów. Należy pamiętać, że wybór struktury fragmentacji ma wpływ na dostępne metody indeksowania.',
       },
       aboutRetrieval: 'o metodzie wyszukiwania.',
       chunkStructure: 'Struktura porcji',

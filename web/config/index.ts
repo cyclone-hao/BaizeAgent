@@ -308,7 +308,7 @@ export const DISABLE_UPLOAD_IMAGE_AS_ICON
 export const GITHUB_ACCESS_TOKEN
   = process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN || ''
 
-export const SUPPORT_INSTALL_LOCAL_FILE_EXTENSIONS = '.afpkg,.afbndl'
+export const SUPPORT_INSTALL_LOCAL_FILE_EXTENSIONS = '.bzpkg,.bzbndl'
 export const FULL_DOC_PREVIEW_LENGTH = 50
 
 export const JSON_SCHEMA_MAX_DEPTH = 10

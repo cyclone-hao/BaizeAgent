@@ -172,7 +172,7 @@ const translation = {
     communityFeedback: 'フィードバック',
     roadmap: 'ロードマップ',
     community: 'コミュニティ',
-    about: 'AgentFlow について',
+    about: '白泽智能体平台 について',
     logout: 'ログアウト',
     github: 'GitHub',
   },
@@ -285,7 +285,7 @@ const translation = {
     sendInvite: '招待を送る',
     invitedAsRole: '{{role}}ユーザーとして招待されました',
     invitationSent: '招待が送信されました',
-    invitationSentTip: '招待が送信され、彼らは AgentFlow にサインインしてあなたのチームデータにアクセスできます。',
+    invitationSentTip: '招待が送信され、彼らは 白泽智能体平台 にサインインしてあなたのチームデータにアクセスできます。',
     invitationLink: '招待リンク',
     failedInvitationEmails: '以下のユーザーは正常に招待されませんでした',
     ok: 'OK',
@@ -354,7 +354,7 @@ const translation = {
       openaiHosted: 'ホステッド OpenAI',
       onTrial: 'トライアル中',
       exhausted: 'クォータが使い果たされました',
-      desc: 'AgentFlow が提供する OpenAI ホスティングサービスを使用すると、GPT-3.5 などのモデルを使用できます。トライアルクォータが使い果たされる前に、他のモデルプロバイダを設定する必要があります。',
+      desc: '白泽智能体平台 が提供する OpenAI ホスティングサービスを使用すると、GPT-3.5 などのモデルを使用できます。トライアルクォータが使い果たされる前に、他のモデルプロバイダを設定する必要があります。',
       callTimes: '通話回数',
       usedUp: 'トライアルクォータが使い果たされました。独自のモデルプロバイダを追加してください。',
       useYourModel: '現在、独自のモデルプロバイダを使用しています。',
@@ -561,7 +561,7 @@ const translation = {
     },
   },
   apiBasedExtension: {
-    title: 'API 拡張機能は、AgentFlow のアプリケーション全体での簡単な使用のための設定を簡素化し、集中的な API 管理を提供します。',
+    title: 'API 拡張機能は、白泽智能体平台 のアプリケーション全体での簡単な使用のための設定を簡素化し、集中的な API 管理を提供します。',
     link: '独自の API 拡張機能を開発する方法について学ぶ。',
     add: 'API 拡張機能を追加',
     selector: {
@@ -591,8 +591,8 @@ const translation = {
   about: {
     changeLog: '変更ログ',
     updateNow: '今すぐ更新',
-    nowAvailable: 'AgentFlow {{version}} が利用可能です。',
-    latestAvailable: 'AgentFlow {{version}} が最新バージョンです。',
+    nowAvailable: '白泽智能体平台 {{version}} が利用可能です。',
+    latestAvailable: '白泽智能体平台 {{version}} が最新バージョンです。',
   },
   appMenus: {
     overview: '監視',

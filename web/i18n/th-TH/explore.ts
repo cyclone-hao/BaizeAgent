@@ -16,7 +16,7 @@ const translation = {
     },
   },
   apps: {
-    title: 'สํารวจแอพโดย AgentFlow',
+    title: 'สํารวจแอพโดย 白泽智能体平台',
     description: 'ใช้แอปเทมเพลตเหล่านี้ทันทีหรือปรับแต่งแอปของคุณเองตามเทมเพลต',
     allCategories: 'แนะ นำ',
   },

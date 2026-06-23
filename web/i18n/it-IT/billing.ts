@@ -78,7 +78,7 @@ const translation = {
         'La modifica manuale e l\'annotazione delle risposte forniscono capacità di risposta a domande personalizzabili di alta qualità per le app. (Applicabile solo nelle app di chat)',
     },
     ragAPIRequestTooltip:
-      'Si riferisce al numero di chiamate API che invocano solo le capacità di elaborazione della base di conoscenza di AgentFlow.',
+      'Si riferisce al numero di chiamate API che invocano solo le capacità di elaborazione della base di conoscenza di 白泽智能体平台.',
     receiptInfo:
       'Solo il proprietario del team e l\'amministratore del team possono abbonarsi e visualizzare le informazioni di fatturazione',
     comparePlanAndFeatures: 'Confronta piani e caratteristiche',
@@ -97,7 +97,7 @@ const translation = {
     documentsTooltip: 'Quota sul numero di documenti importati dalla Fonte di Dati Conoscitiva.',
     freeTrialTipSuffix: 'Nessuna carta di credito richiesta',
     cloud: 'Servizio Cloud',
-    apiRateLimitTooltip: 'Il limite di utilizzo dell\'API si applica a tutte le richieste effettuate tramite l\'API AgentFlow, comprese la generazione di testo, le conversazioni chat, le esecuzioni di flussi di lavoro e l\'elaborazione di documenti.',
+    apiRateLimitTooltip: 'Il limite di utilizzo dell\'API si applica a tutte le richieste effettuate tramite l\'API 白泽智能体平台, comprese la generazione di testo, le conversazioni chat, le esecuzioni di flussi di lavoro e l\'elaborazione di documenti.',
     getStarted: 'Inizia',
     annualBilling: 'Fatturazione annuale',
     documentsRequestQuotaTooltip: 'Specifica il numero totale di azioni che un\'area di lavoro può eseguire al minuto all\'interno della base di conoscenza, compresi la creazione, l\'eliminazione, gli aggiornamenti dei dataset, il caricamento di documenti, le modifiche, l\'archiviazione e le query sulla base di conoscenza. Questa metrica viene utilizzata per valutare le prestazioni delle richieste alla base di conoscenza. Ad esempio, se un utente di Sandbox esegue 10 test consecutivi in un minuto, la sua area di lavoro sarà temporaneamente limitata dall\'eseguire le seguenti azioni per il minuto successivo: creazione, eliminazione, aggiornamenti dei dataset e caricamento o modifica di documenti.',
@@ -134,8 +134,8 @@ const translation = {
         2: 'Funzionalità esclusive per le aziende',
         3: 'Spazi di lavoro multipli e gestione aziendale',
         0: 'Soluzioni di distribuzione scalabili di livello aziendale',
-        5: 'SLA negoziati dai partner AgentFlow',
-        7: 'Aggiornamenti e manutenzione da parte di AgentFlow ufficialmente',
+        5: 'SLA negoziati dai partner 白泽智能体平台',
+        7: 'Aggiornamenti e manutenzione da parte di 白泽智能体平台 ufficialmente',
       },
       price: 'Personalizzato',
       for: 'Per team di grandi dimensioni',
@@ -145,7 +145,7 @@ const translation = {
     community: {
       features: {
         0: 'Tutte le funzionalità principali rilasciate nel repository pubblico',
-        2: 'Conforme alla licenza Open Source AgentFlow',
+        2: 'Conforme alla licenza Open Source 白泽智能体平台',
         1: 'Area di lavoro singola',
       },
       name: 'Comunità',

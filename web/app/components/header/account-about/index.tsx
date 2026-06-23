@@ -43,7 +43,7 @@ export default function AccountAbout({
 
           <div className='text-center text-xs font-normal text-text-tertiary'>Version {langGeniusVersionInfo?.current_version}</div>
           <div className='flex flex-col items-center gap-2 text-center text-xs font-normal text-text-secondary'>
-            <div>© {dayjs().year()} AgentFlow. All rights reserved.</div>
+            <div>© {dayjs().year()} 白泽智能体平台. All rights reserved.</div>
           </div>
         </div>
         <div className='-mx-8 mb-4 h-[0.5px] bg-divider-regular' />

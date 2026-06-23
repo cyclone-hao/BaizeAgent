@@ -69,11 +69,11 @@ const GlobalSidebar = () => {
       >
         <img
           src="/logo/logo1.png"
-          alt="AgentFlow logo"
+          alt="白泽智能体平台 logo"
           className={cn('shrink-0 object-contain', expand ? 'h-7' : 'h-6')}
         />
         {expand && (
-          <span className="text-xs font-semibold text-primary-600">AgentFlow</span>
+          <span className="text-xs font-semibold text-primary-600">白泽智能体平台</span>
         )}
       </div>
 

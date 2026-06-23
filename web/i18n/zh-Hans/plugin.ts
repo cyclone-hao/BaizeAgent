@@ -251,7 +251,7 @@ const translation = {
     empower: '助力您的 AI 开发',
     discover: '探索',
     and: '和',
-    difyMarketplace: 'AgentFlow 插件市场',
+    difyMarketplace: '白泽智能体平台 插件市场',
     moreFrom: '更多来自市场',
     noPluginFound: '未找到插件',
     pluginsResult: '{{num}} 个插件结果',
@@ -263,8 +263,8 @@ const translation = {
       firstReleased: '首次发布',
     },
     viewMore: '查看更多',
-    verifiedTip: '此插件由 AgentFlow 认证',
-    partnerTip: '此插件由 AgentFlow 合作伙伴认证',
+    verifiedTip: '此插件由 白泽智能体平台 认证',
+    partnerTip: '此插件由 白泽智能体平台 合作伙伴认证',
   },
   task: {
     installing: '{{installingLength}} 个插件安装中，0 已完成',
@@ -284,7 +284,7 @@ const translation = {
     confirm: '确认',
   },
   installedPlugins: '已安装插件',
-  difyVersionNotCompatible: '当前 AgentFlow 版本不兼容该插件，其最低版本要求为 {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: '当前 白泽智能体平台 版本不兼容该插件，其最低版本要求为 {{minimal白泽智能体平台Version}}',
   auth: {
     default: '默认',
     custom: '自定义',

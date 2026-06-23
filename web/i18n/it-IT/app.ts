@@ -167,7 +167,7 @@ const translation = {
     },
     aliyun: {
       title: 'Monitoraggio Cloud',
-      description: 'La piattaforma di osservabilità completamente gestita e senza manutenzione fornita da Alibaba Cloud consente il monitoraggio, il tracciamento e la valutazione delle applicazioni AgentFlow fin da subito.',
+      description: 'La piattaforma di osservabilità completamente gestita e senza manutenzione fornita da Alibaba Cloud consente il monitoraggio, il tracciamento e la valutazione delle applicazioni 白泽智能体平台 fin da subito.',
     },
   },
   answerIcon: {

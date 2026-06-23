@@ -192,11 +192,11 @@ const translation = {
     empower: 'Zwiększ możliwości rozwoju sztucznej inteligencji',
     viewMore: 'Zobacz więcej',
     and: 'i',
-    difyMarketplace: 'Rynek AgentFlow',
+    difyMarketplace: 'Rynek 白泽智能体平台',
     noPluginFound: 'Nie znaleziono wtyczki',
     pluginsResult: '{{num}} wyniki',
-    partnerTip: 'Zweryfikowane przez partnera AgentFlow',
-    verifiedTip: 'Zweryfikowane przez AgentFlow',
+    partnerTip: 'Zweryfikowane przez partnera 白泽智能体平台',
+    verifiedTip: 'Zweryfikowane przez 白泽智能体平台',
   },
   task: {
     installError: 'Nie udało się zainstalować wtyczek {{errorLength}}, kliknij, aby wyświetlić',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Wtyczki',
   },
-  difyVersionNotCompatible: 'Obecna wersja AgentFlow nie jest kompatybilna z tym wtyczką, proszę zaktualizować do minimalnej wymaganej wersji: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'Obecna wersja 白泽智能体平台 nie jest kompatybilna z tym wtyczką, proszę zaktualizować do minimalnej wymaganej wersji: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Poproś o wtyczkę',
   publishPlugins: 'Publikowanie wtyczek',
   auth: {

@@ -148,7 +148,7 @@ const translation = {
   pipelineNameAndIcon: 'Nazwa i ikona potoku',
   knowledgeNameAndIconPlaceholder: 'Podaj nazwę Bazy Wiedzy',
   editPipelineInfo: 'Edytowanie informacji o potoku',
-  knowledgeDescriptionPlaceholder: 'Opisz, co znajduje się w tej Bazie wiedzy. Szczegółowy opis umożliwia sztucznej inteligencji dokładniejszy dostęp do zawartości zestawu danych. Jeśli pole jest puste, AgentFlow użyje domyślnej strategii trafień. (Opcjonalnie)',
+  knowledgeDescriptionPlaceholder: 'Opisz, co znajduje się w tej Bazie wiedzy. Szczegółowy opis umożliwia sztucznej inteligencji dokładniejszy dostęp do zawartości zestawu danych. Jeśli pole jest puste, 白泽智能体平台 użyje domyślnej strategii trafień. (Opcjonalnie)',
 }
 
 export default translation

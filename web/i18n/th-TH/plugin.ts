@@ -194,9 +194,9 @@ const translation = {
     discover: 'ค้นพบ',
     noPluginFound: 'ไม่พบปลั๊กอิน',
     empower: 'เพิ่มศักยภาพในการพัฒนา AI ของคุณ',
-    difyMarketplace: 'ตลาด AgentFlow',
-    partnerTip: 'ได้รับการตรวจสอบโดยพันธมิตรของ AgentFlow',
-    verifiedTip: 'ได้รับการตรวจสอบโดย AgentFlow',
+    difyMarketplace: 'ตลาด 白泽智能体平台',
+    partnerTip: 'ได้รับการตรวจสอบโดยพันธมิตรของ 白泽智能体平台',
+    verifiedTip: 'ได้รับการตรวจสอบโดย 白泽智能体平台',
   },
   task: {
     installing: 'การติดตั้งปลั๊กอิน {{installingLength}} 0 เสร็จแล้ว',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'ปลั๊กอิน',
   },
-  difyVersionNotCompatible: 'เวอร์ชั่นปัจจุบันของ AgentFlow ไม่สามารถใช้งานร่วมกับปลั๊กอินนี้ได้ กรุณาอัปเกรดไปยังเวอร์ชั่นขั้นต่ำที่ต้องการ: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'เวอร์ชั่นปัจจุบันของ 白泽智能体平台 ไม่สามารถใช้งานร่วมกับปลั๊กอินนี้ได้ กรุณาอัปเกรดไปยังเวอร์ชั่นขั้นต่ำที่ต้องการ: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'ขอปลั๊กอิน',
   publishPlugins: 'เผยแพร่ปลั๊กอิน',
   auth: {

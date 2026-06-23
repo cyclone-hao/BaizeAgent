@@ -933,7 +933,7 @@ const translation = {
       chunkStructureTip: {
         learnMore: 'Află mai multe',
         title: 'Vă rugăm să alegeți o structură de bucăți',
-        message: 'Baza de cunoștințe AgentFlow acceptă trei structuri de fragmentare: General, Părinte-copil și Întrebări și răspunsuri. Fiecare bază de cunoștințe poate avea o singură structură. Ieșirea de la nodul precedent trebuie să se alinieze cu structura de bucăți selectată. Rețineți că alegerea structurii de fragmentare afectează metodele de index disponibile.',
+        message: 'Baza de cunoștințe 白泽智能体平台 acceptă trei structuri de fragmentare: General, Părinte-copil și Întrebări și răspunsuri. Fiecare bază de cunoștințe poate avea o singură structură. Ieșirea de la nodul precedent trebuie să se alinieze cu structura de bucăți selectată. Rețineți că alegerea structurii de fragmentare afectează metodele de index disponibile.',
       },
       indexMethodIsRequired: 'Este necesară metoda indexului',
       chunkStructure: 'Structura bucății',

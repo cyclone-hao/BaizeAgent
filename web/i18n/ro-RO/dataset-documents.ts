@@ -1,7 +1,7 @@
 const translation = {
   list: {
     title: 'Documente',
-    desc: 'Toate fișierele din Cunoștințe sunt afișate aici, iar întreaga Cunoaștere poate fi legată de citări AgentFlow sau indexată prin intermediul pluginului Chat.',
+    desc: 'Toate fișierele din Cunoștințe sunt afișate aici, iar întreaga Cunoaștere poate fi legată de citări 白泽智能体平台 sau indexată prin intermediul pluginului Chat.',
     addFile: 'adaugă fișier',
     addPages: 'Adaugă pagini',
     table: {
@@ -54,7 +54,7 @@ const translation = {
         tip: 'Puteți încărca fișiere, sincroniza de pe site-ul web sau din aplicații web precum Notion, GitHub etc.',
       },
       sync: {
-        tip: 'AgentFlow va descărca periodic fișiere din Notion și va finaliza procesarea.',
+        tip: '白泽智能体平台 va descărca periodic fișiere din Notion și va finaliza procesarea.',
       },
     },
     delete: {

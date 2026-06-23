@@ -1,8 +1,8 @@
 const translation = {
   tips: {
-    notLoggedIn: 'このアプリはあなたのAgentFlow Cloudアカウントにアクセスしたいです',
+    notLoggedIn: 'このアプリはあなたの白泽智能体平台 Cloudアカウントにアクセスしたいです',
     needLogin: 'ログインして認証してください',
-    loggedIn: 'このアプリはあなたのAgentFlow Cloudアカウントから以下の情報にアクセスしたいと思っています。',
+    loggedIn: 'このアプリはあなたの白泽智能体平台 Cloudアカウントから以下の情報にアクセスしたいと思っています。',
     common: '私たちはあなたのプライバシーを尊重し、この情報を私たちの開発者ツールによる体験を向上させるためにのみ使用します。',
   },
   scopes: {

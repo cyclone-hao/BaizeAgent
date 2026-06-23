@@ -191,12 +191,12 @@ const translation = {
     and: 'e',
     pluginsResult: '{{num}} resultados',
     empower: 'Capacite seu desenvolvimento de IA',
-    difyMarketplace: 'Mercado AgentFlow',
+    difyMarketplace: 'Mercado 白泽智能体平台',
     moreFrom: 'Mais do Marketplace',
     noPluginFound: 'Nenhum plugin encontrado',
     discover: 'Descobrir',
-    verifiedTip: 'Verificado pelo AgentFlow',
-    partnerTip: 'Verificado por um parceiro da AgentFlow',
+    verifiedTip: 'Verificado pelo 白泽智能体平台',
+    partnerTip: 'Verificado por um parceiro da 白泽智能体平台',
   },
   task: {
     installedError: 'Falha na instalação dos plug-ins {{errorLength}}',
@@ -223,7 +223,7 @@ const translation = {
   metadata: {
     title: 'Plugins',
   },
-  difyVersionNotCompatible: 'A versão atual do AgentFlow não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimalAgentFlowVersion}}',
+  difyVersionNotCompatible: 'A versão atual do 白泽智能体平台 não é compatível com este plugin, por favor atualize para a versão mínima exigida: {{minimal白泽智能体平台Version}}',
   requestAPlugin: 'Solicitar um plugin',
   publishPlugins: 'Publicar plugins',
   auth: {

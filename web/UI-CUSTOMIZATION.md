@@ -1,7 +1,7 @@
-# AgentFlow UI 二次开发定制记录
+# 白泽智能体平台 UI 二次开发定制记录
 
 ## 品牌名称
-- **新品牌名**: AgentFlow
+- **新品牌名**: 白泽智能体平台
 - **主色调**: 紫色系 (#8b5cf6)
 
 ---
@@ -26,18 +26,18 @@
 
 ### 3. Logo 组件更新 ✅
 **文件**: `web/app/components/base/logo/dify-logo.tsx`
-- 更新 alt 文本为 "AgentFlow logo"
+- 更新 alt 文本为 "白泽智能体平台 logo"
 
 ### 4. 页面元数据 ✅
 **文件**: `web/app/layout.tsx`
-- `apple-mobile-web-app-title`: "Dify" → "AgentFlow"
+- `apple-mobile-web-app-title`: "Dify" → "白泽智能体平台"
 
 ### 5. 国际化文案 ✅
 **文件**:
 - `web/i18n/zh-Hans/common.ts` - 中文文案
 - `web/i18n/en-US/common.ts` - 英文文案
 
-**修改内容**: 所有 "Dify" 替换为 "AgentFlow"
+**修改内容**: 所有 "Dify" 替换为 "白泽智能体平台"
 - 邀请提示
 - 版本更新提示
 - API 扩展说明
@@ -45,7 +45,7 @@
 
 ### 6. 登录页版权信息 ✅
 **文件**: `web/app/signin/layout.tsx`
-- 底部版权: "LangGenius, Inc." → "AgentFlow"
+- 底部版权: "LangGenius, Inc." → "白泽智能体平台"
 
 ---
 

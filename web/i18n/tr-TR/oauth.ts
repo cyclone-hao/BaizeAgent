@@ -1,8 +1,8 @@
 const translation = {
   tips: {
-    notLoggedIn: 'Bu uygulama AgentFlow Cloud hesabınıza erişmek istiyor',
+    notLoggedIn: 'Bu uygulama 白泽智能体平台 Cloud hesabınıza erişmek istiyor',
     common: 'Gizliliğinize saygı gösteriyoruz ve bu bilgiyi yalnızca geliştirici araçlarımızla deneyiminizi geliştirmek için kullanacağız.',
-    loggedIn: 'Bu uygulama AgentFlow Cloud hesabınızdaki aşağıdaki bilgilere erişmek istiyor.',
+    loggedIn: 'Bu uygulama 白泽智能体平台 Cloud hesabınızdaki aşağıdaki bilgilere erişmek istiyor.',
     needLogin: 'Lütfen yetkilendirmek için giriş yapın',
   },
   scopes: {

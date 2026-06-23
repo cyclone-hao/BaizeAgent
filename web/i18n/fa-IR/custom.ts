@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'سفارشی سازی برند وب اپ',
-    removeBrand: 'حذف "Powered by AgentFlow"',
+    removeBrand: 'حذف "Powered by 白泽智能体平台"',
     changeLogo: 'تغییر تصویر برند "Powered by"',
     changeLogoTip: 'فرمت SVG یا PNG با حداقل اندازه 40x40px',
   },

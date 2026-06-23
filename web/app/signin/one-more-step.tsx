@@ -99,7 +99,7 @@ const OneMoreStep = () => {
                   <div className='w-[256px] text-xs font-medium'>
                     <div className='font-medium'>{t('login.sendUsMail')}</div>
                     <div className='cursor-pointer text-xs font-medium text-text-accent-secondary'>
-                      <a href="mailto:support@agentflow.ai">support@agentflow.ai</a>
+                      <a href="mailto:support@baize-agent.ai">support@baize-agent.ai</a>
                     </div>
                   </div>
                 }

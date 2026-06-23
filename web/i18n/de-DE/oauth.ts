@@ -1,8 +1,8 @@
 const translation = {
   tips: {
     common: 'Wir respektieren Ihre Privatsphäre und werden diese Informationen nur verwenden, um Ihre Erfahrung mit unseren Entwickler-Tools zu verbessern.',
-    notLoggedIn: 'Diese App möchte auf Ihr AgentFlow Cloud-Konto zugreifen',
-    loggedIn: 'Diese App möchte auf die folgenden Informationen aus Ihrem AgentFlow Cloud-Konto zugreifen.',
+    notLoggedIn: 'Diese App möchte auf Ihr 白泽智能体平台 Cloud-Konto zugreifen',
+    loggedIn: 'Diese App möchte auf die folgenden Informationen aus Ihrem 白泽智能体平台 Cloud-Konto zugreifen.',
     needLogin: 'Bitte melden Sie sich an, um zu autorisieren.',
   },
   scopes: {

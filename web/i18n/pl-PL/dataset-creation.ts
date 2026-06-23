@@ -221,7 +221,7 @@ const translation = {
   otherDataSource: {
     learnMore: 'Dowiedz się więcej',
     title: 'Połączyć się z innymi źródłami danych?',
-    description: 'Obecnie baza wiedzy AgentFlow ma tylko ograniczone źródła danych. Dodanie źródła danych do bazy wiedzy AgentFlow to fantastyczny sposób na zwiększenie elastyczności i możliwości platformy dla wszystkich użytkowników. Nasz przewodnik po wkładach ułatwia rozpoczęcie pracy. Kliknij poniższy link, aby dowiedzieć się więcej.',
+    description: 'Obecnie baza wiedzy 白泽智能体平台 ma tylko ograniczone źródła danych. Dodanie źródła danych do bazy wiedzy 白泽智能体平台 to fantastyczny sposób na zwiększenie elastyczności i możliwości platformy dla wszystkich użytkowników. Nasz przewodnik po wkładach ułatwia rozpoczęcie pracy. Kliknij poniższy link, aby dowiedzieć się więcej.',
   },
   watercrawl: {
     apiKeyPlaceholder: 'Klucz API z watercrawl.dev',

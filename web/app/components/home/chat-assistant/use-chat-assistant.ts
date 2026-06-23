@@ -7,6 +7,7 @@ import {
 } from '@/app/components/header/account-setting/model-provider-page/declarations'
 import type { Model as ModelGroup } from '@/app/components/header/account-setting/model-provider-page/declarations'
 import { TransferMethod } from '@/types/app'
+import { useToastContext } from '@/app/components/base/toast'
 import { createApp } from '@/service/apps'
 import {
   deleteChatConversation,
@@ -18,6 +19,8 @@ import {
 import { get } from '@/service/base'
 import { fetchWebSearch } from '@/service/web-search'
 import type { WebSearchResult } from '@/service/web-search'
+import { generateImage } from '@/service/generate'
+import type { ImageGenerateResponse } from '@/service/generate'
 import type { AppDetailResponse } from '@/models/app'
 import {
   BASE_APP_STORAGE_KEY,
@@ -25,6 +28,8 @@ import {
   DEFAULT_COMPLETION_PARAMS,
   DEFAULT_SYSTEM_PROMPT,
   MODEL_STORAGE_KEY,
+  VISION_SYSTEM_PROMPT,
+  findVisionModel,
   getReasoningParams,
   isReasoningModel,
 } from './config'
@@ -48,6 +53,7 @@ export type ChatItem = {
   sources?: WebSearchResult[]
   files?: { type: string; transfer_method: string; url: string; upload_file_id: string }[]
   documentNames?: string[]
+  generatedImages?: string[]
 }
 
 export type ModelSelection = {
@@ -133,6 +139,7 @@ function saveDatasetSelection(sel: DatasetSelection[]) {
 
 export function useChatAssistant() {
   const { textGenerationModelList } = useProviderContext()
+  const { notify } = useToastContext()
 
   // ── Base App (auto-create with validation) ──
   const [baseAppId, setBaseAppId] = useState<string | null>(null)
@@ -230,6 +237,8 @@ export function useChatAssistant() {
   const [isResponding, setIsResponding] = useState(false)
   const [deepThinking, setDeepThinking] = useState(false)
   const [webSearch, setWebSearch] = useState(false)
+  const [visionMode, setVisionMode] = useState(false)
+  const [imageGen, setImageGen] = useState(false)
   const conversationIdRef = useRef('')
   const taskIdRef = useRef('')
   const lastMessageIdRef = useRef('')
@@ -355,7 +364,10 @@ export function useChatAssistant() {
   // NOTE: document-capable models (e.g. qwen-long) have plugin compatibility issues
   // with the Tongyi provider — fileid:// format causes 400 errors.
   // Only enable file upload for vision models (image analysis works reliably).
-  const supportsFileUpload = isVisionModel
+
+  // 识图模式：查找 qwen3.6-plus 视觉模型，开启时强制使用并启用图片上传
+  const visionModel = useMemo(() => findVisionModel(availableModels), [availableModels])
+  const supportsFileUpload = isVisionModel || visionMode
 
   // ── File upload config (images only — document support pending plugin fix) ──
   const fileUploadConfig = useMemo(() => {
@@ -387,6 +399,7 @@ export function useChatAssistant() {
     useDeepThinking: boolean,
     searchResults: WebSearchResult[] = [],
     documentContext: string = '',
+    isVisionModeFlag: boolean = false,
   ) => {
     const completionParams: Record<string, unknown> = { ...DEFAULT_COMPLETION_PARAMS }
     if (useDeepThinking && isReasoningModel(model.model)) {
@@ -395,7 +408,8 @@ export function useChatAssistant() {
         Object.assign(completionParams, reasoningParams)
     }
 
-    const prePrompt = DEFAULT_SYSTEM_PROMPT + buildSearchContext(searchResults) + documentContext
+    const basePrompt = isVisionModeFlag ? VISION_SYSTEM_PROMPT : DEFAULT_SYSTEM_PROMPT
+    const prePrompt = basePrompt + buildSearchContext(searchResults) + documentContext
 
     const config: Record<string, any> = {
       model: {
@@ -457,7 +471,55 @@ export function useChatAssistant() {
     files?: { type: string; transfer_method: string; url: string; upload_file_id: string }[],
     documentTexts?: { filename: string; text: string }[],
   ) => {
-    if (!baseAppId || !selectedModel || isResponding)
+    if (isResponding)
+      return
+
+    // ── Image Generation Mode ──
+    if (imageGen) {
+      if (!query.trim()) {
+        notify({ type: 'info', message: '请输入图片描述' })
+        return
+      }
+
+      const userMsg: ChatItem = { id: genId(), content: query, isAnswer: false }
+      const aiMsgId = genId()
+      const aiMsg: ChatItem = { id: aiMsgId, content: '', isAnswer: true }
+      setChatList(prev => [...prev, userMsg, aiMsg])
+      setIsResponding(true)
+
+      try {
+        const result: ImageGenerateResponse = await generateImage(query)
+        const images = result.images || []
+        if (images.length > 0) {
+          setChatList(prev => prev.map((item, idx) =>
+            idx === prev.length - 1 && item.isAnswer
+              ? { ...item, content: `🎨 已为你生成图片：`, generatedImages: images }
+              : item,
+          ))
+        }
+        else {
+          setChatList(prev => prev.map((item, idx) =>
+            idx === prev.length - 1 && item.isAnswer
+              ? { ...item, content: '⚠️ 图片生成未返回结果，请重试' }
+              : item,
+          ))
+        }
+      }
+      catch (err: any) {
+        const msg = err?.message || '图片生成失败'
+        setChatList(prev => prev.map((item, idx) =>
+          idx === prev.length - 1 && item.isAnswer
+            ? { ...item, content: `⚠️ ${msg}` }
+            : item,
+        ))
+      }
+      finally {
+        setIsResponding(false)
+      }
+      return
+    }
+
+    if (!baseAppId || !selectedModel)
       return
 
     let searchResults: WebSearchResult[] = []
@@ -465,9 +527,12 @@ export function useChatAssistant() {
       try {
         const searchResponse = await fetchWebSearch(query, 5)
         searchResults = searchResponse?.results || []
+        if (!searchResults.length)
+          notify({ type: 'warning', message: '联网搜索未返回结果，将基于自身知识回答' })
       }
-      catch (err) {
+      catch (err: any) {
         console.error('Web search failed:', err)
+        notify({ type: 'error', message: `联网搜索失败: ${err?.message || '服务端点不可用，请检查后端是否已重启'}` })
       }
     }
 
@@ -488,7 +553,12 @@ export function useChatAssistant() {
     setIsResponding(true)
 
     let accumulatedContent = ''
-    const modelConfig = buildModelConfig(selectedModel, selectedDatasets, deepThinking, searchResults, docContext)
+    // 识图模式：强制使用 qwen3.6-plus 视觉模型，忽略 deepThinking
+    const effectiveModel = (visionMode && visionModel)
+      ? visionModel
+      : selectedModel
+    const effectiveDeepThinking = visionMode ? false : deepThinking
+    const modelConfig = buildModelConfig(effectiveModel, selectedDatasets, effectiveDeepThinking, searchResults, docContext, visionMode)
 
     sendChatMessage(baseAppId, {
       query,
@@ -519,7 +589,7 @@ export function useChatAssistant() {
         }
 
         accumulatedContent += messageChunk
-        const currentContent = deepThinking ? accumulatedContent : stripThinkTags(accumulatedContent)
+        const currentContent = effectiveDeepThinking ? accumulatedContent : stripThinkTags(accumulatedContent)
         setChatList(prev => prev.map((item, idx) =>
           idx === prev.length - 1 && item.isAnswer
             ? { ...item, content: currentContent }
@@ -552,7 +622,7 @@ export function useChatAssistant() {
       onMessageReplace: (data) => {
         if (data.answer) {
           accumulatedContent = data.answer
-          const finalContent = deepThinking ? data.answer : stripThinkTags(data.answer)
+          const finalContent = effectiveDeepThinking ? data.answer : stripThinkTags(data.answer)
           setChatList(prev => prev.map((item, idx) =>
             idx === prev.length - 1 && item.isAnswer
               ? { ...item, content: finalContent }
@@ -561,7 +631,7 @@ export function useChatAssistant() {
         }
       },
     })
-  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload])
+  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, visionMode, visionModel, imageGen, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload, notify])
 
   // ── Stop ──
   const handleStop = useCallback(() => {
@@ -602,6 +672,11 @@ export function useChatAssistant() {
     setDeepThinking,
     webSearch,
     setWebSearch,
+    visionMode,
+    setVisionMode,
+    visionModel,
+    imageGen,
+    setImageGen,
     sendMessage,
     handleStop,
     handleRestart,

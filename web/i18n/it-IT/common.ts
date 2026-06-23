@@ -202,8 +202,8 @@ const translation = {
     newPassword: 'Nuova password',
     confirmPassword: 'Conferma password',
     notEqual: 'Le due password sono diverse.',
-    langGeniusAccount: 'Account AgentFlow',
-    langGeniusAccountTip: 'Il tuo account AgentFlow e i dati utente associati.',
+    langGeniusAccount: 'Account 白泽智能体平台',
+    langGeniusAccountTip: 'Il tuo account 白泽智能体平台 e i dati utente associati.',
     editName: 'Modifica Nome',
     showAppLength: 'Mostra {{length}} app',
     delete: 'Elimina Account',
@@ -211,7 +211,7 @@ const translation = {
       'Eliminando il tuo account cancellerai permanentemente tutti i tuoi dati e non sarà possibile recuperarli.',
     myAccount: 'Il mio account',
     account: 'Conto',
-    studio: 'AgentFlow Studio',
+    studio: '白泽智能体平台 Studio',
     deletePrivacyLinkTip: 'Per ulteriori informazioni su come gestiamo i tuoi dati, consulta il nostro',
     deletePrivacyLink: 'Informativa sulla privacy.',
     deleteSuccessTip: 'Il tuo account ha bisogno di tempo per completare l\'eliminazione. Ti invieremo un\'e-mail quando tutto sarà finito.',
@@ -280,7 +280,7 @@ const translation = {
     invitedAsRole: 'Invitato come utente {{role}}',
     invitationSent: 'Invito inviato',
     invitationSentTip:
-      'Invito inviato, e possono accedere a AgentFlow per accedere ai dati del tuo team.',
+      'Invito inviato, e possono accedere a 白泽智能体平台 per accedere ai dati del tuo team.',
     invitationLink: 'Link di Invito',
     failedInvitationEmails:
       'Gli utenti seguenti non sono stati invitati con successo',
@@ -351,7 +351,7 @@ const translation = {
       openaiHosted: 'OpenAI Ospitato',
       onTrial: 'IN PROVA',
       exhausted: 'QUOTA ESAURITA',
-      desc: 'Il servizio di hosting OpenAI fornito da AgentFlow ti consente di utilizzare modelli come GPT-3.5. Prima che la tua quota di prova sia esaurita, devi configurare altri fornitori di modelli.',
+      desc: 'Il servizio di hosting OpenAI fornito da 白泽智能体平台 ti consente di utilizzare modelli come GPT-3.5. Prima che la tua quota di prova sia esaurita, devi configurare altri fornitori di modelli.',
       callTimes: 'Numero di chiamate',
       usedUp: 'Quota di prova esaurita. Aggiungi il tuo fornitore di modelli.',
       useYourModel: 'Attualmente utilizzando il proprio fornitore di modelli.',
@@ -570,7 +570,7 @@ const translation = {
   },
   apiBasedExtension: {
     title:
-      'Le estensioni API forniscono una gestione centralizzata delle API, semplificando la configurazione per un facile utilizzo nelle applicazioni di AgentFlow.',
+      'Le estensioni API forniscono una gestione centralizzata delle API, semplificando la configurazione per un facile utilizzo nelle applicazioni di 白泽智能体平台.',
     link: 'Scopri come sviluppare la tua estensione API.',
     add: 'Aggiungi Estensione API',
     selector: {
@@ -601,8 +601,8 @@ const translation = {
   about: {
     changeLog: 'Registro delle modifiche',
     updateNow: 'Aggiorna ora',
-    nowAvailable: 'AgentFlow {{version}} è ora disponibile.',
-    latestAvailable: 'AgentFlow {{version}} è l\'ultima versione disponibile.',
+    nowAvailable: '白泽智能体平台 {{version}} è ora disponibile.',
+    latestAvailable: '白泽智能体平台 {{version}} è l\'ultima versione disponibile.',
   },
   appMenus: {
     overview: 'Monitoraggio',

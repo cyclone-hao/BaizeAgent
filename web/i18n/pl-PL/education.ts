@@ -2,7 +2,7 @@ const translation = {
   toVerifiedTip: {
     coupon: 'ekskluzywny kupon 100%',
     front: 'Teraz jesteś uprawniony do statusu zweryfikowanej edukacji. Proszę wprowadzić swoje informacje edukacyjne poniżej, aby zakończyć proces i otrzymać',
-    end: 'dla Profesjonalnego Planu AgentFlow.',
+    end: 'dla Profesjonalnego Planu 白泽智能体平台.',
   },
   form: {
     schoolName: {
@@ -27,25 +27,25 @@ const translation = {
       },
       option: {
         age: 'Potwierdzam, że mam co najmniej 18 lat',
-        inSchool: 'Potwierdzam, że jestem zapisany lub zatrudniony w podanej instytucji. AgentFlow może wymagać dowodu zapisania/zatrudnienia. Jeśli wprowadzę w błąd dotyczący mojej zdolności do uczestnictwa, zgadzam się zapłacić wszelkie opłaty, które zostały początkowo zaniechane w oparciu o mój status edukacyjny.',
+        inSchool: 'Potwierdzam, że jestem zapisany lub zatrudniony w podanej instytucji. 白泽智能体平台 może wymagać dowodu zapisania/zatrudnienia. Jeśli wprowadzę w błąd dotyczący mojej zdolności do uczestnictwa, zgadzam się zapłacić wszelkie opłaty, które zostały początkowo zaniechane w oparciu o mój status edukacyjny.',
       },
       title: 'Warunki i umowy',
     },
   },
   toVerified: 'Uzyskaj potwierdzenie edukacji',
   submit: 'Zatwierdź',
-  rejectContent: 'Niestety, nie kwalifikujesz się do statusu Zweryfikowanej Edukacji i w związku z tym nie możesz otrzymać ekskluzywnego kuponu 100% na plan AgentFlow Professional, jeśli korzystasz z tego adresu e-mail.',
-  successContent: 'Wydaliśmy kupon rabatowy na 100% dla planu AgentFlow Professional na Twoje konto. Kupon jest ważny przez jeden rok, prosimy o jego użycie w okresie ważności.',
+  rejectContent: 'Niestety, nie kwalifikujesz się do statusu Zweryfikowanej Edukacji i w związku z tym nie możesz otrzymać ekskluzywnego kuponu 100% na plan 白泽智能体平台 Professional, jeśli korzystasz z tego adresu e-mail.',
+  successContent: 'Wydaliśmy kupon rabatowy na 100% dla planu 白泽智能体平台 Professional na Twoje konto. Kupon jest ważny przez jeden rok, prosimy o jego użycie w okresie ważności.',
   currentSigned: 'AKTUALNIE ZALOGOWANY JAKO',
-  successTitle: 'Masz zweryfikowane wykształcenie AgentFlow',
-  rejectTitle: 'Twoja weryfikacja edukacyjna AgentFlow została odrzucona',
+  successTitle: 'Masz zweryfikowane wykształcenie 白泽智能体平台',
+  rejectTitle: 'Twoja weryfikacja edukacyjna 白泽智能体平台 została odrzucona',
   learn: 'Dowiedz się, jak uzyskać potwierdzenie wykształcenia',
   emailLabel: 'Twój aktualny email',
   submitError: 'Przesłanie formularza nie powiodło się. Proszę spróbować ponownie później.',
   notice: {
     expired: {
       summary: {
-        line1: 'Możesz nadal uzyskać dostęp i korzystać z AgentFlow.',
+        line1: 'Możesz nadal uzyskać dostęp i korzystać z 白泽智能体平台.',
         line2: 'Jednakże, nie kwalifikujesz się już do nowych kuponów zniżkowych na edukację.',
       },
       title: 'Twój status edukacji wygasł.',

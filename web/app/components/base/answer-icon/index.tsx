@@ -1,12 +1,8 @@
 'use client'
 
 import type { FC } from 'react'
-import { init } from 'emoji-mart'
-import data from '@emoji-mart/data'
 import classNames from '@/utils/classnames'
 import type { AppIconType } from '@/types/app'
-
-init({ data })
 
 export type AnswerIconProps = {
   iconType?: AppIconType | null
@@ -33,13 +29,17 @@ const AnswerIcon: FC<AnswerIconProps> = ({
     'text-xl',
   )
   const isValidImageIcon = iconType === 'image' && imageUrl
+  const emojiChar = (icon && icon !== '') ? icon : null
+  const isDefaultIcon = !isValidImageIcon && !emojiChar
   return <div
     className={wrapperClassName}
     style={{ background: background || '#D5F5F6' }}
   >
-    {isValidImageIcon
-      ? <img src={imageUrl} className="h-full w-full rounded-full" alt="answer icon" />
-      : (icon && icon !== '') ? <em-emoji id={icon} /> : <em-emoji id='🤖' />
+    {isDefaultIcon
+      ? <img src="/default-bot-icon.jpeg" className="h-full w-full rounded-full object-cover" alt="default bot icon" />
+      : isValidImageIcon
+        ? <img src={imageUrl} className="h-full w-full rounded-full" alt="answer icon" />
+        : <span className="not-emoji">{emojiChar}</span>
     }
   </div>
 }

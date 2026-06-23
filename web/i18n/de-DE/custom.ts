@@ -8,7 +8,7 @@ const translation = {
   },
   webapp: {
     title: 'web app Marke anpassen',
-    removeBrand: 'Entferne Powered by AgentFlow',
+    removeBrand: 'Entferne Powered by 白泽智能体平台',
     changeLogo: 'Ändere Powered by Markenbild',
     changeLogoTip: 'SVG oder PNG Format mit einer Mindestgröße von 40x40px',
   },

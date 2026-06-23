@@ -204,7 +204,7 @@ const translation = {
   },
   otherDataSource: {
     title: 'Kết nối với các nguồn dữ liệu khác?',
-    description: 'Hiện tại, cơ sở tri thức của AgentFlow chỉ có nguồn dữ liệu hạn chế. Đóng góp nguồn dữ liệu vào cơ sở kiến thức AgentFlow là một cách tuyệt vời để giúp nâng cao tính linh hoạt và sức mạnh của nền tảng cho tất cả người dùng. Hướng dẫn đóng góp của chúng tôi giúp bạn dễ dàng bắt đầu. Vui lòng nhấp vào liên kết bên dưới để tìm hiểu thêm.',
+    description: 'Hiện tại, cơ sở tri thức của 白泽智能体平台 chỉ có nguồn dữ liệu hạn chế. Đóng góp nguồn dữ liệu vào cơ sở kiến thức 白泽智能体平台 là một cách tuyệt vời để giúp nâng cao tính linh hoạt và sức mạnh của nền tảng cho tất cả người dùng. Hướng dẫn đóng góp của chúng tôi giúp bạn dễ dàng bắt đầu. Vui lòng nhấp vào liên kết bên dưới để tìm hiểu thêm.',
     learnMore: 'Tìm hiểu thêm',
   },
   watercrawl: {

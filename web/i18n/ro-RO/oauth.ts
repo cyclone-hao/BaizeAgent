@@ -1,8 +1,8 @@
 const translation = {
   tips: {
     needLogin: 'Vă rugăm să vă conectați pentru a autoriza',
-    loggedIn: 'Această aplicație vrea să acceseze următoarele informații din contul tău AgentFlow Cloud.',
-    notLoggedIn: 'Această aplicație vrea să acceseze contul tău AgentFlow Cloud',
+    loggedIn: 'Această aplicație vrea să acceseze următoarele informații din contul tău 白泽智能体平台 Cloud.',
+    notLoggedIn: 'Această aplicație vrea să acceseze contul tău 白泽智能体平台 Cloud',
     common: 'Respectăm confidențialitatea dvs. și vom folosi aceste informații doar pentru a îmbunătăți experiența dvs. cu instrumentele noastre pentru dezvoltatori.',
   },
   scopes: {

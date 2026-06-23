@@ -143,7 +143,7 @@ const translation = {
   },
   knowledgeDescription: '知識說明',
   knowledgeNameAndIconPlaceholder: '請輸入知識庫的名稱',
-  knowledgeDescriptionPlaceholder: '描述此知識庫中的內容。詳細的描述使人工智慧能夠更準確地存取資料集的內容。如果為空，AgentFlow 將使用預設命中策略。（選用）',
+  knowledgeDescriptionPlaceholder: '描述此知識庫中的內容。詳細的描述使人工智慧能夠更準確地存取資料集的內容。如果為空，白泽智能体平台 將使用預設命中策略。（選用）',
   pipelineNameAndIcon: '管線名稱 & 圖示',
   knowledgeNameAndIcon: '知識名稱和圖示',
   inputField: '輸入欄位',
