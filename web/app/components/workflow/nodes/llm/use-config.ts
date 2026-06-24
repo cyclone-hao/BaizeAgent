@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import produce from 'immer'
 import { EditionType, VarType } from '../../types'
 import type { Memory, PromptItem, ValueSelector, Var, Variable } from '../../types'
@@ -25,7 +25,26 @@ const useConfig = (id: string, payload: LLMNodeType) => {
 
   const defaultConfig = useStore(s => s.nodesDefaultConfigs)[payload.type]
   const [defaultRolePrefix, setDefaultRolePrefix] = useState<{ user: string; assistant: string }>({ user: '', assistant: '' })
-  const { inputs, setInputs: doSetInputs } = useNodeCrud<LLMNodeType>(id, payload)
+  const { inputs: rawInputs, setInputs: doSetInputs } = useNodeCrud<LLMNodeType>(id, payload)
+
+  // Normalize inputs: ensure required fields exist for AI-generated workflows
+  const inputs = useMemo(() => {
+    if (!rawInputs) return rawInputs
+    const normalized = { ...rawInputs }
+    if (!normalized.context) {
+      normalized.context = { enabled: false, variable_selector: [] }
+    }
+    if (!normalized.vision) {
+      normalized.vision = { enabled: false }
+    }
+    if (!normalized.model) {
+      normalized.model = { provider: '', name: '', mode: 'chat', completion_params: {} }
+    }
+    if (!normalized.prompt_template) {
+      normalized.prompt_template = []
+    }
+    return normalized
+  }, [rawInputs])
   const inputRef = useRef(inputs)
 
   const { deleteNodeInspectorVars } = useInspectVarsCrud()
@@ -76,7 +95,7 @@ const useConfig = (id: string, payload: LLMNodeType) => {
     }
   })()
 
-  const shouldShowContextTip = !hasSetBlockStatus.context && inputs.context.enabled
+  const shouldShowContextTip = !hasSetBlockStatus.context && inputs.context?.enabled
 
   const appendDefaultPromptConfig = useCallback((draft: LLMNodeType, defaultConfig: any, passInIsChatMode?: boolean) => {
     const promptTemplates = defaultConfig.prompt_templates
@@ -115,7 +134,7 @@ const useConfig = (id: string, payload: LLMNodeType) => {
     handleVisionResolutionChange,
     handleModelChanged: handleVisionConfigAfterModelChanged,
   } = useConfigVision(model, {
-    payload: inputs.vision,
+    payload: inputs.vision || { enabled: false },
     onChange: (newPayload) => {
       const newInputs = produce(inputs, (draft) => {
         draft.vision = newPayload

@@ -114,9 +114,9 @@ class KnowledgeRetrievalNodeData(BaseNodeData):
     """
 
     type: str = "knowledge-retrieval"
-    query_variable_selector: list[str]
-    dataset_ids: list[str]
-    retrieval_mode: Literal["single", "multiple"]
+    query_variable_selector: list[str] = Field(default_factory=list)
+    dataset_ids: list[str] = Field(default_factory=list)
+    retrieval_mode: Literal["single", "multiple"] = "multiple"
     multiple_retrieval_config: MultipleRetrievalConfig | None = None
     single_retrieval_config: SingleRetrievalConfig | None = None
     metadata_filtering_mode: Literal["disabled", "automatic", "manual"] | None = "disabled"

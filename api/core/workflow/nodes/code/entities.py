@@ -1,6 +1,6 @@
-from typing import Annotated, Literal, Self
+from typing import Annotated, Any, Literal, Self
 
-from pydantic import AfterValidator, BaseModel
+from pydantic import AfterValidator, BaseModel, field_validator
 
 from core.helper.code_executor.code_executor import CodeLanguage
 from core.variables.types import SegmentType
@@ -45,3 +45,17 @@ class CodeNodeData(BaseNodeData):
     code: str
     outputs: dict[str, Output]
     dependencies: list[Dependency] | None = None
+
+    @field_validator("outputs", mode="before")
+    @classmethod
+    def validate_outputs(cls, value: Any) -> Any:
+        """Convert list format to dict format (AI may generate end-node style arrays)"""
+        if isinstance(value, list):
+            outputs_dict: dict[str, Any] = {}
+            for item in value:
+                if isinstance(item, dict) and "variable" in item:
+                    var_name = item["variable"]
+                    var_type = item.get("type", "string")
+                    outputs_dict[var_name] = {"type": var_type}
+            return outputs_dict
+        return value

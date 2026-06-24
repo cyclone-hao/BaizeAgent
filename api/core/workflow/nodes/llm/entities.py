@@ -63,7 +63,7 @@ class LLMNodeData(BaseNodeData):
     prompt_template: Sequence[LLMNodeChatModelMessage] | LLMNodeCompletionModelPromptTemplate
     prompt_config: PromptConfig = Field(default_factory=PromptConfig)
     memory: MemoryConfig | None = None
-    context: ContextConfig
+    context: ContextConfig = Field(default_factory=lambda: ContextConfig(enabled=False))
     vision: VisionConfig = Field(default_factory=VisionConfig)
     structured_output: Mapping[str, Any] | None = None
     # We used 'structured_output_enabled' in the past, but it's not a good name.
@@ -91,6 +91,28 @@ class LLMNodeData(BaseNodeData):
     def convert_none_prompt_config(cls, v: Any):
         if v is None:
             return PromptConfig()
+        return v
+
+    @field_validator("context", mode="before")
+    @classmethod
+    def convert_none_context(cls, v: Any):
+        if v is None:
+            return ContextConfig(enabled=False)
+        return v
+
+    @field_validator("model", mode="before")
+    @classmethod
+    def validate_model(cls, v: Any):
+        if not isinstance(v, dict):
+            return {"provider": "", "name": "", "mode": "chat", "completion_params": {}}
+        if not v.get("provider"):
+            v["provider"] = ""
+        if not v.get("name"):
+            v["name"] = ""
+        if not v.get("mode"):
+            v["mode"] = "chat"
+        if "completion_params" not in v:
+            v["completion_params"] = {}
         return v
 
     @property

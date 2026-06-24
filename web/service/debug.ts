@@ -46,6 +46,15 @@ export const stopChatMessageResponding = async (appId: string, taskId: string) =
   return post(`apps/${appId}/chat-messages/${taskId}/stop`)
 }
 
+/** 保存生图记录到对话历史（不触发 LLM 推理） */
+export const saveImageMessage = async (appId: string, body: {
+  query: string
+  image_urls: string[]
+  conversation_id?: string
+}) => {
+  return post(`apps/${appId}/image-messages`, { body })
+}
+
 export const sendCompletionMessage = async (appId: string, body: Record<string, any>, { onData, onCompleted, onError, onMessageReplace }: {
   onData: IOnData
   onCompleted: IOnCompleted

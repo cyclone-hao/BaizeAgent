@@ -63,8 +63,8 @@ const useConfig = (id: string, payload: IfElseNodeType) => {
   const varsIsVarFileAttribute = useMemo(() => {
     const conditions: Record<string, boolean> = {}
     inputs.cases?.forEach((c) => {
-      c.conditions.forEach((condition) => {
-        conditions[condition.id] = getIsVarFileAttribute(condition.variable_selector!)
+      c.conditions?.forEach((condition) => {
+        conditions[condition.id] = condition.variable_selector ? getIsVarFileAttribute(condition.variable_selector) : false
       })
     })
     return conditions

@@ -34,6 +34,10 @@ const useConfig = (id: string, payload: HttpNodeType) => {
         ...defaultConfig,
         ...inputs,
       }
+      // Ensure body exists (AI-generated nodes may not have it)
+      if (!newInputs.body) {
+        newInputs.body = { type: BodyType.none, data: [] }
+      }
       const bodyData = newInputs.body.data
       if (typeof bodyData === 'string') {
         newInputs.body = {
@@ -47,6 +51,14 @@ const useConfig = (id: string, payload: HttpNodeType) => {
           data: [],
         }
       }
+
+      // Ensure other required fields exist
+      if (!newInputs.authorization)
+        newInputs.authorization = { type: 'no-auth' as any, config: null }
+      if (!newInputs.timeout)
+        newInputs.timeout = { max_connect_timeout: 0, max_read_timeout: 0, max_write_timeout: 0 }
+      if (!newInputs.variables)
+        newInputs.variables = []
 
       setInputs(newInputs)
       setIsDataReady(true)

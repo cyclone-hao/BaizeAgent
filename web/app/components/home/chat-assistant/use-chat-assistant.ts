@@ -13,6 +13,7 @@ import {
   deleteChatConversation,
   fetchChatConversations,
   fetchConversationMessages,
+  saveImageMessage,
   sendChatMessage,
   stopChatMessageResponding,
 } from '@/service/debug'
@@ -27,6 +28,7 @@ import {
   DATASET_STORAGE_KEY,
   DEFAULT_COMPLETION_PARAMS,
   DEFAULT_SYSTEM_PROMPT,
+  ENV_HOME_CHAT_APP_ID,
   MODEL_STORAGE_KEY,
   VISION_SYSTEM_PROMPT,
   findVisionModel,
@@ -154,6 +156,20 @@ export function useChatAssistant() {
     setAppError(null)
 
     try {
+      // 优先使用环境变量配置的全局共享应用
+      if (ENV_HOME_CHAT_APP_ID) {
+        try {
+          await get<AppDetailResponse>(`apps/${ENV_HOME_CHAT_APP_ID}`)
+          setBaseAppId(ENV_HOME_CHAT_APP_ID)
+          setAppReady(true)
+          return
+        }
+        catch {
+          console.warn(`环境变量 NEXT_PUBLIC_HOME_CHAT_APP_ID 配置的应用 ${ENV_HOME_CHAT_APP_ID} 不存在或无法访问`)
+        }
+      }
+
+      // 回退：使用 localStorage 缓存的每用户独立应用
       const cached = localStorage.getItem(BASE_APP_STORAGE_KEY)
       if (cached) {
         try {
@@ -300,10 +316,26 @@ export function useChatAssistant() {
           content: msg.query || '',
           isAnswer: false,
         })
+
+        // 检测生图记录：answer 字段包含 JSON { type: "image_generation", image_urls: [...] }
+        let answerContent = msg.answer || ''
+        let generatedImages: string[] | undefined
+        try {
+          const parsed = JSON.parse(answerContent)
+          if (parsed?.type === 'image_generation' && Array.isArray(parsed.image_urls)) {
+            generatedImages = parsed.image_urls
+            answerContent = '🎨 已为你生成图片：'
+          }
+        }
+        catch {
+          // Not JSON, use as-is
+        }
+
         items.push({
           id: msg.id,
-          content: msg.answer || '',
+          content: answerContent,
           isAnswer: true,
+          generatedImages,
         })
       }
       setChatList(items)
@@ -503,6 +535,23 @@ export function useChatAssistant() {
               ? { ...item, content: '⚠️ 图片生成未返回结果，请重试' }
               : item,
           ))
+        }
+
+        // 持久化对话：使用 saveImageMessage 直接保存生图记录，不触发 LLM
+        if (baseAppId && images.length > 0) {
+          saveImageMessage(baseAppId, {
+            query: query,
+            image_urls: images,
+            conversation_id: conversationIdRef.current || undefined,
+          }).then((res: any) => {
+            if (res?.conversation_id)
+              conversationIdRef.current = res.conversation_id
+            if (res?.message_id)
+              lastMessageIdRef.current = res.message_id
+            setTimeout(() => fetchHistory(), 300)
+          }).catch((err) => {
+            console.error('Failed to save image message:', err)
+          })
         }
       }
       catch (err: any) {

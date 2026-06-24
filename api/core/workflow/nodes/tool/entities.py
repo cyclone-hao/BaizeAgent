@@ -17,6 +17,15 @@ class ToolEntity(BaseModel):
     credential_id: str | None = None
     plugin_unique_identifier: str | None = None  # redundancy
 
+    @field_validator("provider_type", mode="before")
+    @classmethod
+    def validate_provider_type(cls, value):
+        """Auto-correct invalid provider_type values (e.g., from AI-generated workflows)"""
+        valid_values = {"plugin", "builtin", "workflow", "api", "app", "dataset-retrieval", "mcp"}
+        if isinstance(value, str) and value not in valid_values:
+            return "builtin"
+        return value
+
     @field_validator("tool_configurations", mode="before")
     @classmethod
     def validate_tool_configurations(cls, value, values: ValidationInfo):

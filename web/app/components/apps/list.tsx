@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   useRouter,
 } from 'next/navigation'
-import useSWRInfinite from 'swr/infinite'
+import useSWR from 'swr'
 import { useTranslation } from 'react-i18next'
 import { useDebounceFn } from 'ahooks'
 import {
@@ -14,6 +14,8 @@ import {
   RiFile4Line,
   RiMessage3Line,
   RiRobot3Line,
+  RiArrowLeftLine,
+  RiArrowRightLine,
 } from '@remixicon/react'
 import AppCard from './app-card'
 import NewAppCard from './new-app-card'
@@ -35,36 +37,14 @@ import Empty from './empty'
 import Footer from './footer'
 import { useGlobalPublicStore } from '@/context/global-public-context'
 
+const PAGE_SIZE = 10
+
 const TagManagementModal = dynamic(() => import('@/app/components/base/tag-management'), {
   ssr: false,
 })
 const CreateFromDSLModal = dynamic(() => import('@/app/components/app/create-from-dsl-modal'), {
   ssr: false,
 })
-
-const getKey = (
-  pageIndex: number,
-  previousPageData: AppListResponse,
-  activeTab: string,
-  isCreatedByMe: boolean,
-  tags: string[],
-  keywords: string,
-) => {
-  if (!pageIndex || previousPageData.has_more) {
-    const params: any = { url: 'apps', params: { page: pageIndex + 1, limit: 30, name: keywords, is_created_by_me: isCreatedByMe } }
-
-    if (activeTab !== 'all')
-      params.params.mode = activeTab
-    else
-      delete params.params.mode
-
-    if (tags.length)
-      params.params.tag_ids = tags
-
-    return params
-  }
-  return null
-}
 
 const List = () => {
   const { t } = useTranslation()
@@ -79,6 +59,7 @@ const List = () => {
   const [isCreatedByMe, setIsCreatedByMe] = useState(queryIsCreatedByMe)
   const [tagFilterValue, setTagFilterValue] = useState<string[]>(tagIDs)
   const [searchKeywords, setSearchKeywords] = useState(keywords)
+  const [currentPage, setCurrentPage] = useState(1)
   const newAppCardRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [showCreateFromDSLModal, setShowCreateFromDSLModal] = useState(false)
@@ -101,14 +82,25 @@ const List = () => {
     enabled: isCurrentWorkspaceEditor,
   })
 
-  const { data, isLoading, error, setSize, mutate } = useSWRInfinite(
-    (pageIndex: number, previousPageData: AppListResponse) => getKey(pageIndex, previousPageData, activeTab, isCreatedByMe, tagIDs, searchKeywords),
+  // Build query params
+  const queryParams: any = {
+    page: currentPage,
+    limit: PAGE_SIZE,
+    name: searchKeywords,
+    is_created_by_me: isCreatedByMe,
+  }
+  if (activeTab !== 'all')
+    queryParams.mode = activeTab
+  if (tagIDs.length)
+    queryParams.tag_ids = tagIDs
+
+  const { data, isLoading, error, mutate } = useSWR<AppListResponse>(
+    { url: 'apps', params: queryParams },
     fetchAppList,
     {
-      revalidateFirstPage: true,
+      revalidateOnFocus: false,
       shouldRetryOnError: false,
       dedupingInterval: 500,
-      errorRetryCount: 3,
     },
   )
 
@@ -134,25 +126,10 @@ const List = () => {
       return router.replace('/datasets')
   }, [router, isCurrentWorkspaceDatasetOperator])
 
+  // Reset to page 1 when filters change
   useEffect(() => {
-    const hasMore = data?.at(-1)?.has_more ?? true
-    let observer: IntersectionObserver | undefined
-
-    if (error) {
-      if (observer)
-        observer.disconnect()
-      return
-    }
-
-    if (anchorRef.current) {
-      observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !isLoading && !error && hasMore)
-          setSize((size: number) => size + 1)
-      }, { rootMargin: '100px' })
-      observer.observe(anchorRef.current)
-    }
-    return () => observer?.disconnect()
-  }, [isLoading, setSize, anchorRef, mutate, data, error])
+    setCurrentPage(1)
+  }, [activeTab, isCreatedByMe, tagIDs, searchKeywords])
 
   const { run: handleSearch } = useDebounceFn(() => {
     setSearchKeywords(keywords)
@@ -208,19 +185,58 @@ const List = () => {
             />
           </div>
         </div>
-        {(data && data[0].total > 0)
+        {(data && data.total > 0)
           ? <div className='relative grid grow grid-cols-1 content-start gap-4 px-12 pt-2 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 2k:grid-cols-6'>
             {isCurrentWorkspaceEditor
               && <NewAppCard ref={newAppCardRef} onSuccess={mutate} selectedAppType={activeTab} />}
-            {data.map(({ data: apps }) => apps.map(app => (
+            {data.data.map(app => (
               <AppCard key={app.id} app={app} onRefresh={mutate} />
-            )))}
+            ))}
           </div>
           : <div className='relative grid grow grid-cols-1 content-start gap-4 overflow-hidden px-12 pt-2 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 2k:grid-cols-6'>
             {isCurrentWorkspaceEditor
               && <NewAppCard ref={newAppCardRef} className='z-10' onSuccess={mutate} selectedAppType={activeTab} />}
             <Empty />
           </div>}
+
+        {/* Pagination */}
+        {data && data.total > 0 && (
+          <div className="flex items-center justify-center gap-2 px-12 py-4">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1 || isLoading}
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-components-panel-border bg-components-panel-bg text-text-secondary hover:bg-state-base-hover disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <RiArrowLeftLine className="h-4 w-4" />
+            </button>
+            <div className="flex items-center gap-1">
+              {Array.from({ length: Math.ceil(data.total / PAGE_SIZE) }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  disabled={isLoading}
+                  className={`flex h-8 min-w-[2rem] items-center justify-center rounded-lg px-2 text-sm font-medium ${
+                    page === currentPage
+                      ? 'bg-primary-600 text-white'
+                      : 'border border-components-panel-border bg-components-panel-bg text-text-secondary hover:bg-state-base-hover'
+                  } disabled:cursor-not-allowed disabled:opacity-50`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setCurrentPage(p => p + 1)}
+              disabled={!data.has_more || isLoading}
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-components-panel-border bg-components-panel-bg text-text-secondary hover:bg-state-base-hover disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <RiArrowRightLine className="h-4 w-4" />
+            </button>
+            <span className="ml-2 text-sm text-text-tertiary">
+              共 {data.total} 个应用，第 {currentPage}/{Math.ceil(data.total / PAGE_SIZE)} 页
+            </span>
+          </div>
+        )}
 
         {isCurrentWorkspaceEditor && (
           <div
@@ -236,7 +252,6 @@ const List = () => {
           <Footer />
         )}
         <CheckModal />
-        <div ref={anchorRef} className='h-0'> </div>
         {showTagManagementModal && (
           <TagManagementModal type='app' show={showTagManagementModal} />
         )}

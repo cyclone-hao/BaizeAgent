@@ -65,6 +65,7 @@ from . import (
     version,
     web_search,
     image_generate,
+    workflow_builder,
 )
 
 # Import app controllers
@@ -295,6 +296,7 @@ __all__ = [
     "version",
     "web_search",
     "image_generate",
+    "workflow_builder",
     "website",
     "workflow",
     "workflow_app_log",

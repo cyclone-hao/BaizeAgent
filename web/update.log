@@ -1,5 +1,86 @@
 # 白泽智能体平台 二次开发更新日志
 
+## 2026-06-23 — AI 创建工作流全面稳定性修复
+
+### P0 — 用户直接可见
+- **加载状态可折叠**：AI 正在设计工作流... 的加载气泡现在可以点击折叠/展开，点击后隐藏进度条和预计时间，再次点击恢复显示
+- **修复生图后新对话不保存历史**：生图功能之前完全绕过对话系统（不调用 sendChatMessage），导致点击"新对话"后生图记录丢失。现在生图成功后会后台调用 sendChatMessage 创建对话记录，并刷新历史列表
+- **修复生图持久化触发多余 LLM 回答**：之前的生图历史记录调用 sendChatMessage 会触发完整 LLM 推理，导致历史中出现多余的文字回答。现在新增后端 API `POST /apps/{id}/image-messages` 直接保存生图记录到数据库，不触发 LLM 推理
+- **修复生图历史记录不显示图片**：从历史加载消息时，检测 answer 字段中的生图 JSON 数据（`{type: "image_generation", image_urls: [...]}`），自动解析并显示图片
+
+### Bug Fix
+- `api/controllers/console/app/completion.py` — 新增 `ImageMessageApi` 端点（`POST /apps/{id}/image-messages`）：直接保存生图记录到对话历史，不触发 LLM 推理，answer 字段存储 JSON 格式的图片 URL 数据
+- `service/debug.ts` — 新增 `saveImageMessage` 函数：调用新的 image-messages 端点
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 生图完成后改用 `saveImageMessage` 保存记录（替代 `sendChatMessage`），不触发 LLM；`loadConversation` 检测生图 JSON 并解析显示图片
+- `api/core/workflow/nodes/tool/entities.py` — 后端 ToolEntity 添加 `provider_type` validator：自动将无效值（如 AI 生成的 `"model"`）转换为 `"builtin"`
+- `api/core/workflow/nodes/code/entities.py` — 后端 CodeNodeData 添加 `outputs` validator：自动将数组格式转换为字典格式
+- `api/core/workflow/nodes/llm/entities.py` — 后端 LLMNodeData 添加默认值和 validators：`context` 默认 `enabled=False`，`model` 自动补全缺失字段
+- `api/core/workflow/nodes/knowledge_retrieval/entities.py` — 后端 KnowledgeRetrievalNodeData 添加默认值：`query_variable_selector`、`dataset_ids` 默认空列表，`retrieval_mode` 默认 `"multiple"`
+- `api/controllers/console/workflow_builder.py` — 修复 tool 节点 `provider_type` 生成无效值（如 `"model"`）：明确指定只允许 `"builtin"`, `"plugin"`, `"api"`, `"workflow"` 等合法值
+- `app/components/workflow/utils/workflow-init.ts` — 修复 tool 节点 `provider_type` 验证失败：自动将无效值转换为 `'builtin'`
+- `app/components/workflow/utils/workflow-init.ts` — 全面增强所有节点类型的防御性初始化：
+  - **HTTP 节点**：补全 `body`、`authorization`、`timeout`、`method`、`url`、`headers`、`params`、`variables` 默认值
+  - **Tool 节点**：补全 `provider_id`、`provider_type`、`provider_name`、`tool_name`、`tool_label`、`tool_parameters`、`tool_configurations` 默认值
+  - **Code 节点**：补全 `variables`、`code`、`code_language`、`outputs` 默认值；自动将数组格式的 outputs 转换为字典格式（AI 可能生成 end 节点风格的数组格式）
+  - **End 节点**：补全 `outputs` 默认值
+  - **Answer 节点**：补全 `variables`、`answer` 默认值
+  - **Start 节点**：补全 `variables` 默认值
+  - **Knowledge Retrieval 节点**：补全 `retrieval_mode`、`query_variable_selector`、`dataset_ids`、`multiple_retrieval_config` 默认值
+  - **LLM 节点**：补全 `context`、`vision`、`prompt_template` 默认值
+  - **If-else 节点**：确保 `cases` 至少包含 1 个 case（`case_id: "true"`）
+- `app/components/workflow/nodes/knowledge-retrieval/use-config.ts` — 修复 `query_variable_selector.length` 无空检查导致的崩溃（`inputs.query_variable_selector || []`）；fetchDatasets 失败时清空无效 dataset IDs
+- `app/components/workflow/nodes/http/use-config.ts` — 修复 `body.data`/`body.type` 无空检查导致的崩溃（合并默认配置后检查 body 是否存在）；补全 authorization/timeout/variables 默认值
+- `app/components/workflow/nodes/if-else/use-config.ts` — 修复 `condition.variable_selector!` 非空断言导致的崩溃（改为可选检查）；conditions 数组添加可选链访问
+- `app/components/workflow/nodes/code/use-config.ts` — 修复 `for (const item of inputs.variables)` 无空检查导致的崩溃（`inputs.variables || []`）
+- `app/components/workflow/nodes/llm/use-config.ts` — 修复 LLM 节点配置面板崩溃：useMemo 防御性处理缺失字段，可选链访问 context/vision
+- `app/components/workflow/datasets-detail-store/provider.tsx` — 修复数据集详情加载崩溃：try-catch 处理 fetchDatasets 失败
+- `api/controllers/console/workflow_builder.py` — 全面完善 system prompt：
+  - 为 Code 节点添加 outputs 格式说明（字典格式 `{"var": {"type": "string"}}`，而非数组格式），并提供正反示例
+  - 为 LLM 节点添加完整示例（包含 context、vision 字段）
+  - 为 HTTP Request 节点添加完整示例（包含 body、authorization、timeout）
+  - 为 End 节点添加完整示例（包含 outputs 数组格式）
+  - 为 Knowledge Retrieval 节点添加完整示例，明确要求 `dataset_ids: []`
+  - 为 If-else 节点添加完整示例，使用新版 `cases` 结构
+  - 添加边的 sourceHandle 规则（if-else 用 "true"/"false"，普通节点用 "source"）
+- `app/components/workflow/nodes/llm/use-config.ts` — 修复 LLM 节点配置面板崩溃：对 AI 生成的不完整节点数据做防御性处理，自动补全缺失字段默认值
+- `api/controllers/console/workflow_builder.py` — 更新 system prompt 中的知识库节点格式：添加 `retrieval_mode`、`multiple_retrieval_config` 等必填字段并提供完整示例；更新 `if-else` 节点格式从旧版 `conditions` 改为新版 `cases` 数组结构
+- `app/components/apps/workflow-builder/use-workflow-builder.ts` — 修复工作流草稿同步失败（400 BAD REQUEST）：补全必填字段（`features`, `environment_variables`, `conversation_variables`）；改进错误处理显示具体 API 错误信息
+
+## 2026-06-23 — 智能体编排页面新增"AI 创建工作流"功能
+
+### P0 — 用户直接可见
+- **新增"AI 创建工作流"按钮**：应用列表页（/apps）的创建卡片中新增紫色渐变按钮，点击打开 AI 对话弹窗
+- **对话式工作流设计**：用户通过自然语言描述需求，AI 自动设计工作流拓扑结构（节点 + 连接）
+- **实时预览**：右侧面板显示 SVG 工作流缩略图，节点按类型着色（start 绿色、llm 紫色、knowledge-retrieval 橙色等）
+- **一键创建**：确认设计后点击"创建工作流"，自动创建应用 + 同步工作流图 + 跳转到编辑器
+- **示例提示**：弹窗内提供 2 个示例场景按钮（客服智能体、邮件处理流程），降低使用门槛
+- **应用列表分页**：从无限滚动改为传统分页，每页显示 10 个应用，支持页码切换
+
+### P1 — 外部链接与接口
+- `api/controllers/console/workflow_builder.py` — **新增** POST /console/api/workflow-builder/chat 端点，调用 LLM 生成工作流 JSON
+- `web/service/workflow-builder.ts` — **新增** 前端工作流构建服务 `chatWithWorkflowBuilder()`
+- 支持 9 种节点类型：start、end、llm、knowledge-retrieval、code、if-else、tool、http-request、answer
+
+### P2 — 内部标识符
+- `app/components/apps/list.tsx` — 从 `useSWRInfinite`（无限滚动）改为 `useSWR`（单页分页），新增分页控件（页码按钮 + 上/下一页 + 总页数显示），每页 10 个应用
+- `app/components/apps/workflow-builder/dialog.tsx` — **新增** 主弹窗组件（左右分栏：对话 + 预览）
+- `app/components/apps/workflow-builder/use-workflow-builder.ts` — **新增** 核心 Hook（对话状态 + API 调用 + 工作流创建逻辑）
+- `app/components/apps/workflow-builder/workflow-preview.tsx` — 新增点击放大查看功能（小预览图悬停显示放大图标，点击弹出全屏模态框显示 600px 高度的大图，支持点击遮罩或关闭按钮关闭）
+- `app/components/apps/new-app-card.tsx` — 新增"AI 创建工作流"按钮（`RiSparklingFill` 图标）+ 动态加载 WorkflowBuilderDialog
+- `api/controllers/console/__init__.py` — 注册 `workflow_builder` 模块
+
+### Bug Fix
+- `api/controllers/console/workflow_builder.py` — DashScope API 超时时间从 60s 增加到 120s（生成复杂工作流 JSON 需要更长时间）
+- `api/controllers/console/workflow_builder.py` — System prompt 中的"Dify"替换为"智能体"（品牌一致性）
+- `api/controllers/console/workflow_builder.py` — System prompt 新增"重要限制"章节：禁止提及其他平台（Dify/Coze/扣子等）、禁止营销话术、要求简洁专业回复
+- `app/components/home/chat-assistant/config.ts` — 新增 `ENV_HOME_CHAT_APP_ID` 常量，支持环境变量配置全局共享应用
+- `app/components/home/chat-assistant/use-chat-assistant.ts` — 优先使用环境变量 `NEXT_PUBLIC_HOME_CHAT_APP_ID` 配置的全局共享应用，避免每用户重复创建
+- `web/.env.local` — 配置 `NEXT_PUBLIC_HOME_CHAT_APP_ID=66f7ec31-dc8d-491f-a469-6f1cc21737f9`（使用现有的首页对话助手应用）
+- `app/components/apps/workflow-builder/use-workflow-builder.ts` — 改进错误提示，显示超时/失败原因
+- `app/components/apps/workflow-builder/use-workflow-builder.ts` — 修复 toast 库导入（sonner → useToastContext）
+- `app/components/apps/workflow-builder/dialog.tsx` — 修复 Modal 属性名（show → isShow）+ Loading 组件兼容性
+- `app/components/apps/workflow-builder/dialog.tsx` — 新增加载进度条动画（从左到右滑动的渐变进度条，2秒循环，替代静态脉冲效果）
+
 ## 2026-06-23 — 首页 AI 助手新增"生图"功能（DashScope qwen-image）
 
 ### P0 — 用户直接可见

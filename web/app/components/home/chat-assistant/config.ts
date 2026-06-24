@@ -5,6 +5,9 @@
 /** localStorage key: 持久化选中的基础应用 ID */
 export const BASE_APP_STORAGE_KEY = 'home-chat-base-app-id'
 
+/** 环境变量配置的全局共享应用 ID（所有用户使用同一个应用） */
+export const ENV_HOME_CHAT_APP_ID = process.env.NEXT_PUBLIC_HOME_CHAT_APP_ID || ''
+
 /** localStorage key: 持久化选中的模型 */
 export const MODEL_STORAGE_KEY = 'home-chat-selected-model'
 

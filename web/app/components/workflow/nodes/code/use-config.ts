@@ -114,7 +114,7 @@ const useConfig = (id: string, payload: CodeNodeType) => {
       else if (inputs.code_language === CodeLanguage.python3) {
         mainDefRe = /def\s+main\b\s*\([\s\S]*?\)/g
         const param_list = []
-        for (const item of inputs.variables) {
+        for (const item of (inputs.variables || [])) {
           let param = item.variable
           let param_type = ''
           switch (item.value_type) {

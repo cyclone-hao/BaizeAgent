@@ -238,14 +238,27 @@ export const initialNodes = (originNodes: Node[], originEdges: Edge[]) => {
           },
         ]
       }
+      if (!nodeData.cases || nodeData.cases.length === 0) {
+        (node.data as IfElseNodeType).cases = [
+          {
+            case_id: 'true',
+            logical_operator: 'and' as any,
+            conditions: [],
+          },
+        ]
+      }
+
       node.data._targetBranches = branchNameCorrect([
-        ...(node.data as IfElseNodeType).cases.map(item => ({ id: item.case_id, name: '' })),
+        ...(node.data as IfElseNodeType).cases.map((item: any) => ({ id: item.case_id, name: '' })),
         { id: 'false', name: '' },
       ])
     }
 
     if (node.data.type === BlockEnum.QuestionClassifier) {
-      node.data._targetBranches = (node.data as QuestionClassifierNodeType).classes.map((topic) => {
+      const qcData = node.data as QuestionClassifierNodeType
+      if (!qcData.classes)
+        qcData.classes = []
+      node.data._targetBranches = qcData.classes.map((topic) => {
         return topic
       })
     }
@@ -266,30 +279,88 @@ export const initialNodes = (originNodes: Node[], originEdges: Edge[]) => {
     }
 
     // legacy provider handle
-    if (node.data.type === BlockEnum.LLM)
-      (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
+    if (node.data.type === BlockEnum.LLM) {
+      if ((node as any).data.model)
+        (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
 
-    if (node.data.type === BlockEnum.KnowledgeRetrieval && (node as any).data.multiple_retrieval_config?.reranking_model)
-      (node as any).data.multiple_retrieval_config.reranking_model.provider = correctModelProvider((node as any).data.multiple_retrieval_config?.reranking_model.provider)
-
-    if (node.data.type === BlockEnum.QuestionClassifier)
-      (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
-
-    if (node.data.type === BlockEnum.ParameterExtractor)
-      (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
-
-    if (node.data.type === BlockEnum.HttpRequest && !node.data.retry_config) {
-      node.data.retry_config = {
-        retry_enabled: true,
-        max_retries: DEFAULT_RETRY_MAX,
-        retry_interval: DEFAULT_RETRY_INTERVAL,
+      // Ensure required fields exist
+      if (!(node as any).data.context) {
+        (node as any).data.context = {
+          enabled: false,
+          variable_selector: [],
+        }
+      }
+      if (!(node as any).data.vision) {
+        (node as any).data.vision = {
+          enabled: false,
+        }
+      }
+      if (!(node as any).data.prompt_template) {
+        (node as any).data.prompt_template = []
       }
     }
 
-    if (node.data.type === BlockEnum.Tool && !(node as Node<ToolNodeType>).data.version && !(node as Node<ToolNodeType>).data.tool_node_version) {
-      (node as Node<ToolNodeType>).data.tool_node_version = '2'
+    if (node.data.type === BlockEnum.KnowledgeRetrieval) {
+      if ((node as any).data.multiple_retrieval_config?.reranking_model)
+        (node as any).data.multiple_retrieval_config.reranking_model.provider = correctModelProvider((node as any).data.multiple_retrieval_config?.reranking_model.provider)
 
-      const toolConfigurations = (node as Node<ToolNodeType>).data.tool_configurations
+      // Ensure required fields exist
+      if (!(node as any).data.retrieval_mode)
+        (node as any).data.retrieval_mode = 'multiple'
+
+      if (!(node as any).data.query_variable_selector)
+        (node as any).data.query_variable_selector = []
+
+      if (!(node as any).data.dataset_ids)
+        (node as any).data.dataset_ids = []
+
+      if (!(node as any).data.multiple_retrieval_config) {
+        (node as any).data.multiple_retrieval_config = {
+          top_k: 3,
+          score_threshold: null,
+          reranking_enable: false,
+        }
+      }
+    }
+
+    if (node.data.type === BlockEnum.QuestionClassifier && (node as any).data.model)
+      (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
+
+    if (node.data.type === BlockEnum.ParameterExtractor && (node as any).data.model)
+      (node as any).data.model.provider = correctModelProvider((node as any).data.model.provider)
+
+    if (node.data.type === BlockEnum.HttpRequest) {
+      const d = node.data as any
+      if (!d.variables) d.variables = []
+      if (!d.method) d.method = 'get'
+      if (!d.url) d.url = ''
+      if (!d.headers) d.headers = ''
+      if (!d.params) d.params = ''
+      if (!d.body) d.body = { type: 'none', data: [] }
+      if (!d.authorization) d.authorization = { type: 'no-auth', config: null }
+      if (!d.timeout) d.timeout = { max_connect_timeout: 0, max_read_timeout: 0, max_write_timeout: 0 }
+      if (!d.retry_config) {
+        d.retry_config = {
+          retry_enabled: true,
+          max_retries: DEFAULT_RETRY_MAX,
+          retry_interval: DEFAULT_RETRY_INTERVAL,
+        }
+      }
+    }
+
+    if (node.data.type === BlockEnum.Tool) {
+      const d = node.data as any
+      if (!d.provider_id) d.provider_id = ''
+      if (!d.provider_type || !['builtin', 'plugin', 'api', 'workflow', 'app', 'dataset-retrieval', 'mcp'].includes(d.provider_type))
+        d.provider_type = 'builtin'
+      if (!d.provider_name) d.provider_name = ''
+      if (!d.tool_name) d.tool_name = ''
+      if (!d.tool_label) d.tool_label = ''
+      if (!d.tool_parameters) d.tool_parameters = {}
+      if (!d.tool_configurations) d.tool_configurations = {}
+      if (!d.version && !d.tool_node_version) d.tool_node_version = '2'
+
+      const toolConfigurations = d.tool_configurations
       if (toolConfigurations && Object.keys(toolConfigurations).length > 0) {
         const newValues = { ...toolConfigurations }
         Object.keys(toolConfigurations).forEach((key) => {
@@ -299,9 +370,45 @@ export const initialNodes = (originNodes: Node[], originEdges: Edge[]) => {
               value: toolConfigurations[key],
             }
           }
-        });
-        (node as Node<ToolNodeType>).data.tool_configurations = newValues
+        })
+        d.tool_configurations = newValues
       }
+    }
+
+    if (node.data.type === BlockEnum.Code) {
+      const d = node.data as any
+      if (!d.variables) d.variables = []
+      if (!d.code) d.code = ''
+      if (!d.code_language) d.code_language = 'python3'
+      if (!d.outputs) {
+        d.outputs = {}
+      }
+      else if (Array.isArray(d.outputs)) {
+        // AI may generate array format (end node style), convert to dict format
+        const outputsObj: Record<string, any> = {}
+        d.outputs.forEach((item: any) => {
+          if (item.variable) {
+            outputsObj[item.variable] = { type: item.type || 'string' }
+          }
+        })
+        d.outputs = outputsObj
+      }
+    }
+
+    if (node.data.type === BlockEnum.End) {
+      const d = node.data as any
+      if (!d.outputs) d.outputs = []
+    }
+
+    if (node.data.type === BlockEnum.Answer) {
+      const d = node.data as any
+      if (!d.variables) d.variables = []
+      if (d.answer === undefined || d.answer === null) d.answer = ''
+    }
+
+    if (node.data.type === BlockEnum.Start) {
+      const d = node.data as any
+      if (!d.variables) d.variables = []
     }
 
     return node

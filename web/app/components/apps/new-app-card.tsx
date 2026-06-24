@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { CreateFromDSLModalTab } from '@/app/components/app/create-from-dsl-modal'
 import { useProviderContext } from '@/context/provider-context'
 import { FileArrow01, FilePlus01, FilePlus02 } from '@/app/components/base/icons/src/vender/line/files'
+import { RiSparklingFill } from '@remixicon/react'
 import cn from '@/utils/classnames'
 import dynamic from 'next/dynamic'
 
@@ -19,6 +20,9 @@ const CreateAppTemplateDialog = dynamic(() => import('@/app/components/app/creat
   ssr: false,
 })
 const CreateFromDSLModal = dynamic(() => import('@/app/components/app/create-from-dsl-modal'), {
+  ssr: false,
+})
+const WorkflowBuilderDialog = dynamic(() => import('@/app/components/apps/workflow-builder'), {
   ssr: false,
 })
 
@@ -44,6 +48,7 @@ const CreateAppCard = ({
   const [showNewAppTemplateDialog, setShowNewAppTemplateDialog] = useState(false)
   const [showNewAppModal, setShowNewAppModal] = useState(false)
   const [showCreateFromDSLModal, setShowCreateFromDSLModal] = useState(!!dslUrl)
+  const [showWorkflowBuilder, setShowWorkflowBuilder] = useState(false)
 
   const activeTab = useMemo(() => {
     if (dslUrl)
@@ -59,7 +64,14 @@ const CreateAppCard = ({
     >
       <div className='grow rounded-t-xl p-2'>
         <div className='px-6 pb-1 pt-2 text-xs font-medium leading-[18px] text-text-tertiary'>{t('app.createApp')}</div>
-        <button className='mb-1 flex w-full cursor-pointer items-center rounded-lg px-6 py-[7px] text-[13px] font-medium leading-[18px] text-text-tertiary hover:bg-state-base-hover hover:text-text-secondary' onClick={() => setShowNewAppModal(true)}>
+        <button
+          onClick={() => setShowWorkflowBuilder(true)}
+          className='mb-1 flex w-full cursor-pointer items-center rounded-lg px-6 py-[7px] text-[13px] font-medium leading-[18px] text-primary-600 hover:bg-primary-50'
+        >
+          <RiSparklingFill className='mr-2 h-4 w-4 shrink-0' />
+          AI 创建工作流
+        </button>
+        <button className='flex w-full cursor-pointer items-center rounded-lg px-6 py-[7px] text-[13px] font-medium leading-[18px] text-text-tertiary hover:bg-state-base-hover hover:text-text-secondary' onClick={() => setShowNewAppModal(true)}>
           <FilePlus01 className='mr-2 h-4 w-4 shrink-0' />
           {t('app.newApp.startFromBlank')}
         </button>
@@ -117,6 +129,17 @@ const CreateAppCard = ({
           }}
           activeTab={activeTab}
           dslUrl={dslUrl}
+          onSuccess={() => {
+            onPlanInfoChanged()
+            if (onSuccess)
+              onSuccess()
+          }}
+        />
+      )}
+      {showWorkflowBuilder && (
+        <WorkflowBuilderDialog
+          show={showWorkflowBuilder}
+          onClose={() => setShowWorkflowBuilder(false)}
           onSuccess={() => {
             onPlanInfoChanged()
             if (onSuccess)

@@ -27,9 +27,13 @@ const DatasetsDetailProvider: FC<DatasetsDetailProviderProps> = ({
     storeRef.current = createDatasetsDetailStore()
 
   const updateDatasetsDetail = useCallback(async (datasetIds: string[]) => {
-    const { data: datasetsDetail } = await fetchDatasets({ url: '/datasets', params: { page: 1, ids: datasetIds } })
-    if (datasetsDetail && datasetsDetail.length > 0)
-      storeRef.current!.getState().updateDatasetsDetail(datasetsDetail)
+    try {
+      const { data: datasetsDetail } = await fetchDatasets({ url: '/datasets', params: { page: 1, ids: datasetIds } })
+      if (datasetsDetail && datasetsDetail.length > 0)
+        storeRef.current!.getState().updateDatasetsDetail(datasetsDetail)
+    } catch (e) {
+      console.warn('Failed to fetch datasets detail, skipping:', datasetIds, e)
+    }
   }, [])
 
   useEffect(() => {

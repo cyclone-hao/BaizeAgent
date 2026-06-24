@@ -219,11 +219,20 @@ const useConfig = (id: string, payload: KnowledgeRetrievalNodeType) => {
       const inputs = inputRef.current
       const datasetIds = inputs.dataset_ids
       if (datasetIds?.length > 0) {
-        const { data: dataSetsWithDetail } = await fetchDatasets({ url: '/datasets', params: { page: 1, ids: datasetIds } as any })
-        setSelectedDatasets(dataSetsWithDetail)
+        try {
+          const { data: dataSetsWithDetail } = await fetchDatasets({ url: '/datasets', params: { page: 1, ids: datasetIds } as any })
+          setSelectedDatasets(dataSetsWithDetail)
+        } catch (e) {
+          console.warn('Failed to fetch datasets, clearing invalid IDs:', datasetIds, e)
+          // AI-generated workflows may contain fake dataset IDs, clear them
+          const newInputs = produce(inputs, (draft) => {
+            draft.dataset_ids = []
+          })
+          setInputs(newInputs)
+        }
       }
       const newInputs = produce(inputs, (draft) => {
-        draft.dataset_ids = datasetIds
+        draft.dataset_ids = draft.dataset_ids || []
       })
       setInputs(newInputs)
       setSelectedDatasetsLoaded(true)
@@ -232,8 +241,8 @@ const useConfig = (id: string, payload: KnowledgeRetrievalNodeType) => {
 
   useEffect(() => {
     const inputs = inputRef.current
-    let query_variable_selector: ValueSelector = inputs.query_variable_selector
-    if (isChatMode && inputs.query_variable_selector.length === 0 && startNodeId)
+    let query_variable_selector: ValueSelector = inputs.query_variable_selector || []
+    if (isChatMode && query_variable_selector.length === 0 && startNodeId)
       query_variable_selector = [startNodeId, 'sys.query']
 
     setInputs(produce(inputs, (draft) => {
