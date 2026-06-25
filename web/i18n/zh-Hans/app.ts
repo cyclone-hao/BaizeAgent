@@ -1,5 +1,5 @@
 const translation = {
-  createApp: '创建应用',
+  createApp: '打造智能体应用',
   types: {
     all: '全部',
     chatbot: '聊天助手',
@@ -17,7 +17,7 @@ const translation = {
   duplicateTitle: '复制应用',
   export: '导出 DSL',
   exportFailed: '导出 DSL 失败',
-  importDSL: '导入 DSL 文件',
+  importDSL: '导入智能体JSON',
   createFromConfigFile: '通过 DSL 文件创建',
   importFromDSL: '导入 DSL',
   importFromDSLFile: '文件',
@@ -37,8 +37,8 @@ const translation = {
   roadmap: '产品路线图',
   newApp: {
     learnMore: '了解更多',
-    startFromBlank: '创建空白应用',
-    startFromTemplate: '从应用模版创建',
+    startFromBlank: '创建新的智能体应用',
+    startFromTemplate: '从智能体应用广场创建',
     foundResult: '{{count}} 个结果',
     foundResults: '{{count}} 个结果',
     noAppsFound: '未找到应用',

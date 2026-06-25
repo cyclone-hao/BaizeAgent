@@ -8,8 +8,6 @@ import useSWR from 'swr'
 import { useTranslation } from 'react-i18next'
 import { useDebounceFn } from 'ahooks'
 import {
-  RiApps2Line,
-  RiDragDropLine,
   RiExchange2Line,
   RiFile4Line,
   RiMessage3Line,
@@ -20,7 +18,6 @@ import {
 import AppCard from './app-card'
 import NewAppCard from './new-app-card'
 import useAppsQueryState from './hooks/use-apps-query-state'
-import { useDSLDragDrop } from './hooks/use-dsl-drag-drop'
 import type { AppListResponse } from '@/models/app'
 import { fetchAppList } from '@/service/apps'
 import { useAppContext } from '@/context/app-context'
@@ -31,18 +28,13 @@ import { useTabSearchParams } from '@/hooks/use-tab-searchparams'
 import Input from '@/app/components/base/input'
 import { useStore as useTagStore } from '@/app/components/base/tag-management/store'
 import TagFilter from '@/app/components/base/tag-management/filter'
-import CheckboxWithLabel from '@/app/components/datasets/create/website/base/checkbox-with-label'
 import dynamic from 'next/dynamic'
 import Empty from './empty'
-import Footer from './footer'
 import { useGlobalPublicStore } from '@/context/global-public-context'
 
 const PAGE_SIZE = 10
 
 const TagManagementModal = dynamic(() => import('@/app/components/base/tag-management'), {
-  ssr: false,
-})
-const CreateFromDSLModal = dynamic(() => import('@/app/components/app/create-from-dsl-modal'), {
   ssr: false,
 })
 
@@ -53,7 +45,7 @@ const List = () => {
   const { isCurrentWorkspaceEditor, isCurrentWorkspaceDatasetOperator } = useAppContext()
   const showTagManagementModal = useTagStore(s => s.showTagManagementModal)
   const [activeTab, setActiveTab] = useTabSearchParams({
-    defaultTab: 'all',
+    defaultTab: 'workflow',
   })
   const { query: { tagIDs = [], keywords = '', isCreatedByMe: queryIsCreatedByMe = false }, setQuery } = useAppsQueryState()
   const [isCreatedByMe, setIsCreatedByMe] = useState(queryIsCreatedByMe)
@@ -61,26 +53,12 @@ const List = () => {
   const [searchKeywords, setSearchKeywords] = useState(keywords)
   const [currentPage, setCurrentPage] = useState(1)
   const newAppCardRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [showCreateFromDSLModal, setShowCreateFromDSLModal] = useState(false)
-  const [droppedDSLFile, setDroppedDSLFile] = useState<File | undefined>()
   const setKeywords = useCallback((keywords: string) => {
     setQuery(prev => ({ ...prev, keywords }))
   }, [setQuery])
   const setTagIDs = useCallback((tagIDs: string[]) => {
     setQuery(prev => ({ ...prev, tagIDs }))
   }, [setQuery])
-
-  const handleDSLFileDropped = useCallback((file: File) => {
-    setDroppedDSLFile(file)
-    setShowCreateFromDSLModal(true)
-  }, [])
-
-  const { dragging } = useDSLDragDrop({
-    onDSLFileDropped: handleDSLFileDropped,
-    containerRef,
-    enabled: isCurrentWorkspaceEditor,
-  })
 
   // Build query params
   const queryParams: any = {
@@ -106,7 +84,6 @@ const List = () => {
 
   const anchorRef = useRef<HTMLDivElement>(null)
   const options = [
-    { value: 'all', text: t('app.types.all'), icon: <RiApps2Line className='mr-1 h-[14px] w-[14px]' /> },
     { value: 'workflow', text: t('app.types.workflow'), icon: <RiExchange2Line className='mr-1 h-[14px] w-[14px]' /> },
     { value: 'advanced-chat', text: t('app.types.advanced'), icon: <RiMessage3Line className='mr-1 h-[14px] w-[14px]' /> },
     { value: 'chat', text: t('app.types.chatbot'), icon: <RiMessage3Line className='mr-1 h-[14px] w-[14px]' /> },
@@ -147,20 +124,9 @@ const List = () => {
     handleTagsUpdate()
   }
 
-  const handleCreatedByMeChange = useCallback(() => {
-    const newValue = !isCreatedByMe
-    setIsCreatedByMe(newValue)
-    setQuery(prev => ({ ...prev, isCreatedByMe: newValue }))
-  }, [isCreatedByMe, setQuery])
-
   return (
     <>
-      <div ref={containerRef} className='relative flex h-0 shrink-0 grow flex-col overflow-y-auto bg-background-body'>
-        {dragging && (
-          <div className="absolute inset-0 z-50 m-0.5 rounded-2xl border-2 border-dashed border-components-dropzone-border-accent bg-[rgba(21,90,239,0.14)] p-2">
-          </div>
-        )}
-
+      <div className='relative flex h-0 shrink-0 grow flex-col overflow-y-auto bg-background-body'>
         <div className='sticky top-0 z-10 flex flex-wrap items-center justify-between gap-y-2 bg-background-body px-12 pb-2 pt-4 leading-[56px]'>
           <TabSliderNew
             value={activeTab}
@@ -168,12 +134,6 @@ const List = () => {
             options={options}
           />
           <div className='flex items-center gap-2'>
-            <CheckboxWithLabel
-              className='mr-2'
-              label={t('app.showMyCreatedAppsOnly')}
-              isChecked={isCreatedByMe}
-              onChange={handleCreatedByMeChange}
-            />
             <TagFilter type='app' value={tagFilterValue} onChange={handleTagsChange} />
             <Input
               showLeftIcon
@@ -238,40 +198,11 @@ const List = () => {
           </div>
         )}
 
-        {isCurrentWorkspaceEditor && (
-          <div
-            className={`flex items-center justify-center gap-2 py-4 ${dragging ? 'text-text-accent' : 'text-text-quaternary'}`}
-            role="region"
-            aria-label={t('app.newApp.dropDSLToCreateApp')}
-          >
-            <RiDragDropLine className="h-4 w-4" />
-            <span className="system-xs-regular">{t('app.newApp.dropDSLToCreateApp')}</span>
-          </div>
-        )}
-        {!systemFeatures.branding.enabled && (
-          <Footer />
-        )}
         <CheckModal />
         {showTagManagementModal && (
           <TagManagementModal type='app' show={showTagManagementModal} />
         )}
       </div>
-
-      {showCreateFromDSLModal && (
-        <CreateFromDSLModal
-          show={showCreateFromDSLModal}
-          onClose={() => {
-            setShowCreateFromDSLModal(false)
-            setDroppedDSLFile(undefined)
-          }}
-          onSuccess={() => {
-            setShowCreateFromDSLModal(false)
-            setDroppedDSLFile(undefined)
-            mutate()
-          }}
-          droppedFile={droppedDSLFile}
-        />
-      )}
     </>
   )
 }

@@ -1,3 +1,4 @@
+import json
 import logging
 
 from flask import request
@@ -26,11 +27,12 @@ from core.errors.error import (
 )
 from core.helper.trace_id_helper import get_external_trace_id
 from core.model_runtime.errors.invoke import InvokeError
+from extensions.ext_database import db
 from libs import helper
 from libs.helper import uuid_value
 from libs.login import current_user, login_required
 from models import Account
-from models.model import AppMode
+from models.model import AppMode, Conversation, Message
 from services.app_generate_service import AppGenerateService
 from services.errors.llm import InvokeRateLimitError
 

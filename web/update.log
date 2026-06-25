@@ -1,5 +1,92 @@
 # 白泽智能体平台 二次开发更新日志
 
+## 2026-06-25 — 隐藏"从智能体应用广场创建"按钮
+
+### P0 — 用户直接可见
+- **隐藏"从智能体应用广场创建"按钮**：创建卡片中的模板创建按钮已移除，仅保留"AI 创建工作流"、"创建新的智能体应用"、"导入智能体JSON"三个入口
+
+### P2 — 内部标识符
+- `app/components/apps/new-app-card.tsx` — 移除模板创建按钮渲染和 `RiCompass3Line` 图标导入
+
+## 2026-06-25 — 智能体编排页面隐藏"我创建的"和"全部"标签
+
+### P0 — 用户直接可见
+- **隐藏"我创建的"复选框**：智能体编排页面（/apps）右侧筛选栏中的"我创建的"复选框已移除
+- **隐藏"全部"标签**：TabSlider 中的"全部"分类标签已移除，默认显示"工作流"标签
+
+### P2 — 内部标识符
+- `app/components/apps/list.tsx` — 移除 `CheckboxWithLabel` 组件导入和渲染，移除 `RiApps2Line` 图标导入，从 `options` 数组中移除"全部"选项，`defaultTab` 从 `'all'` 改为 `'workflow'`
+
+## 2026-06-25 — 创建卡片文案和图标更新
+
+### P0 — 用户直接可见
+- **"创建空白应用" → "创建新的智能体应用"**
+- **"导入 DSL 文件" → "导入智能体JSON"**
+- **4 个按钮图标全部替换**（去除 Dify 原版 FilePlus/FileArrow 图标）：
+  - AI 创建工作流：✨ `RiSparklingFill`（保持）
+  - 创建新的智能体应用：🤖 `RiRobot2Line`（原 FilePlus01）
+  - 从智能体应用广场创建：🧭 `RiCompass3Line`（原 FilePlus02）
+  - 导入智能体JSON：📥 `RiFileDownloadLine`（原 FileArrow01）
+
+### P2 — 内部标识符
+- `i18n/zh-Hans/app.ts` — `importDSL` 和 `newApp.startFromBlank` 文案更新
+- `app/components/apps/new-app-card.tsx` — 移除 `FileArrow01/FilePlus01/FilePlus02` 导入，替换为 Remix 图标
+
+## 2026-06-25 — 智能体编排页面文案更新
+
+### P0 — 用户直接可见
+- **"创建应用" → "打造智能体应用"**：创建卡片标题文案更新
+- **"从应用模版创建" → "从智能体应用广场创建"**：创建卡片中模板创建按钮文案更新
+
+### P2 — 内部标识符
+- `i18n/zh-Hans/app.ts` — `createApp` 和 `newApp.startFromTemplate` 文案更新
+
+## 2026-06-25 — 智能体编排页面移除 DSL 拖放和底部版权栏
+
+### P0 — 用户直接可见
+- **移除"拖放 DSL 文件到此处创建应用"**：智能体编排页面（/apps）底部的拖放提示和 DSL 拖放创建功能已移除
+- **移除底部版权栏**：智能体编排页面底部的 "© 2026 中国广电 - 中广数智科技（北京）有限责任公司" 已移除
+
+### P2 — 内部标识符
+- `app/components/apps/list.tsx` — 移除 DSL 拖放相关代码：
+  - 移除 `useDSLDragDrop` hook 调用和 `dragging` 状态
+  - 移除拖放覆盖层（虚线边框）
+  - 移除 `CreateFromDSLModal` 动态导入和渲染
+  - 移除 `droppedDSLFile` / `showCreateFromDSLModal` 状态
+  - 移除 `RiDragDropLine` 图标导入
+  - 移除 `Footer` 组件导入和渲染
+
+## 2026-06-25 — GitHub 仓库改名 + Docker 容器修复 + 生产部署 CI/CD
+
+### P1 — 外部链接与接口
+- **GitHub 仓库改名**：`cyclone-hao/dify` → `cyclone-hao/BaizeAgent`
+- **本地 git remote 更新**：origin 指向 `https://github.com/cyclone-hao/BaizeAgent.git`
+- `.github/workflows/build-push.yml` — 重写 CI/CD 流水线：
+  - 从 Docker Hub（`langgenius/dify-*`）改为 GitHub Container Registry（`ghcr.io/cyclone-hao/baize-*`）
+  - 移除 `github.repository == 'langgenius/dify'` 守卫（原仓库专属，fork 不触发）
+  - 推送到 `main` 和 `agentflow-ui-customization` 分支时自动构建
+  - 支持手动触发（workflow_dispatch）+ 自定义 tag
+  - 使用 GHCR 缓存加速构建
+
+### P2 — 内部标识符
+- `DEPLOY.md` — **新增** 生产环境部署指南：
+  - 架构图：代码 → GitHub Actions → GHCR 镜像 → 服务器 docker compose
+  - 开发环境 vs 生产环境镜像对比表
+  - 三步部署流程：构建镜像 → 服务器配置 → 启动验证
+  - 后续更新流程（push → build → pull → up）
+  - 常见问题：GHCR 不可达、版本回滚、数据库迁移
+
+### Bug Fix
+- Docker 容器无法启动（API/Worker/Sandbox/SSRF Proxy 全部 crash loop）：
+  - 根因：容器是 42 小时前创建的陈旧状态，DB 重建后容器启动时序问题导致 crash loop
+  - 修复：`docker compose up -d --force-recreate api worker sandbox ssrf_proxy`
+- Plugin Daemon `no available node, plugin not found` 错误（AI 助手对话报 500）：
+  - 根因：plugin_daemon 容器是 2 周前的旧容器，当时 DB 连接失败后进入 panic 循环从未恢复
+  - 修复：`docker compose up -d --force-recreate plugin_daemon`，OpenAI/Tongyi/DeepSeek 三个模型插件正常加载
+- **生图保存历史记录 500 错误** (`POST /apps/{id}/image-messages` 返回 `NameError: name 'db' is not defined`)：
+  - 根因：`api/controllers/console/app/completion.py` 的 `ImageMessageApi` 类使用了 `db`、`Conversation`、`Message`、`json` 但缺少 import 语句
+  - 修复：添加 `import json`、`from extensions.ext_database import db`、`from models.model import Conversation, Message`
+
 ## 2026-06-23 — AI 创建工作流全面稳定性修复
 
 ### P0 — 用户直接可见
