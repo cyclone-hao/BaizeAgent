@@ -9,7 +9,6 @@ import { RiCloseLine, RiCommandLine, RiCornerDownLeftLine } from '@remixicon/rea
 import { useDebounceFn, useKeyPress } from 'ahooks'
 import Uploader from './uploader'
 import Button from '@/app/components/base/button'
-import Input from '@/app/components/base/input'
 import Modal from '@/app/components/base/modal'
 import { ToastContext } from '@/app/components/base/toast'
 import {
@@ -49,8 +48,6 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
   const { notify } = useContext(ToastContext)
   const [currentFile, setDSLFile] = useState<File | undefined>(droppedFile)
   const [fileContent, setFileContent] = useState<string>()
-  const [currentTab, setCurrentTab] = useState(activeTab)
-  const [dslUrlValue, setDslUrlValue] = useState(dslUrl)
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [versions, setVersions] = useState<{ importedVersion: string; systemVersion: string }>()
   const [importId, setImportId] = useState<string>()
@@ -84,29 +81,17 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
       handleFile(droppedFile)
   }, [droppedFile])
 
-  const onCreate: MouseEventHandler = async () => {
-    if (currentTab === CreateFromDSLModalTab.FROM_FILE && !currentFile)
-      return
-    if (currentTab === CreateFromDSLModalTab.FROM_URL && !dslUrlValue)
+  const onCreate = async () => {
+    if (!currentFile)
       return
     if (isCreatingRef.current)
       return
     isCreatingRef.current = true
     try {
-      let response
-
-      if (currentTab === CreateFromDSLModalTab.FROM_FILE) {
-        response = await importDSL({
-          mode: DSLImportMode.YAML_CONTENT,
-          yaml_content: fileContent || '',
-        })
-      }
-      if (currentTab === CreateFromDSLModalTab.FROM_URL) {
-        response = await importDSL({
-          mode: DSLImportMode.YAML_URL,
-          yaml_url: dslUrlValue || '',
-        })
-      }
+      const response = await importDSL({
+        mode: DSLImportMode.YAML_CONTENT,
+        yaml_content: fileContent || '',
+      })
 
       if (!response)
         return
@@ -153,7 +138,7 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
   const { run: handleCreateApp } = useDebounceFn(onCreate, { wait: 300 })
 
   useKeyPress(['meta.enter', 'ctrl.enter'], () => {
-    if (show && !isAppsFull && ((currentTab === CreateFromDSLModalTab.FROM_FILE && currentFile) || (currentTab === CreateFromDSLModalTab.FROM_URL && dslUrlValue)))
+    if (show && !isAppsFull && currentFile)
       handleCreateApp()
   })
 
@@ -197,26 +182,11 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
     }
   }
 
-  const tabs = [
-    {
-      key: CreateFromDSLModalTab.FROM_FILE,
-      label: t('app.importFromDSLFile'),
-    },
-    {
-      key: CreateFromDSLModalTab.FROM_URL,
-      label: t('app.importFromDSLUrl'),
-    },
-  ]
-
   const buttonDisabled = useMemo(() => {
     if (isAppsFull)
       return true
-    if (currentTab === CreateFromDSLModalTab.FROM_FILE)
-      return !currentFile
-    if (currentTab === CreateFromDSLModalTab.FROM_URL)
-      return !dslUrlValue
-    return false
-  }, [isAppsFull, currentTab, currentFile, dslUrlValue])
+    return !currentFile
+  }, [isAppsFull, currentFile])
 
   return (
     <>
@@ -226,7 +196,7 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
         onClose={noop}
       >
         <div className='title-2xl-semi-bold flex items-center justify-between pb-3 pl-6 pr-5 pt-6 text-text-primary'>
-          {t('app.importFromDSL')}
+          导入智能体 JSON
           <div
             className='flex h-8 w-8 cursor-pointer items-center'
             onClick={() => onClose()}
@@ -234,49 +204,12 @@ const CreateFromDSLModal = ({ show, onSuccess, onClose, activeTab = CreateFromDS
             <RiCloseLine className='h-5 w-5 text-text-tertiary' />
           </div>
         </div>
-        <div className='system-md-semibold flex h-9 items-center space-x-6 border-b border-divider-subtle px-6 text-text-tertiary'>
-          {
-            tabs.map(tab => (
-              <div
-                key={tab.key}
-                className={cn(
-                  'relative flex h-full cursor-pointer items-center',
-                  currentTab === tab.key && 'text-text-primary',
-                )}
-                onClick={() => setCurrentTab(tab.key)}
-              >
-                {tab.label}
-                {
-                  currentTab === tab.key && (
-                    <div className='absolute bottom-0 h-[2px] w-full bg-util-colors-blue-brand-blue-brand-600'></div>
-                  )
-                }
-              </div>
-            ))
-          }
-        </div>
         <div className='px-6 py-4'>
-          {
-            currentTab === CreateFromDSLModalTab.FROM_FILE && (
-              <Uploader
-                className='mt-0'
-                file={currentFile}
-                updateFile={handleFile}
-              />
-            )
-          }
-          {
-            currentTab === CreateFromDSLModalTab.FROM_URL && (
-              <div>
-                <div className='system-md-semibold mb-1 text-text-secondary'>DSL URL</div>
-                <Input
-                  placeholder={t('app.importFromDSLUrlPlaceholder') || ''}
-                  value={dslUrlValue}
-                  onChange={e => setDslUrlValue(e.target.value)}
-                />
-              </div>
-            )
-          }
+          <Uploader
+            className='mt-0'
+            file={currentFile}
+            updateFile={handleFile}
+          />
         </div>
         {isAppsFull && (
           <div className='px-6'>

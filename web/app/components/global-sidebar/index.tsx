@@ -15,9 +15,16 @@ import {
 } from '@remixicon/react'
 import SidebarNavItem from './nav-item'
 import { useEventEmitterContextContext } from '@/context/event-emitter'
+import { useProviderContext } from '@/context/provider-context'
 import AccountDropdown from '@/app/components/header/account-dropdown'
 import { Group } from '@/app/components/base/icons/src/vender/other'
 import cn from '@/utils/classnames'
+import dynamic from 'next/dynamic'
+
+const CreateAppModal = dynamic(() => import('@/app/components/app/create-app-modal'), { ssr: false })
+const CreateAppTemplateDialog = dynamic(() => import('@/app/components/app/create-app-dialog'), { ssr: false })
+const CreateFromDSLModal = dynamic(() => import('@/app/components/app/create-from-dsl-modal'), { ssr: false })
+const WorkflowBuilderDialog = dynamic(() => import('@/app/components/apps/workflow-builder'), { ssr: false })
 
 const SIDEBAR_STORAGE_KEY = 'global-sidebar-expand'
 
@@ -26,6 +33,20 @@ const GlobalSidebar = () => {
   const [expand, setExpand] = useState(false)
   const [hideSidebar, setHideSidebar] = useState(false)
   const { eventEmitter } = useEventEmitterContextContext()
+  const { onPlanInfoChanged } = useProviderContext()
+
+  // Create dialog state
+  const [createDialog, setCreateDialog] = useState<{
+    type: 'app' | 'workflow' | 'dsl' | 'template' | null
+    defaultAppMode?: 'advanced-chat' | 'agent-chat'
+  }>({ type: null })
+
+  const closeDialog = useCallback(() => setCreateDialog({ type: null }), [])
+
+  const handleCreateSuccess = useCallback(() => {
+    onPlanInfoChanged()
+    closeDialog()
+  }, [onPlanInfoChanged, closeDialog])
 
   // Load persisted state
   useEffect(() => {
@@ -136,6 +157,39 @@ const GlobalSidebar = () => {
       )}>
         <AccountDropdown />
       </div>
+
+      {/* Create dialogs */}
+      {createDialog.type === 'app' && (
+        <CreateAppModal
+          show
+          onClose={closeDialog}
+          onSuccess={handleCreateSuccess}
+          onCreateFromTemplate={() => setCreateDialog({ type: 'template' })}
+          defaultAppMode={createDialog.defaultAppMode}
+        />
+      )}
+      {createDialog.type === 'template' && (
+        <CreateAppTemplateDialog
+          show
+          onClose={closeDialog}
+          onSuccess={handleCreateSuccess}
+          onCreateFromBlank={() => setCreateDialog({ type: 'app' })}
+        />
+      )}
+      {createDialog.type === 'dsl' && (
+        <CreateFromDSLModal
+          show
+          onClose={closeDialog}
+          onSuccess={handleCreateSuccess}
+        />
+      )}
+      {createDialog.type === 'workflow' && (
+        <WorkflowBuilderDialog
+          show
+          onClose={closeDialog}
+          onSuccess={handleCreateSuccess}
+        />
+      )}
     </div>
   )
 }

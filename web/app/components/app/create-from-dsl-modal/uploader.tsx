@@ -3,7 +3,6 @@ import type { FC } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import {
   RiDeleteBinLine,
-  RiUploadCloud2Line,
 } from '@remixicon/react'
 import { useTranslation } from 'react-i18next'
 import { useContext } from 'use-context-selector'
@@ -106,14 +105,13 @@ const Uploader: FC<Props> = ({
       />
       <div ref={dropRef}>
         {!file && (
-          <div className={cn('flex h-12 items-center rounded-[10px] border border-dashed border-components-dropzone-border bg-components-dropzone-bg text-sm font-normal', dragging && 'border-components-dropzone-border-accent bg-components-dropzone-bg-accent')}>
-            <div className='flex w-full items-center justify-center space-x-2'>
-              <RiUploadCloud2Line className='h-6 w-6 text-text-tertiary' />
-              <div className='text-text-tertiary'>
-                {t('app.dslUploader.button')}
-                <span className='cursor-pointer pl-1 text-text-accent' onClick={selectHandle}>{t('app.dslUploader.browse')}</span>
-              </div>
-            </div>
+          <div className='flex h-12 items-center justify-center rounded-[10px] border border-dashed border-components-dropzone-border bg-components-dropzone-bg text-sm font-normal'>
+            <button
+              onClick={selectHandle}
+              className='cursor-pointer rounded-lg bg-primary-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-700'
+            >
+              选择文件
+            </button>
             {dragging && <div ref={dragRef} className='absolute left-0 top-0 h-full w-full' />}
           </div>
         )}

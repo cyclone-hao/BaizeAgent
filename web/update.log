@@ -1,5 +1,24 @@
 # 白泽智能体平台 二次开发更新日志
 
+## 2026-06-25 — 智能体编排页面重构：创建入口移至侧边栏子菜单
+
+### P0 — 用户直接可见
+- **创建入口移至侧边栏**：原智能体编排页面右侧的 3 个创建按钮（AI 创建工作流、创建新的智能体应用、导入智能体JSON）已移至侧边栏"智能体编排"的下级子菜单
+- **子菜单结构**（扁平化）：
+  - ✨ AI 自动编排智能体（内联显示，非弹窗）
+  - 🤖 Agentic 智能体编排
+- **AI 自动编排智能体改为内联显示**：点击后不再弹出对话框，而是在右侧主内容区显示工作流构建器（带返回按钮）
+- **标签页移除**：移除"对话智能体"和"Agentic 智能体"选择页签，直接显示全部智能体列表，不再按类型筛选
+- **导入按钮美化**：采用渐变背景、圆角、字体加粗和悬浮动效，更加精致
+- **导入智能体 JSON 按钮**：从侧边栏子菜单移至智能体编排页面右上方，作为独立按钮显示在标签筛选区域
+- **创建卡片移除**：智能体编排页面不再显示创建卡片（NewAppCard），仅展示应用列表
+
+### P2 — 内部标识符
+- `app/components/global-sidebar/sidebar-nav-group.tsx` — 新建可折叠侧边栏分组组件，支持展开/收起状态、子菜单嵌套、收起时的悬浮飞出面板
+- `app/components/global-sidebar/index.tsx` — 将"智能体编排"改为 SidebarNavGroup，添加创建子菜单和弹窗状态管理，动态导入 CreateAppModal / CreateAppTemplateDialog / CreateFromDSLModal / WorkflowBuilderDialog
+- `app/components/apps/workflow-builder/inline.tsx` — 新建内联版工作流构建器组件（无 Modal 包裹，带返回按钮），复用 `useWorkflowBuilder` hook 和 `WorkflowPreview`
+- `app/components/apps/list.tsx` — 移除 NewAppCard 导入和渲染，移除 newAppCardRef / anchorRef，精简 options 数组为 2 个标签，defaultTab 改为 `'advanced-chat'`，清理未使用的 import；新增"导入智能体 JSON"按钮和 CreateFromDSLModal 弹窗；新增 WorkflowBuilderInline 内联显示（监听 `show-workflow-builder` 事件）
+
 ## 2026-06-25 — 隐藏"从智能体应用广场创建"按钮
 
 ### P0 — 用户直接可见
@@ -1082,3 +1101,30 @@
 - 弹窗：白色圆角卡片 + 柔和阴影 + "欢迎登录" + 完整表单
 - 淡紫色装饰光斑 + 轻微浮动动画
 - 移动端自适应
+
+## 2026-06-26 — 智能体编排页面改为列表布局，创建入口移至右上角
+
+### P0 — 用户直接可见
+- **列表布局替代卡片网格**：智能体编排页面（/apps）的应用列表从卡片网格改为表格列表，行内展示图标、名称、描述、模式、作者、更新时间、操作菜单
+- **右上角新增三个独立创建按钮**：
+  - ✨ AI 自动编排智能体 — 打开内联工作流构建器
+  - 🤖 Agentic 智能体编排 — 打开 Agentic 智能体创建面板
+  - 📥 导入智能体 JSON — 打开 DSL 导入弹窗
+- **移除侧边栏子菜单**：左侧边栏「智能体编排」不再展开子菜单，创建入口统一放到页面右上角
+
+### P2 — 内部标识符
+- `app/components/apps/list.tsx` — 网格布局改为 `table` 列表，新增 AI 自动编排 / Agentic 编排 / 导入 JSON 三个右上角按钮
+- `app/components/apps/app-card.tsx` — 提取操作菜单为独立组件 `AppCardOperations`，卡片组件精简
+- `app/components/apps/app-card-operations.tsx` — 新建通用操作菜单组件（编辑、复制、导出、切换、打开、访问控制、删除）
+- `app/components/apps/app-list-item.tsx` — 新建列表行组件，展示图标、名称、描述、模式、作者、更新时间、操作菜单
+- `app/components/global-sidebar/index.tsx` — 移除「智能体编排」下的两个子菜单项，改为普通 `SidebarNavItem`
+- `app/components/apps/list.tsx` — 表格行之间与表头分割线统一改为 `border-divider-regular`，更明显
+- `app/components/apps/app-list-item.tsx` — 名称列外层添加 `overflow-hidden`，名称强制 `whitespace-nowrap`；行分割线改为 `border-divider-regular`
+
+## 2026-06-26 — AI 自动编排默认模型改为 qwen3.7-max
+
+### P0 — 用户直接可见
+- **AI 自动编排智能体模型切换**：工作流构建器后端调用的大模型从 `qwen-plus` 改为 `qwen3.7-max`，阿里百炼（DashScope）API key 保持不变
+
+### P2 — 内部标识符
+- `api/controllers/console/workflow_builder.py` — `DEFAULT_MODEL` 从 `"qwen-plus"` 改为 `"qwen3.7-max"`

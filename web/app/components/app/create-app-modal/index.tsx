@@ -283,6 +283,7 @@ const CreateAppModal = ({ show, onClose, onSuccess, onCreateFromTemplate, defaul
   )
 }
 
+export { CreateApp }
 export default CreateAppModal
 
 type AppTypeCardProps = {

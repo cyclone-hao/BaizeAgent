@@ -311,7 +311,7 @@ WORKFLOW_BUILDER_SYSTEM_PROMPT = """你是一个专业的智能体工作流设�
 """
 
 DASHSCOPE_CHAT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
-DEFAULT_MODEL = "qwen-plus"
+DEFAULT_MODEL = "qwen3.7-max"
 
 
 @console_ns.route("/workflow-builder/chat")
