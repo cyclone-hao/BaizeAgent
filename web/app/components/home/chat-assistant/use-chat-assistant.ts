@@ -14,14 +14,15 @@ import {
   fetchChatConversations,
   fetchConversationMessages,
   saveImageMessage,
+  saveVideoMessage,
   sendChatMessage,
   stopChatMessageResponding,
 } from '@/service/debug'
 import { get } from '@/service/base'
 import { fetchWebSearch } from '@/service/web-search'
 import type { WebSearchResult } from '@/service/web-search'
-import { generateImage } from '@/service/generate'
-import type { ImageGenerateResponse } from '@/service/generate'
+import { generateImage, generateVideo, pollVideoTask, VIDEO_MODELS } from '@/service/generate'
+import type { ImageGenerateResponse, VideoModel } from '@/service/generate'
 import type { AppDetailResponse } from '@/models/app'
 import {
   BASE_APP_STORAGE_KEY,
@@ -30,6 +31,10 @@ import {
   DEFAULT_SYSTEM_PROMPT,
   ENV_HOME_CHAT_APP_ID,
   MODEL_STORAGE_KEY,
+  VIDEO_MODEL_STORAGE_KEY,
+  VIDEO_POLL_INTERVAL,
+  VIDEO_POLL_TIMEOUT,
+  VIDEO_STATUS_LABELS,
   VISION_SYSTEM_PROMPT,
   findVisionModel,
   getReasoningParams,
@@ -56,6 +61,8 @@ export type ChatItem = {
   files?: { type: string; transfer_method: string; url: string; upload_file_id: string }[]
   documentNames?: string[]
   generatedImages?: string[]
+  generatedVideo?: string
+  videoModel?: string
 }
 
 export type ModelSelection = {
@@ -255,6 +262,28 @@ export function useChatAssistant() {
   const [webSearch, setWebSearch] = useState(false)
   const [visionMode, setVisionMode] = useState(false)
   const [imageGen, setImageGen] = useState(false)
+  const [videoGen, setVideoGen] = useState(false)
+  const [videoTaskStatus, setVideoTaskStatus] = useState('')
+
+  // ── Video Model Selection ──
+  const loadVideoModel = useCallback((): VideoModel => {
+    if (typeof window === 'undefined') return VIDEO_MODELS[0]
+    try {
+      const raw = localStorage.getItem(VIDEO_MODEL_STORAGE_KEY)
+      if (raw) {
+        const found = VIDEO_MODELS.find(m => m.id === raw)
+        if (found) return found
+      }
+    } catch { /* ignore */ }
+    return VIDEO_MODELS[0]
+  }, [])
+
+  const [videoModel, setVideoModelRaw] = useState<VideoModel>(() => loadVideoModel())
+
+  const setVideoModel = useCallback((m: VideoModel) => {
+    setVideoModelRaw(m)
+    localStorage.setItem(VIDEO_MODEL_STORAGE_KEY, m.id)
+  }, [])
   const conversationIdRef = useRef('')
   const taskIdRef = useRef('')
   const lastMessageIdRef = useRef('')
@@ -318,13 +347,22 @@ export function useChatAssistant() {
         })
 
         // 检测生图记录：answer 字段包含 JSON { type: "image_generation", image_urls: [...] }
+        // 检测视频生成记录：answer 字段包含 JSON { type: "video_generation", video_url: "..." }
         let answerContent = msg.answer || ''
         let generatedImages: string[] | undefined
+        let generatedVideo: string | undefined
+        let videoModelName: string | undefined
         try {
           const parsed = JSON.parse(answerContent)
           if (parsed?.type === 'image_generation' && Array.isArray(parsed.image_urls)) {
             generatedImages = parsed.image_urls
             answerContent = '🎨 已为你生成图片：'
+          }
+          else if (parsed?.type === 'video_generation' && parsed.video_url) {
+            generatedVideo = parsed.video_url
+            const modelId = parsed.model || ''
+            videoModelName = modelId.includes('happyhorse') ? 'HappyHorse' : modelId.includes('wan') ? '万相' : modelId
+            answerContent = '🎬 已为你生成视频'
           }
         }
         catch {
@@ -336,6 +374,8 @@ export function useChatAssistant() {
           content: answerContent,
           isAnswer: true,
           generatedImages,
+          generatedVideo,
+          videoModel: videoModelName,
         })
       }
       setChatList(items)
@@ -568,6 +608,147 @@ export function useChatAssistant() {
       return
     }
 
+    // ── Video Generation Mode ──
+    if (videoGen) {
+      if (!query.trim()) {
+        notify({ type: 'info', message: '请输入视频描述' })
+        return
+      }
+
+      const userMsg: ChatItem = { id: genId(), content: query, isAnswer: false }
+      const aiMsgId = genId()
+      const aiMsg: ChatItem = { id: aiMsgId, content: '', isAnswer: true }
+      setChatList(prev => [...prev, userMsg, aiMsg])
+      setIsResponding(true)
+      setVideoTaskStatus('提交中...')
+
+      try {
+        // Determine if image-to-video: check if files contain an image
+        let imageUrl: string | undefined
+        let uploadFileId: string | undefined
+        let modelId = videoModel.t2v
+        if (files && files.length > 0) {
+          const imageFile = files.find(f => f.type === 'image' && f.upload_file_id)
+          if (imageFile) {
+            // Use the uploaded file ID — backend resolves it to a URL
+            modelId = videoModel.i2v
+            uploadFileId = imageFile.upload_file_id
+          }
+        }
+
+        const result = await generateVideo(query, modelId, imageUrl, uploadFileId)
+        const taskId = result.task_id
+
+        if (!taskId) {
+          setChatList(prev => prev.map((item, idx) =>
+            idx === prev.length - 1 && item.isAnswer
+              ? { ...item, content: '⚠️ 视频生成任务提交失败，未返回任务ID' }
+              : item,
+          ))
+          setIsResponding(false)
+          return
+        }
+
+        // Poll for results
+        setVideoTaskStatus(VIDEO_STATUS_LABELS.PENDING)
+        setChatList(prev => prev.map((item, idx) =>
+          idx === prev.length - 1 && item.isAnswer
+            ? { ...item, content: `🎬 ${VIDEO_STATUS_LABELS.PENDING}` }
+            : item,
+        ))
+
+        const startTime = Date.now()
+        let videoUrl: string | null = null
+
+        while (Date.now() - startTime < VIDEO_POLL_TIMEOUT) {
+          await new Promise(resolve => setTimeout(resolve, VIDEO_POLL_INTERVAL))
+
+          try {
+            const status = await pollVideoTask(taskId)
+
+            if (status.status === 'SUCCEEDED') {
+              videoUrl = status.video_url || null
+              setVideoTaskStatus(VIDEO_STATUS_LABELS.SUCCEEDED)
+              break
+            }
+            else if (status.status === 'FAILED') {
+              setVideoTaskStatus(VIDEO_STATUS_LABELS.FAILED)
+              setChatList(prev => prev.map((item, idx) =>
+                idx === prev.length - 1 && item.isAnswer
+                  ? { ...item, content: `⚠️ ${status.message || '视频生成失败'}` }
+                  : item,
+              ))
+              break
+            }
+            else {
+              // PENDING or RUNNING — update status text
+              const label = VIDEO_STATUS_LABELS[status.status] || '视频生成中...'
+              setVideoTaskStatus(label)
+              setChatList(prev => prev.map((item, idx) =>
+                idx === prev.length - 1 && item.isAnswer
+                  ? { ...item, content: `🎬 ${label}` }
+                  : item,
+              ))
+            }
+          }
+          catch (pollErr: any) {
+            console.warn('Video task poll error:', pollErr)
+            // Continue polling on transient errors
+          }
+        }
+
+        if (!videoUrl && Date.now() - startTime >= VIDEO_POLL_TIMEOUT) {
+          setChatList(prev => prev.map((item, idx) =>
+            idx === prev.length - 1 && item.isAnswer
+              ? { ...item, content: '⚠️ 视频生成超时（超过 10 分钟），请稍后在历史记录中查看' }
+              : item,
+          ))
+        }
+
+        if (videoUrl) {
+          const modelLabel = modelId.includes('happyhorse') ? 'HappyHorse' : '万相 2.7'
+          const hasSourceImage = files?.some(f => f.type === 'image')
+          const prefix = hasSourceImage ? '🖼️ 基于上传图片生成视频' : '🎬 已为你生成视频'
+          setChatList(prev => prev.map((item, idx) =>
+            idx === prev.length - 1 && item.isAnswer
+              ? { ...item, content: prefix, generatedVideo: videoUrl!, videoModel: modelLabel }
+              : item,
+          ))
+
+          // Persist to conversation history
+          if (baseAppId) {
+            saveVideoMessage(baseAppId, {
+              query,
+              video_url: videoUrl,
+              model: modelId,
+              conversation_id: conversationIdRef.current || undefined,
+            }).then((res: any) => {
+              if (res?.conversation_id)
+                conversationIdRef.current = res.conversation_id
+              if (res?.message_id)
+                lastMessageIdRef.current = res.message_id
+              setTimeout(() => fetchHistory(), 300)
+            }).catch((err) => {
+              console.error('Failed to save video message:', err)
+            })
+          }
+        }
+      }
+      catch (err: any) {
+        const msg = err?.message || '视频生成失败'
+        setChatList(prev => prev.map((item, idx) =>
+          idx === prev.length - 1 && item.isAnswer
+            ? { ...item, content: `⚠️ ${msg}` }
+            : item,
+        ))
+      }
+      finally {
+        setVideoTaskStatus('')
+        setIsResponding(false)
+      }
+      return
+    }
+
     if (!baseAppId || !selectedModel)
       return
 
@@ -680,7 +861,7 @@ export function useChatAssistant() {
         }
       },
     })
-  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, visionMode, visionModel, imageGen, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload, notify])
+  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, visionMode, visionModel, imageGen, videoGen, videoModel, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload, notify])
 
   // ── Stop ──
   const handleStop = useCallback(() => {
@@ -726,6 +907,11 @@ export function useChatAssistant() {
     visionModel,
     imageGen,
     setImageGen,
+    videoGen,
+    setVideoGen,
+    videoModel,
+    setVideoModel,
+    videoTaskStatus,
     sendMessage,
     handleStop,
     handleRestart,

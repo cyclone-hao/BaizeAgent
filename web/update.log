@@ -1,5 +1,36 @@
 # 白泽智能体平台 二次开发更新日志
 
+## 2026-06-29 — 修复：生视频模式未触发的闭包陷阱 Bug
+
+### Bug Fix
+- **问题**：点击"生视频"按钮后发送消息，AI 回复普通文本而非调用视频生成 API
+- **根因**：`useChatAssistant()` 中 `sendMessage` 的 `useCallback` 依赖数组缺少 `videoGen` 和 `videoModel`，导致回调函数始终捕获初始值 `videoGen = false`，视频生成路径永远不会执行
+- **修复**：将 `videoGen` 和 `videoModel` 加入依赖数组
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — 第 864 行依赖数组补充 `videoGen, videoModel`
+
+## 2026-06-29 — 首页AI助手新增视频生成功能（文生视频 + 图生视频）
+
+### P0 — 用户直接可见
+- **新增"生视频"切换按钮**：在工具栏"生图"按钮右侧，使用玫红色 (rose) 配色，与"识图""生图"互斥切换
+- **视频模型可选**：激活生视频模式后显示下拉选择器，支持"万相 2.7"和"HappyHorse"两个模型
+- **文生视频**：输入描述文字即可生成视频，异步轮询等待（5秒间隔，最多10分钟），实时显示进度文案
+- **图生视频**：上传图片后自动生成首帧视频，自动从 t2v 模型切换到 i2v 模型
+- **视频渲染**：生成完成后在消息气泡中显示视频播放器（带控制条）和模型标签
+- **历史记录支持**：视频生成记录保存到对话历史，刷新页面可回看
+
+### P1 — 外部链接与接口
+- **新增 DashScope 视频生成 API 调用**：异步提交 + 轮询模式，endpoint `video-generation/generation`
+
+### P2 — 内部标识符
+- `api/controllers/console/video_generate.py` — **新建**，视频生成提交 (`POST /video-generate`) + 任务轮询 (`GET /video-task/<task_id>`) 两个端点
+- `api/controllers/console/app/completion.py` — 新增 `VideoMessageApi` (`POST /apps/<id>/video-messages`)，保存视频生成记录到对话历史
+- `api/controllers/console/__init__.py` — 注册 `video_generate` 模块
+- `web/service/generate.ts` — 新增 `generateVideo`、`pollVideoTask` 函数和 `VideoModel`、`VIDEO_MODELS` 类型定义
+- `web/service/debug.ts` — 新增 `saveVideoMessage` 函数
+- `web/app/components/home/chat-assistant/config.ts` — 新增视频模型配置常量 (`VIDEO_MODEL_STORAGE_KEY`、`VIDEO_POLL_INTERVAL`、`VIDEO_POLL_TIMEOUT`、`VIDEO_STATUS_LABELS`)
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — 新增 `videoGen`/`videoModel`/`videoTaskStatus` 状态、视频生成轮询逻辑、ChatItem 扩展 (`generatedVideo`/`videoModel`)、历史记录视频检测
+- `web/app/components/home/chat-assistant/index.tsx` — 新增"生视频"按钮、视频模型下拉选择器、视频渲染、视频加载状态、三者互斥逻辑、视频模式下图片上传支持
+
 ## 2026-06-25 — 智能体编排页面重构：创建入口移至侧边栏子菜单
 
 ### P0 — 用户直接可见

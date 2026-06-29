@@ -110,3 +110,24 @@ export function findVisionModel(
   const found = availableModels.find(m => m.model.toLowerCase().includes(target))
   return found ? { provider: found.provider, model: found.model, mode: found.mode } : null
 }
+
+// ── 视频生成配置 ──
+
+import type { VideoModel } from '@/service/generate'
+
+/** localStorage key: 持久化选中的视频模型 */
+export const VIDEO_MODEL_STORAGE_KEY = 'home-chat-video-model'
+
+/** 视频轮询间隔（毫秒） */
+export const VIDEO_POLL_INTERVAL = 5000
+
+/** 视频轮询超时（毫秒，10 分钟） */
+export const VIDEO_POLL_TIMEOUT = 600000
+
+/** 视频生成状态文案 */
+export const VIDEO_STATUS_LABELS: Record<string, string> = {
+  PENDING: '排队中，请稍候...',
+  RUNNING: '视频生成中（通常需要 1-5 分钟）...',
+  SUCCEEDED: '视频生成完成！',
+  FAILED: '视频生成失败',
+}

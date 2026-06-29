@@ -55,6 +55,16 @@ export const saveImageMessage = async (appId: string, body: {
   return post(`apps/${appId}/image-messages`, { body })
 }
 
+/** 保存视频生成记录到对话历史（不触发 LLM 推理） */
+export const saveVideoMessage = async (appId: string, body: {
+  query: string
+  video_url: string
+  model?: string
+  conversation_id?: string
+}) => {
+  return post(`apps/${appId}/video-messages`, { body })
+}
+
 export const sendCompletionMessage = async (appId: string, body: Record<string, any>, { onData, onCompleted, onError, onMessageReplace }: {
   onData: IOnData
   onCompleted: IOnCompleted

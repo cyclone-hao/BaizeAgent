@@ -332,3 +332,114 @@ class ImageMessageApi(Resource):
             "conversation_id": str(conversation_id),
             "message_id": str(message.id),
         }, 200
+
+
+@console_ns.route("/apps/<uuid:app_id>/video-messages")
+class VideoMessageApi(Resource):
+    """保存视频生成记录到对话历史（不触发 LLM 推理）"""
+
+    @api.doc("create_video_message")
+    @api.doc(description="Save video generation result to conversation history without LLM inference")
+    @api.doc(params={"app_id": "Application ID"})
+    @api.expect(
+        api.model(
+            "VideoMessageRequest",
+            {
+                "query": fields.String(required=True, description="User prompt for video generation"),
+                "video_url": fields.String(required=True, description="Generated video URL"),
+                "model": fields.String(required=False, description="Video model used"),
+                "conversation_id": fields.String(description="Conversation ID (creates new if not provided)"),
+            },
+        )
+    )
+    @api.response(200, "Video message saved successfully")
+    @api.response(400, "Invalid request parameters")
+    @setup_required
+    @login_required
+    @account_initialization_required
+    @get_app_model(mode=[AppMode.CHAT, AppMode.AGENT_CHAT, AppMode.ADVANCED_CHAT])
+    def post(self, app_model):
+        if not isinstance(current_user, Account):
+            raise Forbidden()
+
+        if not current_user.has_edit_permission:
+            raise Forbidden()
+
+        parser = reqparse.RequestParser()
+        parser.add_argument("query", type=str, required=True, location="json")
+        parser.add_argument("video_url", type=str, required=True, location="json")
+        parser.add_argument("model", type=str, required=False, default="", location="json")
+        parser.add_argument("conversation_id", type=uuid_value, required=False, location="json")
+        args = parser.parse_args()
+
+        # Create or get conversation
+        conversation_id = args.get("conversation_id")
+        if conversation_id:
+            conversation = (
+                db.session.query(Conversation)
+                .where(Conversation.id == conversation_id, Conversation.app_id == app_model.id)
+                .first()
+            )
+            if not conversation:
+                raise NotFound("Conversation not found")
+        else:
+            conversation = Conversation(
+                app_id=app_model.id,
+                app_model_config_id=app_model.app_model_config_id,
+                model_provider="",
+                model_id="",
+                override_model_configs="{}",
+                mode=app_model.mode,
+                name=f"生视频: {args['query'][:30]}",
+                inputs={},
+                introduction="",
+                system_instruction="",
+                system_instruction_tokens=0,
+                status="normal",
+                invoke_from=InvokeFrom.DEBUGGER.value,
+                from_source="console",
+                from_account_id=current_user.id,
+            )
+            db.session.add(conversation)
+            db.session.flush()
+            conversation_id = conversation.id
+
+        # Create message with video URL in answer field
+        video_answer = json.dumps({
+            "type": "video_generation",
+            "video_url": args["video_url"],
+            "model": args.get("model", ""),
+        })
+
+        message = Message(
+            app_id=app_model.id,
+            model_provider="",
+            model_id="",
+            override_model_configs="{}",
+            conversation_id=conversation_id,
+            inputs={},
+            query=args["query"],
+            message={"text": args["query"]},
+            message_tokens=0,
+            message_unit_price=0,
+            message_price_unit=0.001,
+            answer=video_answer,
+            answer_tokens=0,
+            answer_unit_price=0,
+            answer_price_unit=0.001,
+            provider_response_latency=0,
+            total_price=0,
+            currency="USD",
+            status="normal",
+            invoke_from=InvokeFrom.DEBUGGER.value,
+            from_source="console",
+            from_account_id=current_user.id,
+        )
+        db.session.add(message)
+        db.session.commit()
+
+        return {
+            "result": "success",
+            "conversation_id": str(conversation_id),
+            "message_id": str(message.id),
+        }, 200

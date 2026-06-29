@@ -65,6 +65,7 @@ from . import (
     version,
     web_search,
     image_generate,
+    video_generate,
     workflow_builder,
 )
 
@@ -296,6 +297,7 @@ __all__ = [
     "version",
     "web_search",
     "image_generate",
+    "video_generate",
     "workflow_builder",
     "website",
     "workflow",

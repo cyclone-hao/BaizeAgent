@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
-import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainLine, RiChat3Line, RiCloseLine, RiDeleteBinLine, RiGlobalLine, RiImage2Line, RiMagicLine, RiRobot2Line, RiSendPlane2Fill, RiSparkling2Fill, RiStopCircleFill, RiUserSmileLine } from '@remixicon/react'
+import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainLine, RiChat3Line, RiCloseLine, RiDeleteBinLine, RiGlobalLine, RiImage2Line, RiMagicLine, RiRobot2Line, RiSendPlane2Fill, RiSparkling2Fill, RiStopCircleFill, RiUserSmileLine, RiVideoLine, RiArrowDownSLine } from '@remixicon/react'
 import { Markdown } from '@/app/components/base/markdown'
 import Button from '@/app/components/base/button'
 import { useToastContext } from '@/app/components/base/toast'
@@ -13,6 +13,8 @@ import ModelSelector from './model-selector'
 import DatasetSelector from './dataset-selector'
 import SourcesPanel from './sources-panel'
 import { SUGGESTED_QUESTIONS } from './config'
+import { VIDEO_MODELS } from '@/service/generate'
+import type { VideoModel } from '@/service/generate'
 import DocumentUploadButton from './document-upload-button'
 import type { DocumentFile } from './document-upload-button'
 
@@ -39,6 +41,11 @@ const ChatAssistantInner = ({
   visionModel,
   imageGen,
   setImageGen,
+  videoGen,
+  setVideoGen,
+  videoModel,
+  setVideoModel,
+  videoTaskStatus,
   sendMessage,
   handleStop,
   handleRestart,
@@ -69,6 +76,11 @@ const ChatAssistantInner = ({
   visionModel: { provider: string; model: string; mode: string } | null
   imageGen: boolean
   setImageGen: (v: boolean) => void
+  videoGen: boolean
+  setVideoGen: (v: boolean) => void
+  videoModel: VideoModel
+  setVideoModel: (m: VideoModel) => void
+  videoTaskStatus: string
   sendMessage: (query: string, files?: any[], documentTexts?: { filename: string; text: string }[]) => Promise<void>
   handleStop: () => void
   handleRestart: () => void
@@ -171,7 +183,7 @@ const ChatAssistantInner = ({
       notify({ type: 'info', message: '请输入消息内容' })
       return
     }
-    if (!selectedModel) {
+    if (!selectedModel && !imageGen && !videoGen) {
       notify({ type: 'warning', message: '请先选择一个模型' })
       return
     }
@@ -499,13 +511,20 @@ const ChatAssistantInner = ({
                                               <span className="text-xs text-violet-500">图片生成中，请稍候...</span>
                                             </div>
                                           )
-                                          : (
-                                            <div className="flex items-center gap-1.5">
-                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '0ms' }} />
-                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '150ms' }} />
-                                              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '300ms' }} />
-                                            </div>
-                                          )}
+                                          : videoGen
+                                            ? (
+                                              <div className="flex items-center gap-2">
+                                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-rose-200 border-t-rose-500" />
+                                                <span className="text-xs text-rose-500">{videoTaskStatus || '视频生成中，请稍候...'}</span>
+                                              </div>
+                                            )
+                                            : (
+                                              <div className="flex items-center gap-1.5">
+                                                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '0ms' }} />
+                                                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '150ms' }} />
+                                                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '300ms' }} />
+                                              </div>
+                                            )}
                                       </div>
                                     )
                                   )}
@@ -524,6 +543,21 @@ const ChatAssistantInner = ({
                                         </div>
                                       </a>
                                     ))}
+                                  </div>
+                                )}
+                                {item.generatedVideo && !(isLast && isResponding) && (
+                                  <div className="mt-2">
+                                    <video
+                                      src={item.generatedVideo}
+                                      controls
+                                      className="w-full max-w-lg rounded-lg border border-divider-subtle"
+                                      preload="metadata"
+                                    />
+                                    {item.videoModel && (
+                                      <p className="mt-1 text-xs text-text-tertiary">
+                                        🎬 {item.videoModel} 生成
+                                      </p>
+                                    )}
                                   </div>
                                 )}
                               </div>
@@ -613,7 +647,7 @@ const ChatAssistantInner = ({
                         return
                       }
                       setVisionMode(!visionMode)
-                      if (!visionMode) setImageGen(false)
+                      if (!visionMode) { setImageGen(false); setVideoGen(false) }
                     }}
                     disabled={isResponding}
                   >
@@ -630,8 +664,10 @@ const ChatAssistantInner = ({
                       isResponding && 'cursor-not-allowed opacity-50',
                     )}
                     onClick={() => {
-                      if (!imageGen)
+                      if (!imageGen) {
                         setVisionMode(false)
+                        setVideoGen(false)
+                      }
                       setImageGen(!imageGen)
                     }}
                     disabled={isResponding}
@@ -639,6 +675,49 @@ const ChatAssistantInner = ({
                     <RiMagicLine className="h-3.5 w-3.5" />
                     <span>生图</span>
                   </button>
+                  <button
+                    type="button"
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                      videoGen
+                        ? 'border-rose-300 bg-rose-50 text-rose-600 shadow-xs shadow-rose-500/10'
+                        : 'border-divider-regular bg-transparent text-text-tertiary hover:border-components-input-border-hover hover:text-text-secondary',
+                      isResponding && 'cursor-not-allowed opacity-50',
+                    )}
+                    onClick={() => {
+                      if (!videoGen) {
+                        setVisionMode(false)
+                        setImageGen(false)
+                      }
+                      setVideoGen(!videoGen)
+                    }}
+                    disabled={isResponding}
+                  >
+                    <RiVideoLine className="h-3.5 w-3.5" />
+                    <span>生视频</span>
+                  </button>
+                  {videoGen && (
+                    <div className="relative">
+                      <select
+                        value={videoModel.id}
+                        onChange={(e) => {
+                          const found = VIDEO_MODELS.find(m => m.id === e.target.value)
+                          if (found) setVideoModel(found)
+                        }}
+                        disabled={isResponding}
+                        className={cn(
+                          'appearance-none rounded-full border border-rose-200 bg-rose-50/50 py-1.5 pl-3 pr-7 text-xs font-medium text-rose-600 transition-all',
+                          'focus:border-rose-300 focus:outline-none focus:ring-1 focus:ring-rose-200',
+                          isResponding && 'cursor-not-allowed opacity-50',
+                        )}
+                      >
+                        {VIDEO_MODELS.map(m => (
+                          <option key={m.id} value={m.id}>{m.name}</option>
+                        ))}
+                      </select>
+                      <RiArrowDownSLine className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-rose-400" />
+                    </div>
+                  )}
                   <DatasetSelector
                     selected={selectedDatasets}
                     onChange={setSelectedDatasets}
@@ -649,7 +728,7 @@ const ChatAssistantInner = ({
                     documents={documentFiles}
                     onChange={setDocumentFiles}
                     disabled={isResponding}
-                    isVisionModel={supportsFileUpload}
+                    isVisionModel={supportsFileUpload || videoGen}
                   />
                 </div>
 
@@ -807,6 +886,11 @@ const ChatAssistant = () => {
       visionModel={chatProps.visionModel}
       imageGen={chatProps.imageGen}
       setImageGen={chatProps.setImageGen}
+      videoGen={chatProps.videoGen}
+      setVideoGen={chatProps.setVideoGen}
+      videoModel={chatProps.videoModel}
+      setVideoModel={chatProps.setVideoModel}
+      videoTaskStatus={chatProps.videoTaskStatus}
       sendMessage={chatProps.sendMessage}
       handleStop={chatProps.handleStop}
       handleRestart={chatProps.handleRestart}
