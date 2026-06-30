@@ -17,6 +17,11 @@ import { VIDEO_MODELS } from '@/service/generate'
 import type { VideoModel } from '@/service/generate'
 import DocumentUploadButton from './document-upload-button'
 import type { DocumentFile } from './document-upload-button'
+import VideoUploadArea from './video-upload-area'
+import type { VideoFrameFile } from './video-upload-area'
+import VideoParamsPanel from './video-params-panel'
+import VideoPromptTemplates from './video-prompt-templates'
+import type { VideoParams } from './config'
 
 // ── Inner component ──
 
@@ -45,6 +50,12 @@ const ChatAssistantInner = ({
   setVideoGen,
   videoModel,
   setVideoModel,
+  videoParams,
+  setVideoParams,
+  firstFrame,
+  setFirstFrame,
+  lastFrame,
+  setLastFrame,
   videoTaskStatus,
   sendMessage,
   handleStop,
@@ -80,6 +91,12 @@ const ChatAssistantInner = ({
   setVideoGen: (v: boolean) => void
   videoModel: VideoModel
   setVideoModel: (m: VideoModel) => void
+  videoParams: VideoParams
+  setVideoParams: (p: VideoParams) => void
+  firstFrame: VideoFrameFile | null
+  setFirstFrame: (f: VideoFrameFile | null) => void
+  lastFrame: VideoFrameFile | null
+  setLastFrame: (f: VideoFrameFile | null) => void
   videoTaskStatus: string
   sendMessage: (query: string, files?: any[], documentTexts?: { filename: string; text: string }[]) => Promise<void>
   handleStop: () => void
@@ -266,7 +283,7 @@ const ChatAssistantInner = ({
   return (
     <>
       <div className="relative mx-auto mb-8 w-full max-w-[1200px]">
-        <div className="flex h-[520px] gap-5">
+        <div className={cn('flex gap-5', videoGen ? 'h-[760px]' : 'h-[560px]')}>
           {/* ═══ Left Sidebar — History ═══ */}
           <div className="hidden w-[220px] shrink-0 md:block">
             <div className="flex h-full flex-col overflow-hidden rounded-xl border border-components-panel-border bg-components-panel-on-panel-item-bg shadow-sm">
@@ -404,6 +421,12 @@ const ChatAssistantInner = ({
                   <span className="inline-flex items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-600">
                     <RiMagicLine className="h-3 w-3" />
                     生图模式
+                  </span>
+                )}
+                {videoGen && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-[11px] font-medium text-rose-600">
+                    <RiVideoLine className="h-3 w-3" />
+                    生视频模式
                   </span>
                 )}
                 <ModelSelector
@@ -723,14 +746,42 @@ const ChatAssistantInner = ({
                     onChange={setSelectedDatasets}
                     disabled={isResponding}
                   />
-                  {/* Unified upload button (images for vision model + documents for any model) */}
-                  <DocumentUploadButton
-                    documents={documentFiles}
-                    onChange={setDocumentFiles}
-                    disabled={isResponding}
-                    isVisionModel={supportsFileUpload || videoGen}
-                  />
+                  {/* Unified upload button (images for vision model + documents for any model) — hidden in video mode */}
+                  {!videoGen && (
+                    <DocumentUploadButton
+                      documents={documentFiles}
+                      onChange={setDocumentFiles}
+                      disabled={isResponding}
+                      isVisionModel={supportsFileUpload}
+                    />
+                  )}
                 </div>
+
+                {/* Video Mode: Upload Area + Params Panel */}
+                {videoGen && (
+                  <>
+                    <VideoUploadArea
+                      firstFrame={firstFrame}
+                      lastFrame={lastFrame}
+                      onFirstFrameChange={setFirstFrame}
+                      onLastFrameChange={setLastFrame}
+                      disabled={isResponding}
+                      supportsLastFrame={!videoModel.id.includes('happyhorse')}
+                    />
+                    <VideoParamsPanel
+                      params={videoParams}
+                      onChange={setVideoParams}
+                      disabled={isResponding}
+                    />
+                  </>
+                )}
+
+                {/* Video Mode: Prompt Templates */}
+                {videoGen && (
+                  <VideoPromptTemplates
+                    onSelect={(prompt) => setQuery(prev => prev ? `${prev}，${prompt}` : prompt)}
+                  />
+                )}
 
                 {/* Textarea + Send */}
                 <div className="flex items-end gap-2.5 px-4 pb-3.5">
@@ -740,7 +791,7 @@ const ChatAssistantInner = ({
                       'flex-1 resize-none rounded-lg bg-transparent py-2.5 text-sm text-text-primary outline-none',
                       'placeholder:text-text-quaternary',
                     )}
-                    placeholder={imageGen ? '描述你想生成的图片内容...' : appReady ? '输入消息，或点击上传按钮添加附件...' : appError ? '初始化失败' : '正在初始化...'}
+                    placeholder={videoGen ? '描述视频场景、运镜和动作，或选择提示词模板...' : imageGen ? '描述你想生成的图片内容...' : appReady ? '输入消息，或点击上传按钮添加附件...' : appError ? '初始化失败' : '正在初始化...'}
                     minRows={1}
                     maxRows={6}
                     value={query}
@@ -890,6 +941,12 @@ const ChatAssistant = () => {
       setVideoGen={chatProps.setVideoGen}
       videoModel={chatProps.videoModel}
       setVideoModel={chatProps.setVideoModel}
+      videoParams={chatProps.videoParams}
+      setVideoParams={chatProps.setVideoParams}
+      firstFrame={chatProps.firstFrame}
+      setFirstFrame={chatProps.setFirstFrame}
+      lastFrame={chatProps.lastFrame}
+      setLastFrame={chatProps.setLastFrame}
       videoTaskStatus={chatProps.videoTaskStatus}
       sendMessage={chatProps.sendMessage}
       handleStop={chatProps.handleStop}

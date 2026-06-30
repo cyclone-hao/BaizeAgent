@@ -39,10 +39,34 @@ export type VideoTaskStatusResponse = {
   message?: string
 }
 
+export type VideoGenerateParams = {
+  prompt: string
+  model: string
+  imageUrl?: string
+  uploadFileId?: string
+  firstFrameFileId?: string
+  lastFrameFileId?: string
+  resolution?: string   // "480P" | "720P" | "1080P"
+  duration?: number     // 1-10
+  ratio?: string        // "16:9" | "9:16" | "1:1" | "4:3" | "3:4"
+  promptExtend?: boolean
+}
+
 /** 提交视频生成任务 */
-export const generateVideo = (prompt: string, model: string, imageUrl?: string, uploadFileId?: string) => {
+export const generateVideo = (params: VideoGenerateParams) => {
   return post<VideoGenerateResponse>('/video-generate', {
-    body: { prompt, model, image_url: imageUrl, upload_file_id: uploadFileId },
+    body: {
+      prompt: params.prompt,
+      model: params.model,
+      image_url: params.imageUrl,
+      upload_file_id: params.uploadFileId,
+      first_frame_file_id: params.firstFrameFileId,
+      last_frame_file_id: params.lastFrameFileId,
+      resolution: params.resolution,
+      duration: params.duration,
+      ratio: params.ratio,
+      prompt_extend: params.promptExtend,
+    },
   }, { silent: true })
 }
 

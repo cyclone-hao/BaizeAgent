@@ -22,7 +22,7 @@ import { get } from '@/service/base'
 import { fetchWebSearch } from '@/service/web-search'
 import type { WebSearchResult } from '@/service/web-search'
 import { generateImage, generateVideo, pollVideoTask, VIDEO_MODELS } from '@/service/generate'
-import type { ImageGenerateResponse, VideoModel } from '@/service/generate'
+import type { ImageGenerateResponse, VideoGenerateParams, VideoModel } from '@/service/generate'
 import type { AppDetailResponse } from '@/models/app'
 import {
   BASE_APP_STORAGE_KEY,
@@ -32,15 +32,20 @@ import {
   ENV_HOME_CHAT_APP_ID,
   MODEL_STORAGE_KEY,
   VIDEO_MODEL_STORAGE_KEY,
+  VIDEO_PARAMS_STORAGE_KEY,
   VIDEO_POLL_INTERVAL,
   VIDEO_POLL_TIMEOUT,
   VIDEO_STATUS_LABELS,
+  VIDEO_DEFAULTS,
   VISION_SYSTEM_PROMPT,
   findVisionModel,
   getReasoningParams,
   isReasoningModel,
+  loadVideoParams,
+  saveVideoParams,
 } from './config'
 import { buildDocumentContext } from './document-extractor'
+import type { VideoFrameFile } from './video-upload-area'
 
 // ── Types ──────────────────────────────────────────
 
@@ -143,6 +148,9 @@ function saveDatasetSelection(sel: DatasetSelection[]) {
   else
     localStorage.removeItem(DATASET_STORAGE_KEY)
 }
+
+export type { VideoFrameFile } from './video-upload-area'
+export type { VideoParams } from './config'
 
 // ── Hook ───────────────────────────────────────────
 
@@ -284,6 +292,26 @@ export function useChatAssistant() {
     setVideoModelRaw(m)
     localStorage.setItem(VIDEO_MODEL_STORAGE_KEY, m.id)
   }, [])
+
+  // ── Video Params ──
+  const [videoParams, setVideoParamsRaw] = useState(() => loadVideoParams())
+
+  const setVideoParams = useCallback((params: typeof VIDEO_DEFAULTS) => {
+    setVideoParamsRaw(params)
+    saveVideoParams(params)
+  }, [])
+
+  // ── Video Frame Files (first/last) ──
+  const [firstFrame, setFirstFrame] = useState<VideoFrameFile | null>(null)
+  const [lastFrame, setLastFrame] = useState<VideoFrameFile | null>(null)
+
+  // Clear last frame when switching to a model that doesn't support it (e.g. HappyHorse)
+  useEffect(() => {
+    if (videoModel.id.includes('happyhorse') && lastFrame) {
+      if (lastFrame.previewUrl) URL.revokeObjectURL(lastFrame.previewUrl)
+      setLastFrame(null)
+    }
+  }, [videoModel.id])
   const conversationIdRef = useRef('')
   const taskIdRef = useRef('')
   const lastMessageIdRef = useRef('')
@@ -623,20 +651,35 @@ export function useChatAssistant() {
       setVideoTaskStatus('提交中...')
 
       try {
-        // Determine if image-to-video: check if files contain an image
-        let imageUrl: string | undefined
-        let uploadFileId: string | undefined
+        // Determine model: t2v (text only) or i2v (with first frame image)
         let modelId = videoModel.t2v
-        if (files && files.length > 0) {
+        const videoGenParams: VideoGenerateParams = {
+          prompt: query,
+          model: modelId,
+          firstFrameFileId: firstFrame?.uploadFileId || undefined,
+          lastFrameFileId: lastFrame?.uploadFileId || undefined,
+          resolution: videoParams.resolution,
+          duration: videoParams.duration,
+          ratio: videoParams.ratio,
+          promptExtend: videoParams.promptExtend,
+        }
+
+        // Auto-switch to i2v model when first frame image is provided
+        if (firstFrame?.uploadFileId) {
+          videoGenParams.model = videoModel.i2v
+          modelId = videoModel.i2v
+        }
+        // Legacy: also support old-style files array for backward compatibility
+        else if (files && files.length > 0) {
           const imageFile = files.find(f => f.type === 'image' && f.upload_file_id)
           if (imageFile) {
-            // Use the uploaded file ID — backend resolves it to a URL
+            videoGenParams.model = videoModel.i2v
+            videoGenParams.uploadFileId = imageFile.upload_file_id
             modelId = videoModel.i2v
-            uploadFileId = imageFile.upload_file_id
           }
         }
 
-        const result = await generateVideo(query, modelId, imageUrl, uploadFileId)
+        const result = await generateVideo(videoGenParams)
         const taskId = result.task_id
 
         if (!taskId) {
@@ -707,11 +750,17 @@ export function useChatAssistant() {
 
         if (videoUrl) {
           const modelLabel = modelId.includes('happyhorse') ? 'HappyHorse' : '万相 2.7'
-          const hasSourceImage = files?.some(f => f.type === 'image')
-          const prefix = hasSourceImage ? '🖼️ 基于上传图片生成视频' : '🎬 已为你生成视频'
+          const hasSourceImage = !!firstFrame?.uploadFileId || files?.some(f => f.type === 'image')
+          const hasLastFrame = !!lastFrame?.uploadFileId
+          const prefix = hasLastFrame
+            ? '🖼️ 基于首帧+尾帧生成视频'
+            : hasSourceImage
+              ? '🖼️ 基于参考图生成视频'
+              : '🎬 已为你生成视频'
+          const paramInfo = ` (${videoParams.resolution} · ${videoParams.duration}秒 · ${videoParams.ratio})`
           setChatList(prev => prev.map((item, idx) =>
             idx === prev.length - 1 && item.isAnswer
-              ? { ...item, content: prefix, generatedVideo: videoUrl!, videoModel: modelLabel }
+              ? { ...item, content: prefix + paramInfo, generatedVideo: videoUrl!, videoModel: modelLabel }
               : item,
           ))
 
@@ -745,6 +794,11 @@ export function useChatAssistant() {
       finally {
         setVideoTaskStatus('')
         setIsResponding(false)
+        // Clear frame files after generation
+        if (firstFrame?.previewUrl) URL.revokeObjectURL(firstFrame.previewUrl)
+        if (lastFrame?.previewUrl) URL.revokeObjectURL(lastFrame.previewUrl)
+        setFirstFrame(null)
+        setLastFrame(null)
       }
       return
     }
@@ -861,7 +915,7 @@ export function useChatAssistant() {
         }
       },
     })
-  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, visionMode, visionModel, imageGen, videoGen, videoModel, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload, notify])
+  }, [baseAppId, selectedModel, selectedDatasets, deepThinking, webSearch, visionMode, visionModel, imageGen, videoGen, videoModel, videoParams, firstFrame, lastFrame, isResponding, buildModelConfig, stripThinkTags, fetchHistory, supportsFileUpload, notify])
 
   // ── Stop ──
   const handleStop = useCallback(() => {
@@ -911,6 +965,12 @@ export function useChatAssistant() {
     setVideoGen,
     videoModel,
     setVideoModel,
+    videoParams,
+    setVideoParams,
+    firstFrame,
+    setFirstFrame,
+    lastFrame,
+    setLastFrame,
     videoTaskStatus,
     sendMessage,
     handleStop,

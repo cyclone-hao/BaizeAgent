@@ -1,3 +1,4 @@
+import base64
 import logging
 
 import httpx
@@ -24,6 +25,44 @@ VIDEO_MODEL_MAP = {
 }
 
 
+def _resolve_file_to_data_url(file_id: str) -> str | None:
+    """
+    Resolve an upload_file_id to a base64 data URL that DashScope can use.
+    Internal Docker URLs are not accessible externally, so we must convert to data URLs.
+    """
+    if not file_id:
+        return None
+    try:
+        from extensions.ext_database import db
+        from models.model import UploadFile
+        from extensions.ext_storage import storage
+
+        upload_file = db.session.query(UploadFile).filter(
+            UploadFile.id == file_id
+        ).first()
+        if not upload_file:
+            logger.warning("UploadFile not found: %s", file_id)
+            return None
+
+        # If source_url is an external URL (not internal), use it directly
+        if upload_file.source_url and not upload_file.source_url.startswith("http://api:") and not upload_file.source_url.startswith("http://localhost"):
+            return upload_file.source_url
+
+        # Read file content from storage and convert to base64 data URL
+        file_data = storage.load(upload_file.key, stream=False)
+        if not isinstance(file_data, bytes):
+            logger.warning("File content is not bytes: %s", type(file_data))
+            return None
+
+        mime_type = upload_file.mime_type or "image/jpeg"
+        b64_data = base64.b64encode(file_data).decode("utf-8")
+        return f"data:{mime_type};base64,{b64_data}"
+
+    except Exception as e:
+        logger.warning("Failed to resolve file_id %s to data URL: %s", file_id, str(e))
+        return None
+
+
 @console_ns.route("/video-generate")
 class VideoGenerateApi(Resource):
     @api.doc("video_generate")
@@ -36,6 +75,12 @@ class VideoGenerateApi(Resource):
                 "model": fields.String(required=False, description="Model ID, e.g. wan2.7-t2v", default="wan2.7-t2v"),
                 "image_url": fields.String(required=False, description="Source image URL for image-to-video"),
                 "upload_file_id": fields.String(required=False, description="Uploaded file ID (resolved server-side)"),
+                "first_frame_file_id": fields.String(required=False, description="First frame uploaded file ID"),
+                "last_frame_file_id": fields.String(required=False, description="Last frame uploaded file ID"),
+                "resolution": fields.String(required=False, description="Video resolution", default="720P"),
+                "duration": fields.Integer(required=False, description="Video duration in seconds", default=5),
+                "ratio": fields.String(required=False, description="Aspect ratio", default="16:9"),
+                "prompt_extend": fields.Boolean(required=False, description="Auto-enhance prompt", default=True),
             },
         )
     )
@@ -50,34 +95,29 @@ class VideoGenerateApi(Resource):
         parser.add_argument("model", type=str, required=False, default="wan2.7-t2v", location="json")
         parser.add_argument("image_url", type=str, required=False, default=None, location="json")
         parser.add_argument("upload_file_id", type=str, required=False, default=None, location="json")
+        parser.add_argument("first_frame_file_id", type=str, required=False, default=None, location="json")
+        parser.add_argument("last_frame_file_id", type=str, required=False, default=None, location="json")
+        parser.add_argument("resolution", type=str, required=False, default="720P", location="json")
+        parser.add_argument("duration", type=int, required=False, default=5, location="json")
+        parser.add_argument("ratio", type=str, required=False, default="16:9", location="json")
+        parser.add_argument("prompt_extend", type=bool, required=False, default=True, location="json")
         args = parser.parse_args()
 
         api_key = dify_config.DASHSCOPE_API_KEY
         if not api_key:
             return {"code": "dashscope_not_configured", "message": "DashScope API key is not configured"}, 400
 
-        # Resolve upload_file_id to a URL if provided
+        # Resolve first frame (primary image for i2v) — convert to base64 data URL for DashScope
         image_url = args.get("image_url")
-        if not image_url and args.get("upload_file_id"):
-            try:
-                from extensions.ext_database import db
-                from models.model import UploadFile
-                from flask import url_for
+        first_frame_url = None
+        if not image_url and args.get("first_frame_file_id"):
+            first_frame_url = _resolve_file_to_data_url(args["first_frame_file_id"])
+            image_url = first_frame_url
+        elif not image_url and args.get("upload_file_id"):
+            image_url = _resolve_file_to_data_url(args["upload_file_id"])
 
-                upload_file = db.session.query(UploadFile).filter(
-                    UploadFile.id == args["upload_file_id"]
-                ).first()
-                if upload_file:
-                    # Construct the file preview URL
-                    # Use the source_url if available (e.g., S3 signed URL)
-                    if upload_file.source_url:
-                        image_url = upload_file.source_url
-                    else:
-                        # Fallback: construct URL from storage key
-                        from core.file.helpers import get_signed_file_url
-                        image_url = get_signed_file_url(upload_file.id)
-            except Exception as e:
-                logger.warning("Failed to resolve upload_file_id %s: %s", args.get("upload_file_id"), str(e))
+        # Resolve last frame (optional, for keyframe-guided generation)
+        last_frame_url = _resolve_file_to_data_url(args.get("last_frame_file_id"))
 
         # Auto-switch to i2v model when image_url is available
         model = args["model"]
@@ -92,23 +132,56 @@ class VideoGenerateApi(Resource):
         if model not in VIDEO_MODEL_MAP and not any(model.startswith(k.rsplit("-", 1)[0]) for k in VIDEO_MODEL_MAP):
             return {"code": "invalid_model", "message": f"不支持的视频模型: {model}"}, 400
 
+        # Validate parameters
+        resolution = args.get("resolution", "720P")
+        if resolution not in ("480P", "720P", "1080P"):
+            resolution = "720P"
+
+        duration = args.get("duration", 5)
+        if not isinstance(duration, int) or duration < 1 or duration > 10:
+            duration = 5
+
+        ratio = args.get("ratio", "16:9")
+        valid_ratios = ("16:9", "9:16", "1:1", "4:3", "3:4")
+        if ratio not in valid_ratios:
+            ratio = "16:9"
+
+        prompt_extend = args.get("prompt_extend", True)
+
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
             "X-DashScope-Async": "enable",
         }
 
-        # Build input
+        # Build input based on model type
         input_data = {"prompt": args["prompt"]}
-        if image_url:
-            input_data["img_url"] = image_url
+        is_happyhorse = "happyhorse" in model
+
+        if is_happyhorse:
+            # HappyHorse: only supports first frame via media array, no last_frame
+            if image_url:
+                input_data["media"] = [{"img_url": image_url}]
+            if last_frame_url:
+                logger.info("HappyHorse does not support last_frame, ignoring tail frame image")
+        else:
+            # Wan 2.7 and other models: support first_frame + last_frame via media array
+            if image_url or last_frame_url:
+                media = []
+                if image_url:
+                    media.append({"type": "first_frame", "url": image_url})
+                if last_frame_url:
+                    media.append({"type": "last_frame", "url": last_frame_url})
+                input_data["media"] = media
 
         payload = {
             "model": model,
             "input": input_data,
             "parameters": {
-                "resolution": "720P",
-                "prompt_extend": True,
+                "resolution": resolution,
+                "prompt_extend": prompt_extend,
+                "duration": duration,
+                "ratio": ratio,
             },
         }
 

@@ -131,3 +131,77 @@ export const VIDEO_STATUS_LABELS: Record<string, string> = {
   SUCCEEDED: '视频生成完成！',
   FAILED: '视频生成失败',
 }
+
+// ── 视频参数配置 ──
+
+/** 视频参数类型 */
+export type VideoParams = {
+  resolution: string
+  duration: number
+  ratio: string
+  promptExtend: boolean
+}
+
+/** 视频参数默认值 */
+export const VIDEO_DEFAULTS: VideoParams = {
+  resolution: '720P',
+  duration: 5,
+  ratio: '16:9',
+  promptExtend: true,
+}
+
+/** localStorage key: 视频参数持久化 */
+export const VIDEO_PARAMS_STORAGE_KEY = 'home-chat-video-params'
+
+/** 分辨率选项 */
+export const VIDEO_RESOLUTIONS = [
+  { value: '480P', label: '480P 标清' },
+  { value: '720P', label: '720P 高清' },
+  { value: '1080P', label: '1080P 超清' },
+] as const
+
+/** 宽高比选项 */
+export const VIDEO_RATIOS = [
+  { value: '16:9', label: '16:9', desc: '横屏' },
+  { value: '9:16', label: '9:16', desc: '竖屏' },
+  { value: '1:1', label: '1:1', desc: '方形' },
+  { value: '4:3', label: '4:3', desc: '经典' },
+  { value: '3:4', label: '3:4', desc: '肖像' },
+] as const
+
+/** 时长选项 */
+export const VIDEO_DURATIONS = [
+  { value: 3, label: '3秒' },
+  { value: 5, label: '5秒' },
+  { value: 8, label: '8秒' },
+  { value: 10, label: '10秒' },
+] as const
+
+/** 视频提示词模板 */
+export const VIDEO_PROMPT_TEMPLATES = [
+  { icon: '🎬', label: '电影感', prompt: '电影级画面质感，浅景深虚化背景，柔和的侧光照射，镜头缓慢推进，画面色调温暖，4K高清画质' },
+  { icon: '🌅', label: '自然风光', prompt: '航拍视角俯瞰壮阔山河，云雾缭绕在群山之间，阳光穿透云层洒落金色光芒，镜头缓缓平移，展现大自然的宏伟壮观' },
+  { icon: '🏙️', label: '城市延时', prompt: '城市夜景延时摄影，万家灯火闪烁，车流光轨交织成璀璨画卷，高楼大厦矗立其中，星空与城市灯光交相辉映' },
+  { icon: '🌊', label: '海洋世界', prompt: '碧蓝海水波光粼粼，浪花翻涌拍打着礁石，阳光穿透水面形成光柱，海底珊瑚色彩斑斓，鱼群穿梭其中' },
+  { icon: '🌸', label: '微观特写', prompt: '微距镜头下的花瓣露珠晶莹剔透，晨光照耀下折射出彩虹光芒，镜头极缓慢推进，展现自然界的精致细节' },
+  { icon: '🚀', label: '科幻未来', prompt: '未来城市全景，飞行器穿梭在摩天大楼之间，霓虹灯光映射在雨后的街道上，全息投影广告悬浮空中，赛博朋克风格' },
+] as const
+
+/** 加载视频参数（从 localStorage） */
+export function loadVideoParams(): VideoParams {
+  if (typeof window === 'undefined') return { ...VIDEO_DEFAULTS }
+  try {
+    const raw = localStorage.getItem(VIDEO_PARAMS_STORAGE_KEY)
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      return { ...VIDEO_DEFAULTS, ...parsed }
+    }
+  }
+  catch { /* ignore */ }
+  return { ...VIDEO_DEFAULTS }
+}
+
+/** 保存视频参数到 localStorage */
+export function saveVideoParams(params: VideoParams) {
+  localStorage.setItem(VIDEO_PARAMS_STORAGE_KEY, JSON.stringify(params))
+}

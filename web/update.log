@@ -1,5 +1,30 @@
 # 白泽智能体平台 二次开发更新日志
 
+## 2026-06-30 — AI助手视频生成功能全面升级：参考图上传、首帧尾帧双图、参数面板、提示词模板
+
+### P0 — 用户直接可见
+- **专用参考图上传区域**：视频模式下显示独立的拖拽上传区域，替代原通用上传按钮，支持拖拽或点击上传图片
+- **首帧+尾帧双图控制**：两个并排上传槽位（首帧图/尾帧图），上传后显示缩略图预览，支持删除/替换，AI 生成两帧之间的平滑过渡动画
+- **视频参数控制面板**：分辨率（480P/720P/1080P）、时长（3/5/8/10秒）、宽高比（16:9/9:16/1:1/4:3/3:4）、智能扩写开关，参数持久化到 localStorage
+- **提示词模板快捷选择**：6 个场景模板（电影感/自然风光/城市延时/海洋世界/微观特写/科幻未来），一键填入输入框
+- **视频模式标识**：header 显示"生视频模式"玫红色标签
+- **视频专用 placeholder**：输入框提示"描述视频场景、运镜和动作，或选择提示词模板..."
+- **生成结果附带参数信息**：视频生成完成后显示使用的分辨率、时长、宽高比
+
+### P1 — 外部链接与接口
+- **DashScope API 参数扩展**：支持传递 `resolution`、`duration`、`ratio`、`prompt_extend`、`first_frame_file_id`、`last_frame_file_id`
+- **首帧+尾帧 API 支持**：`img_url`（首帧）+ `last_img_url`（尾帧）双图传递给 DashScope
+
+### P2 — 内部标识符
+- `api/controllers/console/video_generate.py` — 扩展 reqparse 新增 6 个参数，提取公共 `resolve_file_url()` 函数，参数校验逻辑，payload 构造使用用户参数替代硬编码
+- `web/service/generate.ts` — 新增 `VideoGenerateParams` 类型，`generateVideo()` 改为接受完整参数对象
+- `web/app/components/home/chat-assistant/config.ts` — 新增 `VideoParams` 类型、`VIDEO_DEFAULTS`、`VIDEO_RESOLUTIONS`、`VIDEO_RATIOS`、`VIDEO_DURATIONS`、`VIDEO_PROMPT_TEMPLATES`、`loadVideoParams()`/`saveVideoParams()` 持久化函数
+- `web/app/components/home/chat-assistant/video-upload-area.tsx` — **新建**，专用参考图上传组件（拖拽、缩略图预览、首帧+尾帧双插槽、`fileUpload()` 复用）
+- `web/app/components/home/chat-assistant/video-params-panel.tsx` — **新建**，视频参数控制面板（pill-style 按钮组、Switch 开关、Tooltip 说明）
+- `web/app/components/home/chat-assistant/video-prompt-templates.tsx` — **新建**，水平滚动提示词模板 chips
+- `web/app/components/home/chat-assistant/use-chat-assistant.ts` — 新增 `videoParams`/`firstFrame`/`lastFrame` 状态管理，`sendMessage` 视频生成逻辑使用新参数，生成后自动清理帧文件，`VideoFrameFile`/`VideoParams` 类型导出
+- `web/app/components/home/chat-assistant/index.tsx` — 集成 VideoUploadArea + VideoParamsPanel + VideoPromptTemplates，视频模式隐藏通用上传按钮，新增视频模式 badge
+
 ## 2026-06-29 — 修复：生视频模式未触发的闭包陷阱 Bug
 
 ### Bug Fix
