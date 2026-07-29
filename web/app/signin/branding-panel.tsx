@@ -20,7 +20,7 @@ const FEATURES = [
       </svg>
     ),
     title: '多模型支持',
-    desc: '统一接入 100+ 主流大模型',
+    desc: '统一接入 400+ 主流大模型',
   },
   {
     icon: (

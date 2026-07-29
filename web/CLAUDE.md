@@ -342,7 +342,7 @@ app/(commonLayout)/home/page.tsx          # 路由入口
 ## 开发命令
 
 ```bash
-cd dify/web
+cd agentflow/web
 pnpm install          # 安装依赖
 pnpm dev              # 启动开发服务器
 pnpm build            # 生产构建

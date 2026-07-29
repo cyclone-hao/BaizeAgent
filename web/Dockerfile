@@ -2,17 +2,18 @@
 FROM node:22-alpine3.21 AS base
 LABEL maintainer="takatost@gmail.com"
 
-# if you located in China, you can use aliyun mirror to speed up
-# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+# Use Aliyun mirror for faster downloads in China
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
-# if you located in China, you can use taobao registry to speed up
-# RUN npm config set registry https://registry.npmmirror.com
+# Use npmmirror registry for faster package downloads in China
+RUN npm config set registry https://registry.npmmirror.com
 
 RUN apk add --no-cache tzdata
 RUN corepack enable
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NEXT_PUBLIC_BASE_PATH=
+ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
 
 
 # install packages
@@ -33,6 +34,16 @@ FROM base AS builder
 WORKDIR /app/web
 COPY --from=packages /app/web/ .
 COPY . .
+
+# Pass API URLs as build args so Next.js bakes them into the static bundle
+ARG CONSOLE_API_URL=http://localhost:5001
+ARG APP_API_URL=http://localhost:5001
+ARG MARKETPLACE_API_URL=https://marketplace.dify.ai
+ARG MARKETPLACE_URL=https://marketplace.dify.ai
+ENV CONSOLE_API_URL=${CONSOLE_API_URL}
+ENV APP_API_URL=${APP_API_URL}
+ENV MARKETPLACE_API_URL=${MARKETPLACE_API_URL}
+ENV MARKETPLACE_URL=${MARKETPLACE_URL}
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build:docker

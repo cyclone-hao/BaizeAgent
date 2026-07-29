@@ -6,20 +6,20 @@ WORKDIR /app/api
 # Install uv
 ENV UV_VERSION=0.8.9
 
-RUN pip install --no-cache-dir uv==${UV_VERSION}
+RUN pip install --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple uv==${UV_VERSION}
 
 
 FROM base AS packages
 
-# if you located in China, you can use aliyun mirror to speed up
-# RUN sed -i 's@deb.debian.org@mirrors.aliyun.com@g' /etc/apt/sources.list.d/debian.sources
+# Use Aliyun mirror for faster downloads in China
+RUN sed -i 's@deb.debian.org@mirrors.aliyun.com@g' /etc/apt/sources.list.d/debian.sources
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ libc-dev libffi-dev libgmp-dev libmpfr-dev libmpc-dev
 
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked --no-dev
+RUN UV_INDEX_URL=https://mirrors.aliyun.com/pypi/simple uv sync --no-dev
 
 # production stage
 FROM base AS production
@@ -45,7 +45,8 @@ ENV PYTHONIOENCODING=utf-8
 WORKDIR /app/api
 
 RUN \
-    apt-get update \
+    sed -i 's@deb.debian.org@mirrors.aliyun.com@g' /etc/apt/sources.list.d/debian.sources \
+    && apt-get update \
     # Install dependencies
     && apt-get install -y --no-install-recommends \
         # basic environment

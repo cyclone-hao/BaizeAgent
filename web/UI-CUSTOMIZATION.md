@@ -90,7 +90,7 @@
 
 ### 启动命令
 ```bash
-cd /d/MyNewStart/CC实战/dify/web
+cd /d/MyNewStart/CC实战/agentflow/web
 pnpm dev
 ```
 
@@ -191,14 +191,14 @@ primary-900: #4c1d95
 
 ```bash
 # 1. 启动中间件（PostgreSQL + Redis + 向量数据库 + Sandbox）
-cd /d/MyNewStart/CC实战/dify/docker
+cd /d/MyNewStart/CC实战/agentflow/docker
 docker compose -f docker-compose.middleware.yaml up -d
 
 # 2. 安装 Python 3.11 或 3.12（当前 Python 3.14 不兼容 Dify API）
 #    推荐用 pyenv-win 或从 https://www.python.org/downloads/ 下载
 
 # 3. 配置后端环境
-cd /d/MyNewStart/CC实战/dify/api
+cd /d/MyNewStart/CC实战/agentflow/api
 cp .env.example .env
 # 编辑 .env 文件，确保数据库、Redis 等连接配置正确
 
@@ -260,7 +260,7 @@ celery -A app.celery worker -P gevent -c 1 --loglevel INFO
 ## 关键文件路径速查
 
 ```
-/d/MyNewStart/CC实战/dify/
+/d/MyNewStart/CC实战/agentflow/
 ├── web/                                    # 前端（已定制）
 │   ├── tailwind-common-config.ts           # ⭐ 主色调配置（已改紫色）
 │   ├── public/logo/                        # ⭐ Logo 文件（已替换）

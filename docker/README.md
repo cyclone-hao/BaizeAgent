@@ -40,7 +40,7 @@ Welcome to the new `docker` directory for deploying Dify using Docker Compose. T
    - Ensure the `middleware.env` file is created by running `cp middleware.env.example middleware.env` (refer to the `middleware.env.example` file).
 1. **Running Middleware Services**:
    - Navigate to the `docker` directory.
-   - Execute `docker compose -f docker-compose.middleware.yaml --profile weaviate -p dify up -d` to start the middleware services. (Change the profile to other vector database if you are not using weaviate)
+   - Execute `docker compose -f docker-compose.middleware.yaml --profile weaviate -p cbn up -d` to start the middleware services. (Change the profile to other vector database if you are not using weaviate)
 
 ### Migration for Existing Users
 
